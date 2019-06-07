@@ -29,14 +29,11 @@ public class PlayerMove : MonoBehaviour
 	
 	//jumping
 	public Vector3 jumpForce =  new Vector3(0, 13, 0);		//normal jump force
-	public Vector3 secondJumpForce = new Vector3(0, 13, 0); //the force of a 2nd consecutive jump
-	public Vector3 thirdJumpForce = new Vector3(0, 13, 0);	//the force of a 3rd consecutive jump
 	public float jumpDelay = 0.1f;							//how fast you need to jump after hitting the ground, to do the next type of jump
 	public float jumpLeniancy = 0.17f;						//how early before hitting the ground you can press jump, and still have it work
 	[HideInInspector]
 	public int onEnemyBounce;					
 	
-	private int onJump;
 	private bool grounded;
 	private Transform[] floorCheckers;
 	private Quaternion screenMovementSpace;
@@ -202,7 +199,6 @@ public class PlayerMove : MonoBehaviour
 					//slope control
 					slope = Vector3.Angle (hit.normal, Vector3.up);
 
-                    print(slope);
 
 					//slide down slopes
 					if(slope > slopeLimit && hit.transform.tag != "Pushable")
@@ -267,17 +263,10 @@ public class PlayerMove : MonoBehaviour
 			//and we press jump, or we pressed jump justt before hitting the ground
 			if (Input.GetButtonDown ("Jump") || airPressTime + jumpLeniancy > Time.time)
 			{	
-				//increment our jump type if we haven't been on the ground for long
-				onJump = (groundedCount < jumpDelay) ? Mathf.Min(2, onJump + 1) : 0;
-				//execute the correct jump (like in mario64, jumping 3 times quickly will do higher jumps)
-				if (onJump == 0)
-						Jump (jumpForce);
-				else if (onJump == 1)
-						Jump (secondJumpForce);
-				else if (onJump == 2){
-						Jump (thirdJumpForce);
-						onJump --;
-				}
+				if (groundedCount > jumpDelay) {
+                    Jump(jumpForce);
+                }
+				
 			}
 		}
 	}
