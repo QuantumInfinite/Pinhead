@@ -30,11 +30,12 @@ EditorBuildSettings:
     path: Assets/Scenes/demo level.unity
     guid: 00000000000000000000000000000000
   - enabled: 1
-    path: Assets/scenes/StartScreen.unity
+    path: Assets/#_Scenes/StartScreen.unity
     guid: a920d7754a2e0074e8ee2d10424866dc
   - enabled: 1
-    path: Assets/scenes/PinHeadWhiteBox.unity
+    path: Assets/#_Scenes/PinHead_2018.unity
     guid: f8eb2a85eb783444f883b5f74d1693d8
   - enabled: 1
-    path: Assets/scenes/EndScreen.unity
+    path: Assets/#_Scenes/EndScreen.unity
     guid: f3673516ad4d71a46a1725c6be3c7627
+  m_configObjects: {}
