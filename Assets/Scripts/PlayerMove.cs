@@ -20,6 +20,7 @@ public class PlayerMove : MonoBehaviour
 	public float airAccel = 18f;			
 	public float decel = 7.6f;
 	public float airDecel = 1.1f;
+
 	[Range(0f, 5f)]
 	public float rotateSpeed = 0.7f, airRotateSpeed = 0.4f;	//how fast to rotate on the ground, how fast to rotate in the air
 	public float maxSpeed = 9;								//maximum speed of movement in X/Z axis

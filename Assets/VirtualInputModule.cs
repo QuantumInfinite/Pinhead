@@ -62,4 +62,9 @@ public class VirtualInputModule : MonoBehaviour
         vMousePos = Vector3.zero;
     }
 
+    public void EnableCursor(bool enabled)
+    {
+        cursorImage.gameObject.SetActive(enabled);
+    }
+
 }

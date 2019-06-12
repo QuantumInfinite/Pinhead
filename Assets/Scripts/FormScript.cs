@@ -143,6 +143,7 @@ public class FormScript : MonoBehaviour
                     playerRoot.transform.LookAt(new Vector3(point.x, transform.position.y, point.z));
                     UpperTorso.transform.LookAt(point); //have player look at mouse
                     break;
+
                 case Form.Yarn:
                     //Do nothing
                     break;
@@ -195,6 +196,7 @@ public class FormScript : MonoBehaviour
             AudioClip clip = null;
             switch (currentForm) {
                 case Form.Pin:
+                    virtualInput.EnableCursor(false);
                     RaycastHit hit = FireRay();
                     if ((hit.transform.tag == "SidePin" || hit.transform.tag == "BackPin" || hit.transform.tag == "Destroyable") && hit.distance <= range) {
                         pinCount--;
@@ -271,7 +273,7 @@ public class FormScript : MonoBehaviour
             case Form.Pin:
                 if (pinCount > 0) {//Entering Pin form
                                    //Set active
-
+                    virtualInput.EnableCursor(true);
                     abilityIsActive = true;
 
                     //Set animation
