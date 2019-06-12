@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Runtime.InteropServices;
 /*
  * Author: Kyle Jones
  * 
@@ -10,7 +11,8 @@ using UnityEngine;
  * 
  * 
  */
-public class FormScript : MonoBehaviour {
+public class FormScript : MonoBehaviour
+{
 
     public GameObject playerRoot; //For spawning
     public GameObject baseModel; //For changing forms
@@ -19,7 +21,7 @@ public class FormScript : MonoBehaviour {
     public ParticleSystem formChangeParticles;
 
     public GameObject pin; //Pin to throw
-    public GameObject pinSpawnMarker; //where to spawn pin
+    public Transform pinSpawnMarker; //where to spawn pin
     public Animator animator; //Animator
     public SkinnedMeshRenderer materialRenderer; //Where to apply the materials
 
@@ -43,10 +45,7 @@ public class FormScript : MonoBehaviour {
     public int maxSwingLength = 15;
     public float swingingAirDecel;
     public GameObject yarnSpawnMarker;
-    public GameObject Pin1;
-    public GameObject Pin2;
-    public GameObject Pin3;
-    public GameObject Pin4;
+    public GameObject[] HeadPins;
     public int regularWeight;
     public int heavyWeight;
     public int heavySpeedDivider;
@@ -59,7 +58,8 @@ public class FormScript : MonoBehaviour {
     public SphereCollider rebutiaColider;
     public Color32 clayNormalColor = new Color(1, 1, 1, 1);
     public Color32 clayHeavyColor = new Color(0.5F, 0.5f, 0.5F, 1);
- 
+
+    Rigidbody rigid;
 
     GameObject pinInstance; //Current Pin
 
@@ -71,7 +71,12 @@ public class FormScript : MonoBehaviour {
     bool drawLine = false;
     float airDecel; //used to restore deceleration 
 
-    public enum Form {
+    PlayerMove playerMove;
+
+    private VirtualInputModule virtualInput;
+
+    public enum Form
+    {
         Regular,
         Yarn,
         Pin,
@@ -94,13 +99,16 @@ public class FormScript : MonoBehaviour {
     public bool hasHatClaydough;
 
 
+    [DllImport("user32.dll")]
+    static extern bool SetCursorPos(int X, int Y);
+
+
     private void Start() {
         pinList = new List<GameObject>();
         torsoRotation = UpperTorso.transform.localEulerAngles;
         aSource = GetComponent<AudioSource>();
         UIManagaer = GameObject.FindGameObjectWithTag("UI");
-        if (enableAllForms)
-        {
+        if (enableAllForms) {
             UIManagaer.GetComponent<PauseMenu>().EnableForm(Form.Heavy);
             UIManagaer.GetComponent<PauseMenu>().EnableForm(Form.Yarn);
             UIManagaer.GetComponent<PauseMenu>().EnableForm(Form.Pin);
@@ -113,6 +121,9 @@ public class FormScript : MonoBehaviour {
         rebutiaHat.SetActive(false);
         spindleHat.SetActive(false);
         claydoughHat.SetActive(false);
+        playerMove = GetComponent<PlayerMove>();
+        rigid = playerRoot.GetComponent<Rigidbody>();
+        virtualInput = UIManagaer.GetComponent<VirtualInputModule>();
     }
 
     void Update() {
@@ -127,21 +138,20 @@ public class FormScript : MonoBehaviour {
             switch (currentForm) {
                 case Form.Pin:
                     //Raycast and aim
-                   
+
                     Vector3 point = FireRay().point;
-                    playerRoot.transform.LookAt(new Vector3(point.x,transform.position.y,point.z));
+                    playerRoot.transform.LookAt(new Vector3(point.x, transform.position.y, point.z));
                     UpperTorso.transform.LookAt(point); //have player look at mouse
                     break;
+
                 case Form.Yarn:
                     //Do nothing
                     break;
                 case Form.Roll:
-                    if (Input.GetAxis("Horizontal") != 0)
-                    {
+                    if (Input.GetAxis("Horizontal") != 0) {
                         rebutiaRollForm.GetComponent<Animator>().SetBool("Rolling", true);
                     }
-                    else
-                    {
+                    else {
                         rebutiaRollForm.GetComponent<Animator>().SetBool("Rolling", false);
                     }
                     break;
@@ -153,13 +163,11 @@ public class FormScript : MonoBehaviour {
         else //Do stuff while ability is not active
         {
             PinsInHead();
-            if (Input.GetKeyDown("f"))
-            {
+            if (Input.GetKeyDown("f")) {
                 RecallPins();
             }
         }
-        if (drawLine)
-        {
+        if (drawLine) {
             //Draw Line
             Vector3[] positions = { yarnSpawnMarker.transform.position, pivot.transform.position };
             GetComponent<LineRenderer>().SetPositions(positions);
@@ -172,31 +180,25 @@ public class FormScript : MonoBehaviour {
             pinCount++;
             other.gameObject.SetActive(false);
 
-            if (pinPickupEffect)
-            {
-                ParticleSystem.Instantiate(pinPickupEffect, transform.position + new Vector3(0, 3, 0), transform.rotation); 
+            if (pinPickupEffect) {
+                ParticleSystem.Instantiate(pinPickupEffect, transform.position + new Vector3(0, 3, 0), transform.rotation);
             }
-            
-            if (pinPickupSound)
-            {
+
+            if (pinPickupSound) {
                 aSource.volume = 1;
                 aSource.clip = pinPickupSound;
                 aSource.Play();
             }
         }
     }
-
-    private void FixedUpdate() {
-        
-    }
     void DeactivateAbility() {
         if (abilityIsActive) {
             AudioClip clip = null;
             switch (currentForm) {
                 case Form.Pin:
+                    virtualInput.EnableCursor(false);
                     RaycastHit hit = FireRay();
-                    if ((hit.transform.tag == "SidePin" || hit.transform.tag == "BackPin" || hit.transform.tag == "Destroyable") && hit.distance <= range)
-                    {
+                    if ((hit.transform.tag == "SidePin" || hit.transform.tag == "BackPin" || hit.transform.tag == "Destroyable") && hit.distance <= range) {
                         pinCount--;
                         ThrowAt(pinInstance, FireRay(), pinThrowTime);
 
@@ -209,13 +211,12 @@ public class FormScript : MonoBehaviour {
                         //Change sound
                         clip = pinThrowSound;
                     }
-                    else
-                    {
+                    else {
                         Destroy(pinInstance);
                         animator.SetTrigger("Idle");
                     }
                     UpperTorso.transform.localEulerAngles = torsoRotation;
-                    GetComponent<PlayerMove>().enabled = true;
+                    playerMove.enabled = true;
                     Cursor.visible = false;
                     break;
                 case Form.Yarn:
@@ -224,7 +225,7 @@ public class FormScript : MonoBehaviour {
 
                     animator.SetTrigger("StopSwinging");
                     //Add deceleration back
-                    GetComponent<PlayerMove>().airDecel = airDecel;
+                    playerMove.airDecel = airDecel;
 
                     //Stop drawing
                     GetComponent<LineRenderer>().enabled = false;
@@ -246,14 +247,13 @@ public class FormScript : MonoBehaviour {
                     break;
                 case Form.Heavy:
                     materialRenderer.material.color = clayNormalColor;
-                    playerRoot.GetComponent<Rigidbody>().mass = regularWeight;
-                    GetComponent<PlayerMove>().maxSpeed *= heavySpeedDivider;
+                    rigid.mass = regularWeight;
+                    playerMove.maxSpeed *= heavySpeedDivider;
                     animator.speed *= (heavySpeedDivider / 1.5f);
                     break;
             }
             //play sound
-            if (clip)
-            {
+            if (clip) {
                 aSource.volume = 1;
                 aSource.clip = clip;
                 aSource.Play();
@@ -265,113 +265,119 @@ public class FormScript : MonoBehaviour {
     }
 
     void ActivateAbility() {
-        if (!abilityIsActive) {
-            AudioClip clip = null;
-            switch (currentForm) {
-                case Form.Pin:
-                    if (pinCount > 0) {//Entering Pin form
-                                       //Set active
-                        
-                        abilityIsActive = true;
+        if (abilityIsActive) {
+            return;
+        }
+        AudioClip clip = null;
+        switch (currentForm) {
+            case Form.Pin:
+                if (pinCount > 0) {//Entering Pin form
+                                   //Set active
+                    virtualInput.EnableCursor(true);
+                    abilityIsActive = true;
 
-                        //Set animation
-                        animator.SetTrigger("Aim");
+                    //Set animation
+                    animator.SetTrigger("Aim");
 
-                        //Create Pin
-                        pinInstance = GameObject.Instantiate(pin, pinSpawnMarker.transform.position, playerRoot.transform.rotation);
-                        pinInstance.transform.parent = pinSpawnMarker.transform;
+                    //Create Pin
+                    pinInstance = GameObject.Instantiate(pin, pinSpawnMarker.transform.position, playerRoot.transform.rotation);
+                    pinInstance.transform.parent = pinSpawnMarker;
 
-                        //Lock character
-                        GetComponent<PlayerMove>().enabled = false;
-                        GetComponent<Rigidbody>().velocity = Vector3.zero;
+                    //Lock character
+                    playerMove.enabled = false;
+                    //rigid.velocity = Vector3.zero;
 
-                        //Show curser
-                        Cursor.visible = true;
-                        Cursor.lockState = CursorLockMode.Locked; //This and next line center curser on screen 
-                        Cursor.lockState = CursorLockMode.None;   //^
+                    //Show curser
+                    Cursor.visible = true;
+                    Cursor.lockState = CursorLockMode.Locked; //This and next line center curser on screen 
+                    Cursor.lockState = CursorLockMode.None;   //^
 
-                        //change sound
-					    aSource.volume = 0.5f;
-                        clip = pinAimSound;
-                    }
-                    else
+                    if (virtualInput != null)
                     {
-                       aSource.volume = 1;
-                       aSource.clip = pinEmptySound;
-                       aSource.Play();
+                        //virtualInput.Center();
+                       // virtualInput.SetVirtualOffset(new Vector3(Screen.width / 3, 0));
                     }
-                    break;
-                case Form.Yarn:
 
-                    pivot = GetNearestPin();
-                    if (pivot != null) { //Pin found. Connect
-                                         //Set active
-                        abilityIsActive = true;
+                    //Cursor.lockState = CursorLockMode.Locked; //This and next line center curser on screen 
+                    //Cursor.lockState = CursorLockMode.None;   //^
 
-                        animator.SetTrigger("Swinging");
+                    //change sound
+                    aSource.volume = 0.5f;
+                    clip = pinAimSound;
+                }
+                else {
+                    aSource.volume = 1;
+                    aSource.clip = pinEmptySound;
+                    aSource.Play();
+                }
+                break;
+            case Form.Yarn:
 
-                        AddJoint(pivot.GetComponent<PinScript>().pivotPoint);
-
-                        //remove deceleration
-                        airDecel = GetComponent<PlayerMove>().airDecel;
-                        GetComponent<PlayerMove>().airDecel = swingingAirDecel;
-
-                        //Draw Line
-                        GetComponent<LineRenderer>().enabled = true;
-                        drawLine = true;
-
-                        //change sound
-                        clip = swingStartSound;
-                    }
-                    break;
-                case Form.Roll:
-                    //Change form
+                pivot = GetNearestPin();
+                if (pivot != null) { //Pin found. Connect
+                                     //Set active
                     abilityIsActive = true;
-                    rebutiaRollForm.SetActive(true);
-                    baseModel.SetActive(false);
-                    //mainColider.enabled = false;
-                    //rebutiaColider.enabled = true;
-                    if (hasHatRebutia) {
-                        rebutiaRollingHat.SetActive(true);
-                        rebutiaHat.SetActive(false);
-                    }
-                    break;
-                case Form.Heavy:
-                    //Set active
 
-                    abilityIsActive = true;
-                    playerRoot.GetComponent<Rigidbody>().mass = heavyWeight;
-                    GetComponent<PlayerMove>().maxSpeed /= heavySpeedDivider;
-                    animator.speed /= (heavySpeedDivider / 1.5f);
-                    materialRenderer.material.color = clayHeavyColor;
-                    break;
-            }
-            if (clip)
-            {
-                aSource.volume = 1;
-                aSource.clip = clip;
-                aSource.Play();
-            }
+                    animator.SetTrigger("Swinging");
+
+                    AddJoint(pivot.GetComponent<PinScript>().pivotPoint);
+
+                    //remove deceleration
+                    airDecel = playerMove.airDecel;
+                    playerMove.airDecel = swingingAirDecel;
+
+                    //Draw Line
+                    GetComponent<LineRenderer>().enabled = true;
+                    drawLine = true;
+
+                    //change sound
+                    clip = swingStartSound;
+                }
+                break;
+            case Form.Roll:
+                //Change form
+                abilityIsActive = true;
+                rebutiaRollForm.SetActive(true);
+                baseModel.SetActive(false);
+                //mainColider.enabled = false;
+                //rebutiaColider.enabled = true;
+                if (hasHatRebutia) {
+                    rebutiaRollingHat.SetActive(true);
+                    rebutiaHat.SetActive(false);
+                }
+                break;
+            case Form.Heavy:
+                //Set active
+
+                abilityIsActive = true;
+                rigid.mass = heavyWeight;
+                playerMove.maxSpeed /= heavySpeedDivider;
+                animator.speed /= (heavySpeedDivider / 1.5f);
+                materialRenderer.material.color = clayHeavyColor;
+                break;
+        }
+        if (clip) {
+            aSource.volume = 1;
+            aSource.clip = clip;
+            aSource.Play();
         }
     }
 
     public void ChangeForm(Form switchTo) {
-        if (switchTo == currentForm || abilityIsActive)
-        {
+        if (switchTo == currentForm || abilityIsActive) {
             return;
         }
-        if (formChangeParticles)
-        {
+        if (formChangeParticles) {
             ParticleSystem.Instantiate(formChangeParticles, transform.position, transform.rotation);
         }
-        if (formChangeSound)
-        {
+        if (formChangeSound) {
             aSource.volume = 1;
             aSource.clip = formChangeSound;
             aSource.Play();
         }
 
         SetHat(switchTo);
+
         switch (switchTo) {
             //PIN
             case Form.Pin:
@@ -464,52 +470,27 @@ public class FormScript : MonoBehaviour {
     }
 
     //PIN FUNCTIONS
-    RaycastHit FireRay()
-    {
-        Ray raymond = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-        Physics.Raycast(raymond, out hit, 1000);
-        //hit.point = new Vector3(hit.point.x,hit.point.y, 0);
-        return hit;
+    RaycastHit FireRay() {
+        if (virtualInput != null) {
+            Ray raymond = Camera.main.ScreenPointToRay(virtualInput.GetVirtualCursorPosition());
+            RaycastHit hit;
+            Physics.Raycast(raymond, out hit, 1000);
+            //hit.point = new Vector3(hit.point.x,hit.point.y, 0);
+            return hit;
+        }
+        else {
+            Ray raymond = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            Physics.Raycast(raymond, out hit, 1000);
+            //hit.point = new Vector3(hit.point.x,hit.point.y, 0);
+            return hit;
+        }
+
     }
-    void PinsInHead()
-    {
-        if (pinCount == 1)
-        {
-            Pin1.SetActive(true);
-            Pin2.SetActive(false);
-            Pin3.SetActive(false);
-            Pin4.SetActive(false);
+    void PinsInHead() {
+        for (int i = 0; i < HeadPins.Length; i++) {
+            HeadPins[i].SetActive(i < pinCount);
         }
-        if (pinCount == 2)
-        {
-            Pin1.SetActive(true);
-            Pin2.SetActive(true);
-            Pin3.SetActive(false);
-            Pin4.SetActive(false);
-        }
-        if (pinCount == 3)
-        {
-            Pin1.SetActive(true);
-            Pin2.SetActive(true);
-            Pin3.SetActive(true);
-            Pin4.SetActive(false);
-        }
-        if (pinCount >= 4)
-        {
-            Pin1.SetActive(true);
-            Pin2.SetActive(true);
-            Pin3.SetActive(true);
-            Pin4.SetActive(true);
-        }
-        if (pinCount == 0)
-        {
-            Pin1.SetActive(false);
-            Pin2.SetActive(false);
-            Pin3.SetActive(false);
-            Pin4.SetActive(false);
-        }
-        
     }
     void RecallPins() {
         pinCount += pinList.Count;
@@ -517,8 +498,7 @@ public class FormScript : MonoBehaviour {
             Destroy(p);
         }
         pinList.Clear();
-        if (pinRecallSound)
-        {
+        if (pinRecallSound) {
             aSource.volume = 1;
             aSource.clip = pinRecallSound;
             aSource.Play();
@@ -546,7 +526,7 @@ public class FormScript : MonoBehaviour {
             distanceZ = (Pin.transform.position.z - transform.position.z);
             //Pin.transform.position = new Vector3(Pin.transform.position.x, Pin.transform.position.y, playerRoot.transform.position.z);
         }
-        
+
 
         float timeToHit = (Mathf.Abs(distanceX) + Mathf.Abs(distanceZ)) / pinThrowTime;
         float xVol = distanceX / timeToHit;
@@ -567,12 +547,10 @@ public class FormScript : MonoBehaviour {
             Pin.GetComponent<PinScript>().NormalizeX();
         }
 
-        else if (Target.transform.tag == "Destroyable")
-        {
+        else if (Target.transform.tag == "Destroyable") {
             //Do nadda
         }
-        else
-        {
+        else {
             Pin.GetComponent<PinScript>().DeleteAfter(pinDespawnTimer);
             Pin.GetComponent<PinScript>().SetColiders(true);
         }

@@ -48,7 +48,7 @@ public class CharacterMotor : MonoBehaviour
 			return true;
 		else
 			rigid.AddForce(relativePos.normalized * acceleration * Time.deltaTime, ForceMode.VelocityChange);
-			return false;
+        return false;
 	}
 	
 	//rotates rigidbody to face its current velocity

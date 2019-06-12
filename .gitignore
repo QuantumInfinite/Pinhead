@@ -35,3 +35,4 @@ sysinfo.txt
 *.apk
 *.unitypackage
 Assets/##_Materials/Shelf.meta
+ProjectSettings/EditorBuildSettings.asset

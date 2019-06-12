@@ -89,7 +89,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 1
   m_Constraints: 120
-  m_CollisionDetection: 2
+  m_CollisionDetection: 3
 --- !u!114 &11400006
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -143,12 +143,10 @@ MonoBehaviour:
   rotateSpeed: 3
   airRotateSpeed: 0.66
   maxSpeed: 9
-  slopeLimit: 181
-  slideAmount: 0
+  slopeLimit: 50
+  slideAmount: 35
   movingPlatformFriction: 7.7
   jumpForce: {x: 0, y: 14, z: 0}
-  secondJumpForce: {x: 0, y: 14, z: 0}
-  thirdJumpForce: {x: 0, y: 16, z: 0}
   jumpDelay: 0.1
   jumpLeniancy: 0.2
   onEnemyBounce: 0
@@ -200,7 +198,7 @@ MonoBehaviour:
   formChangeParticles: {fileID: 198324632482714504, guid: 3a184c293b3dda04eab4f2271c1851cc,
     type: 3}
   pin: {fileID: 1707349961023988, guid: a1d2143a59a995e4d85f47a13a78a8cd, type: 3}
-  pinSpawnMarker: {fileID: 1218240254746066}
+  pinSpawnMarker: {fileID: 4968578279068212}
   animator: {fileID: 95143384420915202}
   materialRenderer: {fileID: 137816834425471486}
   pinAimSound: {fileID: 8300000, guid: be1f8ee0b1d051f4984b2514d8af16c7, type: 3}
@@ -213,17 +211,18 @@ MonoBehaviour:
   formChangeSound: {fileID: 8300000, guid: 81b3ac22b2b99284182cb888b4d42e04, type: 3}
   pinEmptySound: {fileID: 8300000, guid: 4f7d48df31cdb454ebcbc55b7037754d, type: 3}
   currentForm: 0
-  pinCount: 0
+  pinCount: 1
   pinThrowTime: 20
   pinDespawnTimer: 3
   range: 50
   maxSwingLength: 15
   swingingAirDecel: 0.2
   yarnSpawnMarker: {fileID: 1375465622932164}
-  Pin1: {fileID: 1978926581334880}
-  Pin2: {fileID: 1722541055931292}
-  Pin3: {fileID: 1897194552555450}
-  Pin4: {fileID: 1933990470998578}
+  HeadPins:
+  - {fileID: 1978926581334880}
+  - {fileID: 1722541055931292}
+  - {fileID: 1933990470998578}
+  - {fileID: 1897194552555450}
   regularWeight: 1
   heavyWeight: 5
   heavySpeedDivider: 3
@@ -234,7 +233,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 196fa1f2b5395464d97cf41fa8053462, type: 2}
   pinList: []
   abilityIsActive: 0
-  enableAllForms: 0
+  enableAllForms: 1
   mainColider: {fileID: 65493769771402320}
   rebutiaColider: {fileID: 135137702230926452}
   clayNormalColor:
@@ -673,7 +672,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &400016
 Transform:
   m_ObjectHideFlags: 0
