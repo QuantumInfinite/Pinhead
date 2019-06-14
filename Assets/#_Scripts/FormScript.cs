@@ -19,6 +19,7 @@ public class FormScript : MonoBehaviour
     public GameObject rebutiaRollForm;// For rolling
     public GameObject UpperTorso;
     public ParticleSystem formChangeParticles;
+    public AcquirePinEffect pinEffectShader;
 
     public GameObject pin; //Pin to throw
     public Transform pinSpawnMarker; //where to spawn pin
@@ -178,6 +179,7 @@ public class FormScript : MonoBehaviour
     private void OnTriggerEnter(Collider other) {
         if (other.tag == "PinPickup") {
             pinCount++;
+          //  StartCoroutine(pinEffectShader.StartFresnel());
             other.gameObject.SetActive(false);
 
             if (pinPickupEffect) {
