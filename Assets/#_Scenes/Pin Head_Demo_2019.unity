@@ -8338,21 +8338,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pin Head Reference (NOT CHARACTER)
       objectReference: {fileID: 0}
-    - target: {fileID: -6057140222963153312, guid: ca314a37860e09744bcc927867cfb986,
-        type: 3}
-      propertyPath: m_CullingMode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: -6057140222963153312, guid: ca314a37860e09744bcc927867cfb986,
-        type: 3}
-      propertyPath: m_Avatar
-      value: 
-      objectReference: {fileID: 9000000, guid: 33fa6ad184d18ad47811d9072f3a9ad1, type: 3}
-    - target: {fileID: -6057140222963153312, guid: ca314a37860e09744bcc927867cfb986,
-        type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: b98c8ad843cde904395342e1610ec2ef, type: 2}
     - target: {fileID: -4216859302048453862, guid: ca314a37860e09744bcc927867cfb986,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -8423,6 +8408,21 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 76021b9f73381874cbed422db16310ac, type: 2}
+    - target: {fileID: -6057140222963153312, guid: ca314a37860e09744bcc927867cfb986,
+        type: 3}
+      propertyPath: m_CullingMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -6057140222963153312, guid: ca314a37860e09744bcc927867cfb986,
+        type: 3}
+      propertyPath: m_Avatar
+      value: 
+      objectReference: {fileID: 9000000, guid: 33fa6ad184d18ad47811d9072f3a9ad1, type: 3}
+    - target: {fileID: -6057140222963153312, guid: ca314a37860e09744bcc927867cfb986,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: b98c8ad843cde904395342e1610ec2ef, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ca314a37860e09744bcc927867cfb986, type: 3}
 --- !u!4 &1696898200 stripped
