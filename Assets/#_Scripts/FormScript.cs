@@ -289,19 +289,16 @@ public class FormScript : MonoBehaviour
                     playerMove.enabled = false;
                     //rigid.velocity = Vector3.zero;
 
-                    //Show curser
-                    Cursor.visible = true;
-                    Cursor.lockState = CursorLockMode.Locked; //This and next line center curser on screen 
-                    Cursor.lockState = CursorLockMode.None;   //^
+                    //Show curser DEPRICATED AS NO LONGER WORKS
+                    //Cursor.visible = true;
+                    //Cursor.lockState = CursorLockMode.Locked; //This and next line center curser on screen 
+                    //Cursor.lockState = CursorLockMode.None;   //^
 
                     if (virtualInput != null)
                     {
                         //virtualInput.Center();
                        // virtualInput.SetVirtualOffset(new Vector3(Screen.width / 3, 0));
                     }
-
-                    //Cursor.lockState = CursorLockMode.Locked; //This and next line center curser on screen 
-                    //Cursor.lockState = CursorLockMode.None;   //^
 
                     //change sound
                     aSource.volume = 0.5f;
