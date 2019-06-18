@@ -8,4 +8,168 @@ AvatarMask:
   m_PrefabAsset: {fileID: 0}
   m_Name: PinThrowing
   m_Mask: 00000000010000000100000000000000000000000100000001000000010000000100000001000000010000000100000001000000
-  m_Elements: []
+  m_Elements:
+  - m_Path: 
+    m_Weight: 1
+  - m_Path: Body_Low
+    m_Weight: 1
+  - m_Path: Pin Head Rig
+    m_Weight: 1
+  - m_Path: Pin Head Rig/ElbowIK.L
+    m_Weight: 1
+  - m_Path: Pin Head Rig/ElbowIK.L/ElbowIK.L_end
+    m_Weight: 1
+  - m_Path: Pin Head Rig/ElbowIK.R
+    m_Weight: 1
+  - m_Path: Pin Head Rig/ElbowIK.R/ElbowIK.R_end
+    m_Weight: 1
+  - m_Path: Pin Head Rig/HeelIK.L
+    m_Weight: 0
+  - m_Path: Pin Head Rig/HeelIK.L/Foot.L.001
+    m_Weight: 0
+  - m_Path: Pin Head Rig/HeelIK.L/Foot.L.001/Foot.L.002
+    m_Weight: 0
+  - m_Path: Pin Head Rig/HeelIK.L/Foot.L.001/Foot.L.002/Toe.L001
+    m_Weight: 0
+  - m_Path: Pin Head Rig/HeelIK.L/Foot.L.001/Foot.L.002/Toe.L001/Toe.L001_end
+    m_Weight: 0
+  - m_Path: Pin Head Rig/HeelIK.R
+    m_Weight: 0
+  - m_Path: Pin Head Rig/HeelIK.R/Foot.R.001
+    m_Weight: 0
+  - m_Path: Pin Head Rig/HeelIK.R/Foot.R.001/Foot.R.002
+    m_Weight: 0
+  - m_Path: Pin Head Rig/HeelIK.R/Foot.R.001/Foot.R.002/Toe.R.001
+    m_Weight: 0
+  - m_Path: Pin Head Rig/HeelIK.R/Foot.R.001/Foot.R.002/Toe.R.001/Toe.R.001_end
+    m_Weight: 0
+  - m_Path: Pin Head Rig/Hip.L
+    m_Weight: 0
+  - m_Path: Pin Head Rig/Hip.L/Thigh.L
+    m_Weight: 0
+  - m_Path: Pin Head Rig/Hip.L/Thigh.L/Shin.L
+    m_Weight: 0
+  - m_Path: Pin Head Rig/Hip.L/Thigh.L/Shin.L/Shin.L_end
+    m_Weight: 0
+  - m_Path: Pin Head Rig/Hip.R
+    m_Weight: 0
+  - m_Path: Pin Head Rig/Hip.R/Thigh.R
+    m_Weight: 0
+  - m_Path: Pin Head Rig/Hip.R/Thigh.R/Shin.R
+    m_Weight: 0
+  - m_Path: Pin Head Rig/Hip.R/Thigh.R/Shin.R/Shin.R_end
+    m_Weight: 0
+  - m_Path: Pin Head Rig/KneeIK.L
+    m_Weight: 0
+  - m_Path: Pin Head Rig/KneeIK.L/KneeIK.L_end
+    m_Weight: 0
+  - m_Path: Pin Head Rig/KneeIK.R
+    m_Weight: 0
+  - m_Path: Pin Head Rig/KneeIK.R/KneeIK.R_end
+    m_Weight: 0
+  - m_Path: Pin Head Rig/Spine
+    m_Weight: 1
+  - m_Path: Pin Head Rig/Spine/Spine.001
+    m_Weight: 1
+  - m_Path: Pin Head Rig/Spine/Spine.001/Spine.002
+    m_Weight: 1
+  - m_Path: Pin Head Rig/Spine/Spine.001/Spine.002/shoulder.L
+    m_Weight: 1
+  - m_Path: Pin Head Rig/Spine/Spine.001/Spine.002/shoulder.L/upper_arm.L
+    m_Weight: 1
+  - m_Path: Pin Head Rig/Spine/Spine.001/Spine.002/shoulder.L/upper_arm.L/forearm.L
+    m_Weight: 1
+  - m_Path: Pin Head Rig/Spine/Spine.001/Spine.002/shoulder.L/upper_arm.L/forearm.L/forearm.L_end
+    m_Weight: 1
+  - m_Path: Pin Head Rig/Spine/Spine.001/Spine.002/shoulder.R
+    m_Weight: 1
+  - m_Path: Pin Head Rig/Spine/Spine.001/Spine.002/shoulder.R/upper_arm.R
+    m_Weight: 1
+  - m_Path: Pin Head Rig/Spine/Spine.001/Spine.002/shoulder.R/upper_arm.R/forearm.R
+    m_Weight: 1
+  - m_Path: Pin Head Rig/Spine/Spine.001/Spine.002/shoulder.R/upper_arm.R/forearm.R/forearm.R_end
+    m_Weight: 1
+  - m_Path: Pin Head Rig/Spine/Spine.001/Spine.002/Spine.003
+    m_Weight: 1
+  - m_Path: Pin Head Rig/Spine/Spine.001/Spine.002/Spine.003/Neck
+    m_Weight: 1
+  - m_Path: Pin Head Rig/Spine/Spine.001/Spine.002/Spine.003/Neck/Head
+    m_Weight: 1
+  - m_Path: Pin Head Rig/Spine/Spine.001/Spine.002/Spine.003/Neck/Head/Leaf.L
+    m_Weight: 1
+  - m_Path: Pin Head Rig/Spine/Spine.001/Spine.002/Spine.003/Neck/Head/Leaf.L/Leaf.L.001
+    m_Weight: 1
+  - m_Path: Pin Head Rig/Spine/Spine.001/Spine.002/Spine.003/Neck/Head/Leaf.L/Leaf.L.001/Leaf.L.002
+    m_Weight: 1
+  - m_Path: Pin Head Rig/Spine/Spine.001/Spine.002/Spine.003/Neck/Head/Leaf.L/Leaf.L.001/Leaf.L.002/Leaf.L.003
+    m_Weight: 1
+  - m_Path: Pin Head Rig/Spine/Spine.001/Spine.002/Spine.003/Neck/Head/Leaf.L/Leaf.L.001/Leaf.L.002/Leaf.L.003/Leaf.L.004
+    m_Weight: 1
+  - m_Path: Pin Head Rig/Spine/Spine.001/Spine.002/Spine.003/Neck/Head/Leaf.L/Leaf.L.001/Leaf.L.002/Leaf.L.003/Leaf.L.004/Leaf.L.005
+    m_Weight: 1
+  - m_Path: Pin Head Rig/Spine/Spine.001/Spine.002/Spine.003/Neck/Head/Leaf.L/Leaf.L.001/Leaf.L.002/Leaf.L.003/Leaf.L.004/Leaf.L.005/Leaf.L.005_end
+    m_Weight: 1
+  - m_Path: Pin Head Rig/Spine/Spine.001/Spine.002/Spine.003/Neck/Head/Leaf.R
+    m_Weight: 1
+  - m_Path: Pin Head Rig/Spine/Spine.001/Spine.002/Spine.003/Neck/Head/Leaf.R/Leaf.R.001
+    m_Weight: 1
+  - m_Path: Pin Head Rig/Spine/Spine.001/Spine.002/Spine.003/Neck/Head/Leaf.R/Leaf.R.001/Leaf.R.002
+    m_Weight: 1
+  - m_Path: Pin Head Rig/Spine/Spine.001/Spine.002/Spine.003/Neck/Head/Leaf.R/Leaf.R.001/Leaf.R.002/Leaf.R.003
+    m_Weight: 1
+  - m_Path: Pin Head Rig/Spine/Spine.001/Spine.002/Spine.003/Neck/Head/Leaf.R/Leaf.R.001/Leaf.R.002/Leaf.R.003/Leaf.R.004
+    m_Weight: 1
+  - m_Path: Pin Head Rig/Spine/Spine.001/Spine.002/Spine.003/Neck/Head/Leaf.R/Leaf.R.001/Leaf.R.002/Leaf.R.003/Leaf.R.004/Leaf.R.005
+    m_Weight: 1
+  - m_Path: Pin Head Rig/Spine/Spine.001/Spine.002/Spine.003/Neck/Head/Leaf.R/Leaf.R.001/Leaf.R.002/Leaf.R.003/Leaf.R.004/Leaf.R.005/Leaf.R.005_end
+    m_Weight: 1
+  - m_Path: Pin Head Rig/Spine/Spine.001/Spine.002/Spine.003/Neck/Head/Stem
+    m_Weight: 1
+  - m_Path: Pin Head Rig/Spine/Spine.001/Spine.002/Spine.003/Neck/Head/Stem/Stem.001
+    m_Weight: 1
+  - m_Path: Pin Head Rig/Spine/Spine.001/Spine.002/Spine.003/Neck/Head/Stem/Stem.001/Stem.002
+    m_Weight: 1
+  - m_Path: Pin Head Rig/Spine/Spine.001/Spine.002/Spine.003/Neck/Head/Stem/Stem.001/Stem.002/Stem.003
+    m_Weight: 1
+  - m_Path: Pin Head Rig/Spine/Spine.001/Spine.002/Spine.003/Neck/Head/Stem/Stem.001/Stem.002/Stem.003/Stem.003_end
+    m_Weight: 1
+  - m_Path: Pin Head Rig/WristIK.L
+    m_Weight: 1
+  - m_Path: Pin Head Rig/WristIK.L/hand.L
+    m_Weight: 1
+  - m_Path: Pin Head Rig/WristIK.L/hand.L/hand.L.001
+    m_Weight: 1
+  - m_Path: Pin Head Rig/WristIK.L/hand.L/hand.L.001/hand.L.002
+    m_Weight: 1
+  - m_Path: Pin Head Rig/WristIK.L/hand.L/hand.L.001/hand.L.002/hand.L.003
+    m_Weight: 1
+  - m_Path: Pin Head Rig/WristIK.L/hand.L/hand.L.001/hand.L.002/hand.L.003/hand.L.003_end
+    m_Weight: 1
+  - m_Path: Pin Head Rig/WristIK.L/hand.L/Thumb.L
+    m_Weight: 1
+  - m_Path: Pin Head Rig/WristIK.L/hand.L/Thumb.L/Thumb.L.001
+    m_Weight: 1
+  - m_Path: Pin Head Rig/WristIK.L/hand.L/Thumb.L/Thumb.L.001/Thumb.L.002
+    m_Weight: 1
+  - m_Path: Pin Head Rig/WristIK.L/hand.L/Thumb.L/Thumb.L.001/Thumb.L.002/Thumb.L.002_end
+    m_Weight: 1
+  - m_Path: Pin Head Rig/WristIK.R
+    m_Weight: 1
+  - m_Path: Pin Head Rig/WristIK.R/hand.R
+    m_Weight: 1
+  - m_Path: Pin Head Rig/WristIK.R/hand.R/hand.R.001
+    m_Weight: 1
+  - m_Path: Pin Head Rig/WristIK.R/hand.R/hand.R.001/hand.R.002
+    m_Weight: 1
+  - m_Path: Pin Head Rig/WristIK.R/hand.R/hand.R.001/hand.R.002/hand.R.003
+    m_Weight: 1
+  - m_Path: Pin Head Rig/WristIK.R/hand.R/hand.R.001/hand.R.002/hand.R.003/hand.R.003_end
+    m_Weight: 1
+  - m_Path: Pin Head Rig/WristIK.R/hand.R/Thumb.R
+    m_Weight: 1
+  - m_Path: Pin Head Rig/WristIK.R/hand.R/Thumb.R/Thumb.R.001
+    m_Weight: 1
+  - m_Path: Pin Head Rig/WristIK.R/hand.R/Thumb.R/Thumb.R.001/Thumb.R.002
+    m_Weight: 1
+  - m_Path: Pin Head Rig/WristIK.R/hand.R/Thumb.R/Thumb.R.001/Thumb.R.002/Thumb.R.002_end
+    m_Weight: 1
