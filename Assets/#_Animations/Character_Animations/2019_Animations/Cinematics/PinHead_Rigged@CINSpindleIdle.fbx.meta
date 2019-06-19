@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 6e96deede1bf76449979e5eb4bc3a7cc
+guid: 0467bd6b473f7d94486615a91696acd3
 ModelImporter:
   serializedVersion: 25
   internalIDToNameTable:
@@ -7,8 +7,11 @@ ModelImporter:
       74: 3323987697555708243
     second: Pin Head Rig|EmptyAction.001
   - first:
+      74: -7668577097769453961
+    second: Pin Head Rig|CIN Spindle Idle
+  - first:
       74: -4006766745632289508
-    second: Pin Head Rig|CIN Spindle Walking
+    second: Pin Head Rig|Pin Head RigAction.005
   externalObjects: {}
   materials:
     importMaterials: 1
@@ -38,11 +41,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Pin Head Rig|CIN Spindle Walking
-      takeName: Pin Head Rig|Pin Head RigAction.005
-      internalID: -4006766745632289508
+      name: Pin Head Rig|CIN Spindle Idle
+      takeName: Pin Head Rig|Pin Head Rig CIN Spindle Idle
+      internalID: -7668577097769453961
       firstFrame: 0
-      lastFrame: 30
+      lastFrame: 59
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
