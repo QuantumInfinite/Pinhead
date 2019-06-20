@@ -8512,6 +8512,16 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8903175057365054023, guid: c9051317abe95bf479d07fb9d79e56a0,
+        type: 3}
+      propertyPath: m_Drag
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8903175057369670855, guid: c9051317abe95bf479d07fb9d79e56a0,
+        type: 3}
+      propertyPath: jumpForce.y
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 8903175057911323631, guid: c9051317abe95bf479d07fb9d79e56a0,
         type: 3}
       propertyPath: m_LocalPosition.x
