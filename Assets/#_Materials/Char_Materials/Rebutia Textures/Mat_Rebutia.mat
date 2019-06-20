@@ -34,15 +34,15 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - Texture2D_45D7DB3:
-        m_Texture: {fileID: 2800000, guid: 793fa081f911ffe4198d940b1621fff6, type: 3}
+        m_Texture: {fileID: 2800000, guid: b6d37e720db2bf9418cd1c3294301ac4, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - Texture2D_4BBCE29:
-        m_Texture: {fileID: 2800000, guid: 824ad68a6334d32499c4ad670b9e351f, type: 3}
+        m_Texture: {fileID: 2800000, guid: 7292471b9e2b0534db607e040aa57b71, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - Texture2D_5741E08:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 5d5222e8a3aa43044a27e23ff25d8827, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - Texture2D_A3D17606:
@@ -105,6 +105,7 @@ Material:
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _EnvironmentReflections: 1
+    - _FresnelPowerSlider: 0
     - _GlossMapScale: 1
     - _Glossiness: 0.43
     - _GlossyReflections: 1
