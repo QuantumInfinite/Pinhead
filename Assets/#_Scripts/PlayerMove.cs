@@ -20,8 +20,10 @@ public class PlayerMove : MonoBehaviour
 	public float airAccel = 18f;			
 	public float decel = 7.6f;
 	public float airDecel = 1.1f;
+    [HideInInspector]
+    public bool horizontalMovementAllowed = true;
 
-	[Range(0f, 5f)]
+    [Range(0f, 5f)]
 	public float rotateSpeed = 0.7f, airRotateSpeed = 0.4f;	//how fast to rotate on the ground, how fast to rotate in the air
 	public float maxSpeed = 9;								//maximum speed of movement in X/Z axis
 	public float slopeLimit = 40, slideAmount = 35;			//maximum angle of slopes you can walk on, how fast to slide down slopes you can't
@@ -108,11 +110,16 @@ public class PlayerMove : MonoBehaviour
 		screenMovementRight = screenMovementSpace * Vector3.right;
 		
 		//get movement input, set direction to move in
-		float h = Input.GetAxisRaw ("Horizontal");
-		float v = Input.GetAxisRaw ("Vertical");
-		
-		//only apply vertical input to movemement, if player is not sidescroller
-		if(!sidescroller)
+		float h = 0;
+		float v = 0;
+        if (horizontalMovementAllowed)
+        {
+            v = Input.GetAxisRaw("Vertical");
+            h = Input.GetAxisRaw("Horizontal");
+        }
+
+        //only apply vertical input to movemement, if player is not sidescroller
+        if (!sidescroller)
 			direction = (screenMovementForward * v) + (screenMovementRight * h);
 		else
 			direction = Vector3.right * h;
@@ -154,6 +161,7 @@ public class PlayerMove : MonoBehaviour
         //Make player come to a hard stop when grounded and not pressing a button. also disable gravity
         if (grounded && Input.GetAxis("Horizontal") == 0)
         {
+            print("t");
             rigid.velocity = new Vector3(0, rigid.velocity.y);
             rigid.useGravity = false;
         }

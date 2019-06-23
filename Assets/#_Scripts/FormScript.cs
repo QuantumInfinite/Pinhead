@@ -100,10 +100,6 @@ public class FormScript : MonoBehaviour
     public bool hasHatClaydough;
 
 
-    [DllImport("user32.dll")]
-    static extern bool SetCursorPos(int X, int Y);
-
-
     private void Start() {
         pinList = new List<GameObject>();
         torsoRotation = UpperTorso.transform.localEulerAngles;
@@ -163,9 +159,10 @@ public class FormScript : MonoBehaviour
         }
         else //Do stuff while ability is not active
         {
-            PinsInHead();
+            //PinsInHead();
             if (Input.GetKeyDown("f")) {
                 RecallPins();
+                PinsInHead();
             }
         }
         if (drawLine) {
@@ -191,6 +188,7 @@ public class FormScript : MonoBehaviour
                 aSource.clip = pinPickupSound;
                 aSource.Play();
             }
+            PinsInHead();
         }
     }
     void DeactivateAbility() {
@@ -201,7 +199,6 @@ public class FormScript : MonoBehaviour
                     virtualInput.EnableCursor(false);
                     RaycastHit hit = FireRay();
                     if ((hit.transform.tag == "SidePin" || hit.transform.tag == "BackPin" || hit.transform.tag == "Destroyable") && hit.distance <= range) {
-                        pinCount--;
                         ThrowAt(pinInstance, FireRay(), pinThrowTime);
 
                         //Remove Control of this pin
@@ -213,12 +210,15 @@ public class FormScript : MonoBehaviour
                         //Change sound
                         clip = pinThrowSound;
                     }
-                    else {
+                    else
+                    {
+                        pinCount++;
                         Destroy(pinInstance);
                         animator.SetTrigger("Idle");
                     }
+                    PinsInHead();
                     UpperTorso.transform.localEulerAngles = torsoRotation;
-                    playerMove.enabled = true;
+                    playerMove.horizontalMovementAllowed = true;
                     Cursor.visible = false;
                     break;
                 case Form.Yarn:
@@ -275,6 +275,7 @@ public class FormScript : MonoBehaviour
             case Form.Pin:
                 if (pinCount > 0) {//Entering Pin form
                                    //Set active
+                    pinCount--;
                     virtualInput.EnableCursor(true);
                     abilityIsActive = true;
 
@@ -286,7 +287,7 @@ public class FormScript : MonoBehaviour
                     pinInstance.transform.parent = pinSpawnMarker;
 
                     //Lock character
-                    playerMove.enabled = false;
+                    playerMove.horizontalMovementAllowed = false;
                     //rigid.velocity = Vector3.zero;
 
                     //Show curser DEPRICATED AS NO LONGER WORKS
@@ -309,6 +310,7 @@ public class FormScript : MonoBehaviour
                     aSource.clip = pinEmptySound;
                     aSource.Play();
                 }
+                PinsInHead();
                 break;
             case Form.Yarn:
 
