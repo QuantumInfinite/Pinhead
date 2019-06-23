@@ -20,6 +20,7 @@ public class VirtualInputModule : MonoBehaviour
     }
     void Update()
     {
+        /*
         if (PointOnScreen(Input.mousePosition) && pMousePos != Input.mousePosition)
         {
             Vector3 movement = Input.mousePosition - pMousePos;
@@ -28,9 +29,14 @@ public class VirtualInputModule : MonoBehaviour
             cursorImage.SetPositionAndRotation(vMousePos, Quaternion.identity);
             pMousePos = Input.mousePosition;
         }
-        //vMousePos.x = Mathf.Clamp(pMousePos.x + vOffset.x, 0, Screen.width);
-        //vMousePos.y = Mathf.Clamp(pMousePos.y + vOffset.y, 0, Screen.height);
-
+        vMousePos.x = Mathf.Clamp(pMousePos.x + vOffset.x, 0, Screen.width);
+        vMousePos.y = Mathf.Clamp(pMousePos.y + vOffset.y, 0, Screen.height);
+        */
+        vMousePos.x += Input.GetAxis("RStickX") * Time.deltaTime * 1000;
+        vMousePos.y += Input.GetAxis("RStickY") * Time.deltaTime * 1000;
+        vMousePos.x = Mathf.Clamp(vMousePos.x, 0, Screen.width);
+        vMousePos.y = Mathf.Clamp(vMousePos.y, 0, Screen.height);
+        cursorImage.SetPositionAndRotation(vMousePos, Quaternion.identity);
 
         //
     }

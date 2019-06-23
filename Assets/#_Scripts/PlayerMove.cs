@@ -129,8 +129,8 @@ public class PlayerMove : MonoBehaviour
 	//apply correct player movement (fixedUpdate for physics calculations)
 	void FixedUpdate() 
 	{
-		//are we grounded
-		grounded = IsGrounded ();
+        //are we grounded
+        grounded = IsGrounded ();
         
 		//move, rotate, manage speed
 		characterMotor.MoveTo (moveDirection, curAccel, 0.7f, true);
@@ -161,7 +161,6 @@ public class PlayerMove : MonoBehaviour
         //Make player come to a hard stop when grounded and not pressing a button. also disable gravity
         if (grounded && Input.GetAxis("Horizontal") == 0)
         {
-            print("t");
             rigid.velocity = new Vector3(0, rigid.velocity.y);
             rigid.useGravity = false;
         }

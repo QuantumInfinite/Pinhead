@@ -47,9 +47,10 @@ public class FormScript : MonoBehaviour
     public float swingingAirDecel;
     public GameObject yarnSpawnMarker;
     public GameObject[] HeadPins;
-    public int regularWeight;
-    public int heavyWeight;
-    public int heavySpeedDivider;
+    private float regularWeight;
+    public float heavyWeight;
+    public float heavySpeed;
+    private float regularSpeed;
     public Material[] materials;
     public List<GameObject> pinList; //list of all pins
     [HideInInspector]
@@ -75,6 +76,15 @@ public class FormScript : MonoBehaviour
     PlayerMove playerMove;
 
     private VirtualInputModule virtualInput;
+
+    public enum DPadDirection
+    {
+        None,
+        Up,
+        Down,
+        Left,
+        Right
+    }
 
     public enum Form
     {
@@ -114,21 +124,30 @@ public class FormScript : MonoBehaviour
         rebutiaRollForm.SetActive(false);
         PinsInHead();
         bgAudio = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<backgroundAudioMixer>();
-        pinheadHat.SetActive(false);
-        rebutiaHat.SetActive(false);
-        spindleHat.SetActive(false);
-        claydoughHat.SetActive(false);
+        if (pinheadHat) pinheadHat.SetActive(false);
+        if (rebutiaHat) rebutiaHat.SetActive(false);
+        if (spindleHat) spindleHat.SetActive(false);
+        if (claydoughHat) claydoughHat.SetActive(false);
         playerMove = GetComponent<PlayerMove>();
         rigid = playerRoot.GetComponent<Rigidbody>();
         virtualInput = UIManagaer.GetComponent<VirtualInputModule>();
+        regularWeight = rigid.mass;
+        regularSpeed = playerMove.maxSpeed;
     }
 
     void Update() {
+        //Change forms
+        DPadDirection dPadInput = GetDPad();
+        if (dPadInput != DPadDirection.None)
+        {
+            ChangeForm(dPadInput);
+        }
 
-        if (Input.GetMouseButtonDown(0) && !UIManagaer.GetComponent<PauseMenu>().IsPaused) {
+
+        if (Input.GetButtonDown("Fire") && !UIManagaer.GetComponent<PauseMenu>().IsPaused) {
             ActivateAbility();
         }
-        if (Input.GetMouseButtonUp(0) && !UIManagaer.GetComponent<PauseMenu>().IsPaused) {
+        if (Input.GetButtonUp("Fire") && !UIManagaer.GetComponent<PauseMenu>().IsPaused) {
             DeactivateAbility();
         }
         if (abilityIsActive) { //DoingStuff while active
@@ -160,7 +179,7 @@ public class FormScript : MonoBehaviour
         else //Do stuff while ability is not active
         {
             //PinsInHead();
-            if (Input.GetKeyDown("f")) {
+            if (Input.GetButtonDown("Recall")) {
                 RecallPins();
                 PinsInHead();
             }
@@ -196,7 +215,7 @@ public class FormScript : MonoBehaviour
             AudioClip clip = null;
             switch (currentForm) {
                 case Form.Pin:
-                    virtualInput.EnableCursor(false);
+                    //virtualInput.EnableCursor(false);
                     RaycastHit hit = FireRay();
                     if ((hit.transform.tag == "SidePin" || hit.transform.tag == "BackPin" || hit.transform.tag == "Destroyable") && hit.distance <= range) {
                         ThrowAt(pinInstance, FireRay(), pinThrowTime);
@@ -249,9 +268,6 @@ public class FormScript : MonoBehaviour
                     break;
                 case Form.Heavy:
                     materialRenderer.material.color = clayNormalColor;
-                    rigid.mass = regularWeight;
-                    playerMove.maxSpeed *= heavySpeedDivider;
-                    animator.speed *= (heavySpeedDivider / 1.5f);
                     break;
             }
             //play sound
@@ -276,7 +292,7 @@ public class FormScript : MonoBehaviour
                 if (pinCount > 0) {//Entering Pin form
                                    //Set active
                     pinCount--;
-                    virtualInput.EnableCursor(true);
+                    //virtualInput.EnableCursor(true);
                     abilityIsActive = true;
 
                     //Set animation
@@ -351,9 +367,6 @@ public class FormScript : MonoBehaviour
                 //Set active
 
                 abilityIsActive = true;
-                rigid.mass = heavyWeight;
-                playerMove.maxSpeed /= heavySpeedDivider;
-                animator.speed /= (heavySpeedDivider / 1.5f);
                 materialRenderer.material.color = clayHeavyColor;
                 break;
         }
@@ -362,6 +375,31 @@ public class FormScript : MonoBehaviour
             aSource.clip = clip;
             aSource.Play();
         }
+    }
+
+    public void ChangeForm(DPadDirection dir)
+    {
+        Form newForm = Form.Regular;
+        switch (dir)
+        {
+            case DPadDirection.None:
+                return;
+            case DPadDirection.Up:
+                newForm = Form.Yarn;
+                break;
+            case DPadDirection.Down:
+                newForm = Form.Heavy;
+                break;
+            case DPadDirection.Left:
+                newForm = Form.Pin;
+                break;
+            case DPadDirection.Right:
+                newForm = Form.Roll;
+                break;
+            default:
+                break;
+        }
+        ChangeForm(newForm);
     }
 
     public void ChangeForm(Form switchTo) {
@@ -376,7 +414,12 @@ public class FormScript : MonoBehaviour
             aSource.clip = formChangeSound;
             aSource.Play();
         }
-
+        if (currentForm == Form.Heavy)
+        {
+            rigid.mass = regularWeight;
+            animator.speed = 0.75f;
+            playerMove.maxSpeed = regularSpeed;
+        }
         SetHat(switchTo);
 
         switch (switchTo) {
@@ -406,6 +449,9 @@ public class FormScript : MonoBehaviour
                 currentForm = Form.Heavy;
                 //change material
                 materialRenderer.material = materials[3];
+                rigid.mass = heavyWeight;
+                animator.speed = 0.75f;
+                playerMove.maxSpeed = heavySpeed;
                 break;
         }
         bgAudio.SetTrack(currentForm);
@@ -556,5 +602,24 @@ public class FormScript : MonoBehaviour
             Pin.GetComponent<PinScript>().SetColiders(true);
         }
 
+    }
+    public DPadDirection GetDPad()
+    {
+        float hAxis = Input.GetAxis("DPadX");
+        float vAxis = Input.GetAxis("DPadY");
+        if (hAxis + vAxis != 0)
+        {
+            float hStrength = Mathf.Abs(hAxis);
+            float vStrength = Mathf.Abs(vAxis);
+            if (hStrength > vStrength)
+            {
+                return (hAxis < 0) ? DPadDirection.Left : DPadDirection.Right;
+            }
+            else if (hStrength < vStrength)
+            {
+                return (vAxis < 0) ? DPadDirection.Down : DPadDirection.Up;
+            }
+        }
+        return DPadDirection.None;
     }
 }

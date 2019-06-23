@@ -10388,6 +10388,15 @@ PrefabInstance:
       propertyPath: mainCam
       value: 
       objectReference: {fileID: 268904523}
+    - target: {fileID: 11400000, guid: 11a0fc37ad0fcd84ea652130b8070601, type: 3}
+      propertyPath: maxSpeed
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 114349670866637554, guid: 11a0fc37ad0fcd84ea652130b8070601,
+        type: 3}
+      propertyPath: heavySpeed
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 11a0fc37ad0fcd84ea652130b8070601, type: 3}
 --- !u!1 &204421880
@@ -112855,7 +112864,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &620442258063074613
 RectTransform:
   m_ObjectHideFlags: 0

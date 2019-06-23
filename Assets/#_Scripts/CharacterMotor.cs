@@ -95,7 +95,10 @@ public class CharacterMotor : MonoBehaviour
 		{
 			rigid.AddForce ((currentSpeed * -1) * deceleration * Time.deltaTime, ForceMode.VelocityChange);
 			if (rigid.velocity.magnitude > maxSpeed)
-				rigid.AddForce ((currentSpeed * -1) * deceleration * Time.deltaTime, ForceMode.VelocityChange);
+            {
+                rigid.AddForce ((currentSpeed * -1) * deceleration * Time.deltaTime, ForceMode.VelocityChange);
+            }
+				
 		}
 	}
 }
