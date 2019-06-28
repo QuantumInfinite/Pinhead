@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Runtime.InteropServices;
+using UnityEngine.Experimental.VFX;
 /*
  * Author: Kyle Jones
  * 
@@ -18,7 +19,9 @@ public class FormScript : MonoBehaviour
     public GameObject baseModel; //For changing forms
     public GameObject rebutiaRollForm;// For rolling
     public GameObject UpperTorso;
-    public ParticleSystem formChangeParticles;
+    //public ParticleSystem formChangeParticles;
+    public VisualEffect characterSwap;
+    public VFXEventAttribute idk;
     public AcquirePinEffect pinEffectShader;
 
     public GameObject pin; //Pin to throw
@@ -133,6 +136,7 @@ public class FormScript : MonoBehaviour
         virtualInput = UIManagaer.GetComponent<VirtualInputModule>();
         regularWeight = rigid.mass;
         regularSpeed = playerMove.maxSpeed;
+        //characterSwap = GetComponent<VisualEffect>();
     }
 
     void Update() {
@@ -195,7 +199,7 @@ public class FormScript : MonoBehaviour
     private void OnTriggerEnter(Collider other) {
         if (other.tag == "PinPickup") {
             pinCount++;
-          //  StartCoroutine(pinEffectShader.StartFresnel());
+            //  StartCoroutine(pinEffectShader.StartFresnel());
             other.gameObject.SetActive(false);
 
             if (pinPickupEffect) {
@@ -314,7 +318,7 @@ public class FormScript : MonoBehaviour
                     if (virtualInput != null)
                     {
                         //virtualInput.Center();
-                       // virtualInput.SetVirtualOffset(new Vector3(Screen.width / 3, 0));
+                        // virtualInput.SetVirtualOffset(new Vector3(Screen.width / 3, 0));
                     }
 
                     //change sound
@@ -402,12 +406,18 @@ public class FormScript : MonoBehaviour
         ChangeForm(newForm);
     }
 
+
     public void ChangeForm(Form switchTo) {
         if (switchTo == currentForm || abilityIsActive) {
             return;
         }
-        if (formChangeParticles) {
-            ParticleSystem.Instantiate(formChangeParticles, transform.position, transform.rotation);
+        //  if (formChangeParticles) {
+        //     ParticleSystem.Instantiate(formChangeParticles, transform.position, transform.rotation);
+        //  }
+        if (characterSwap)
+        {
+          //  characterSwap.enabled = true;
+            characterSwap.Play();
         }
         if (formChangeSound) {
             aSource.volume = 1;
@@ -428,6 +438,7 @@ public class FormScript : MonoBehaviour
                 //PinsInHead();
                 //Change form
                 currentForm = Form.Pin;
+                characterSwap.SendEvent("toPinhead");
                 //change material
                 materialRenderer.material = materials[0];
                 break;
@@ -437,18 +448,21 @@ public class FormScript : MonoBehaviour
                 currentForm = Form.Yarn;
                 //change material
                 materialRenderer.material = materials[1];
+                characterSwap.SendEvent("toSpindle");
                 break;
             case Form.Roll:
                 //Change form
                 currentForm = Form.Roll;
                 //change material
                 materialRenderer.material = materials[2];
+                characterSwap.SendEvent("toRebutia");
                 break;
             case Form.Heavy:
                 //Change form
                 currentForm = Form.Heavy;
                 //change material
                 materialRenderer.material = materials[3];
+                characterSwap.SendEvent("toClaydoh");
                 rigid.mass = heavyWeight;
                 animator.speed = 0.75f;
                 playerMove.maxSpeed = heavySpeed;
