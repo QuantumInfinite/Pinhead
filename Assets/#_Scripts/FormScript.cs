@@ -416,8 +416,8 @@ public class FormScript : MonoBehaviour
         //  }
         if (characterSwap)
         {
-          //  characterSwap.enabled = true;
-            characterSwap.Play();
+            //  characterSwap.enabled = true;
+            characterSwap.SendEvent("OnPlay");
         }
         if (formChangeSound) {
             aSource.volume = 1;

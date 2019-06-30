@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &735073799
 RectTransform:
   m_ObjectHideFlags: 0
@@ -335,7 +335,7 @@ GameObject:
   - component: {fileID: 620442257210266658}
   - component: {fileID: 620442257210266685}
   - component: {fileID: 620442257210266657}
-  - component: {fileID: 1445364902}
+  - component: {fileID: 2435522605895144757}
   m_Layer: 5
   m_Name: Canvas - UI
   m_TagString: UI
@@ -446,7 +446,7 @@ MonoBehaviour:
   - {fileID: 620442258751892482}
   - {fileID: 620442257603560828}
   - {fileID: 620442257238331813}
---- !u!114 &1445364902
+--- !u!114 &2435522605895144757
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -455,7 +455,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 620442257210266684}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ae272f3c7bd82e488582bcfc9a4a78f, type: 3}
+  m_Script: {fileID: 11500000, guid: 3b1b9daa1fa0c4c4fabefaeb0266aafc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   cursorImage: {fileID: 735073799}
