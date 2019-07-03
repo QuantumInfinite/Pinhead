@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Experimental.VFX;
 /*
  * Author: Kyle Jones
  * 
@@ -34,7 +35,7 @@ public class PinScript : MonoBehaviour {
     public Vector3 CurrentLerpValue;
     Vector3 finish;
     Vector3 start;
-
+    public VisualEffect pinImpact;
     public AudioClip pinStickSound;
     public AudioClip pinImpactSound;
     AudioSource aSource;
@@ -63,13 +64,17 @@ public class PinScript : MonoBehaviour {
             pivotPoint.GetComponent<Rigidbody>().angularDrag = 0;
 
             currentPinMode = PinMode.back;
-
+            if (pinImpact)
+            {
+                pinImpact.SendEvent("PinImpact");
+            }
             //play sound
             if (pinStickSound)
             {
                 aSource.volume = 0.25f;
                 aSource.clip = pinStickSound;
                 aSource.Play();
+
             }
         }
         else if (collision.gameObject.tag == "SidePin")

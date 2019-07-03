@@ -21,7 +21,6 @@ public class FormScript : MonoBehaviour
     public GameObject UpperTorso;
     //public ParticleSystem formChangeParticles;
     public VisualEffect characterSwap;
-    public VFXEventAttribute idk;
     public AcquirePinEffect pinEffectShader;
 
     public GameObject pin; //Pin to throw
@@ -417,7 +416,7 @@ public class FormScript : MonoBehaviour
         if (characterSwap)
         {
             //  characterSwap.enabled = true;
-            characterSwap.SendEvent("OnPlay");
+            characterSwap.SendEvent("PlaySparkles");
         }
         if (formChangeSound) {
             aSource.volume = 1;
@@ -599,6 +598,8 @@ public class FormScript : MonoBehaviour
         //Apply the velocity
         Pin.GetComponent<Rigidbody>().velocity = new Vector3(xVol, yVol, zVol);
         Pin.GetComponent<Rigidbody>().useGravity = true;
+
+
 
         if (Target.transform.tag == "BackPin")//Noramlize to Z
         {
