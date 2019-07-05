@@ -84,6 +84,10 @@ public class PinScript : MonoBehaviour {
             //Destroy this rigidbody to stop falling
             Destroy(GetComponent<Rigidbody>());
             currentPinMode = PinMode.side;
+            if (pinImpact)
+            {
+                pinImpact.SendEvent("PinImpact");
+            }
 
             if (pinStickSound)
             {
@@ -95,6 +99,10 @@ public class PinScript : MonoBehaviour {
         else if (collision.gameObject.tag == "Destroyable")
         {
             SetColiders(true);
+            if (pinImpact)
+            {
+                pinImpact.SendEvent("PinImpact");
+            }
             if (pinImpactSound)
             {
                 aSource.volume = 1;

@@ -19,7 +19,7 @@ MonoBehaviour:
   uiBounds:
     serializedVersion: 2
     x: 128
-    y: -911
+    y: -908
     width: 773
     height: 2758
 --- !u!114 &114350483966674976
@@ -178,9 +178,9 @@ VisualEffectResource:
       seed, float Speed, float DirectionBlend) /*composition:Add speedMode:Constant
       */\n{\n    float3 randomDirection = normalize(RAND3 * 2.0f - 1.0f);\n    float
       speed = Speed;\n    direction = VFXSafeNormalize(lerp(direction, randomDirection,
-      DirectionBlend));\n    velocity += direction * speed;\n}\nvoid PositionSphere_0(inout
+      DirectionBlend));\n    velocity += direction * speed;\n}\nvoid PositionSphere_18D(inout
       float3 position, inout uint seed, inout float3 direction, float3 ArcSphere_sphere_center,
-      float ArcSphere_sphere_radius, float ArcSphere_arc, float volumeFactor) /*positionMode:Surface
+      float ArcSphere_sphere_radius, float ArcSphere_arc, float volumeFactor) /*positionMode:Volume
       spawnMode:Randomized */\n{\n    float cosPhi = 2.0f * RAND - 1.0f;float theta
       = ArcSphere_arc * RAND;\n    float rNorm = pow(volumeFactor + (1 - volumeFactor)
       * RAND, 1.0f / 3.0f);\n    \n    float2 sincosTheta;\n    sincos(theta, sincosTheta.x,
@@ -213,8 +213,8 @@ VisualEffectResource:
       \       \n        {\n            SetAttribute_F01429A3( /*inout */lifetime,
       \ /*inout */seed, (float)1, (float)1);\n        }\n        {\n            VelocityRandomize_18D(
       /*inout */velocity,  /*inout */direction,  /*inout */seed, Speed_b, (float)1);\n
-      \       }\n        {\n            PositionSphere_0( /*inout */position,  /*inout
-      */seed,  /*inout */direction, float3(0,0,0), (float)0.19, (float)6.283185, (float)1);\n
+      \       }\n        {\n            PositionSphere_18D( /*inout */position,  /*inout
+      */seed,  /*inout */direction, float3(0,0,0), (float)0.19, (float)6.283185, (float)0);\n
       \       }\n        \n\n\n#if VFX_USE_ALIVE_CURRENT\n        if (alive)\n        {\n\t\t\tuint
       deadIndex = deadListIn.DecrementCounter();\n            uint index = deadListIn[deadIndex];\n
       \           attributeBuffer.Store((index * 0x1 + 0x0) << 2,asuint(lifetime));\n
@@ -609,16 +609,16 @@ VisualEffectResource:
               time: 0.56250304
               value: 0.07028301
               inSlope: 0
-              outSlope: -0.21552
+              outSlope: -0.09323564
               tangentMode: 69
               weightedMode: 0
               inWeight: 0
               outWeight: 0
             - serializedVersion: 3
-              time: 1.0291748
-              value: -0.030294083
-              inSlope: -0.21552
-              outSlope: -0.21552
+              time: 0.9833374
+              value: 0.031046249
+              inSlope: -0.09323564
+              outSlope: -0.09323564
               tangentMode: 34
               weightedMode: 0
               inWeight: 0
@@ -1398,7 +1398,7 @@ MonoBehaviour:
   m_UICollapsed: 0
   m_UISuperCollapsed: 0
   m_InputSlots:
-  - {fileID: 8926484042661614621}
+  - {fileID: 8926484042661614647}
   - {fileID: 8926484042661614546}
   m_OutputSlots: []
   m_Disabled: 0
@@ -1472,7 +1472,7 @@ MonoBehaviour:
   - {fileID: 8926484042661614548}
   m_OutputSlots: []
   m_Disabled: 0
-  positionMode: 0
+  positionMode: 1
   spawnMode: 0
 --- !u!114 &8926484042661614548
 MonoBehaviour:
@@ -2014,7 +2014,7 @@ MonoBehaviour:
   m_Parent: {fileID: 114350483966674976}
   m_Children:
   - {fileID: 8926484042661614617}
-  m_UIPosition: {x: 525, y: 594}
+  m_UIPosition: {x: 525, y: 739}
   m_UICollapsed: 0
   m_UISuperCollapsed: 0
   m_InputSlots: []
@@ -2338,7 +2338,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEngine.AnimationCurve, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: '{"frames":[{"time":0.0,"value":0.0,"inTangent":0.5111491084098816,"outTangent":0.5111491084098816,"tangentMode":0,"leftTangentMode":1,"rightTangentMode":1,"broken":false},{"time":0.13750001788139344,"value":0.07028301060199738,"inTangent":0.5111491084098816,"outTangent":0.0,"tangentMode":0,"leftTangentMode":2,"rightTangentMode":2,"broken":true},{"time":0.5625030398368836,"value":0.07028301060199738,"inTangent":0.0,"outTangent":-0.2155199944972992,"tangentMode":0,"leftTangentMode":2,"rightTangentMode":2,"broken":true},{"time":1.0291748046875,"value":-0.030294083058834077,"inTangent":-0.2155199944972992,"outTangent":-0.2155199944972992,"tangentMode":0,"leftTangentMode":1,"rightTangentMode":1,"broken":false}],"preWrapMode":8,"postWrapMode":8,"version":1}'
+      m_SerializableObject: '{"frames":[{"time":0.0,"value":0.0,"inTangent":0.5111491084098816,"outTangent":0.5111491084098816,"tangentMode":0,"leftTangentMode":1,"rightTangentMode":1,"broken":false},{"time":0.13750001788139344,"value":0.07028301060199738,"inTangent":0.5111491084098816,"outTangent":0.0,"tangentMode":0,"leftTangentMode":2,"rightTangentMode":2,"broken":true},{"time":0.5625030398368836,"value":0.07028301060199738,"inTangent":0.0,"outTangent":-0.09323564171791077,"tangentMode":0,"leftTangentMode":2,"rightTangentMode":2,"broken":true},{"time":0.98333740234375,"value":0.031046248972415925,"inTangent":-0.09323564171791077,"outTangent":-0.09323564171791077,"tangentMode":0,"leftTangentMode":1,"rightTangentMode":1,"broken":false}],"preWrapMode":8,"postWrapMode":8,"version":1}'
     m_Space: 2147483647
   m_Property:
     name: Scale
@@ -2362,7 +2362,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Parent: {fileID: 114350483966674976}
   m_Children: []
-  m_UIPosition: {x: 446.67725, y: -910.60846}
+  m_UIPosition: {x: 447, y: -908}
   m_UICollapsed: 0
   m_UISuperCollapsed: 0
   m_InputSlots: []
@@ -2858,47 +2858,6 @@ MonoBehaviour:
   m_Direction: 1
   m_LinkedSlots:
   - {fileID: 8926484042661614618}
---- !u!114 &8926484042661614621
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Parent: {fileID: 0}
-  m_Children: []
-  m_UIPosition: {x: 0, y: 0}
-  m_UICollapsed: 1
-  m_UISuperCollapsed: 0
-  m_MasterSlot: {fileID: 8926484042661614621}
-  m_MasterData:
-    m_Owner: {fileID: 8926484042661614544}
-    m_Value:
-      m_Type:
-        m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-          PublicKeyToken=b77a5c561934e089
-      m_SerializableObject: 10
-    m_Space: 2147483647
-  m_Property:
-    name: Speed
-    m_serializedType:
-      m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-        PublicKeyToken=b77a5c561934e089
-    attributes:
-    - m_Type: 3
-      m_Min: -Infinity
-      m_Max: Infinity
-      m_Tooltip: The speed to compute for the particles, in the new direction.
-      m_Regex: 
-      m_RegexMaxLength: 0
-  m_Direction: 0
-  m_LinkedSlots:
-  - {fileID: 8926484042661614635}
 --- !u!114 &8926484042661614628
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3016,7 +2975,7 @@ MonoBehaviour:
   - m_Id: 0
     linkedSlots:
     - outputSlot: {fileID: 8926484042661614635}
-      inputSlot: {fileID: 8926484042661614621}
+      inputSlot: {fileID: 8926484042661614647}
     position: {x: 127.94237, y: -15.4373865}
     expandedSlots: []
     expanded: 0
@@ -3054,4 +3013,45 @@ MonoBehaviour:
     attributes: []
   m_Direction: 1
   m_LinkedSlots:
-  - {fileID: 8926484042661614621}
+  - {fileID: 8926484042661614647}
+--- !u!114 &8926484042661614647
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Parent: {fileID: 0}
+  m_Children: []
+  m_UIPosition: {x: 0, y: 0}
+  m_UICollapsed: 1
+  m_UISuperCollapsed: 0
+  m_MasterSlot: {fileID: 8926484042661614647}
+  m_MasterData:
+    m_Owner: {fileID: 8926484042661614544}
+    m_Value:
+      m_Type:
+        m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089
+      m_SerializableObject: 10
+    m_Space: 2147483647
+  m_Property:
+    name: Speed
+    m_serializedType:
+      m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+    attributes:
+    - m_Type: 3
+      m_Min: -Infinity
+      m_Max: Infinity
+      m_Tooltip: The speed to compute for the particles, in the new direction.
+      m_Regex: 
+      m_RegexMaxLength: 0
+  m_Direction: 0
+  m_LinkedSlots:
+  - {fileID: 8926484042661614635}

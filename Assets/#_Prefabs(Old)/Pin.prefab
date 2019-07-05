@@ -46,19 +46,19 @@ VisualEffect:
   m_PropertySheet:
     m_Float:
       m_Array:
-      - m_Value: 10
+      - m_Value: 15.1
         m_Name: Impact Particle Size
         m_Overridden: 1
-      - m_Value: 7
+      - m_Value: 11.27
         m_Name: Drag Coefficient
         m_Overridden: 1
       - m_Value: 12
         m_Name: Impact Particle Count
         m_Overridden: 1
-      - m_Value: 0.0163
+      - m_Value: 0.016
         m_Name: Scale {X}
         m_Overridden: 1
-      - m_Value: 12
+      - m_Value: 20
         m_Name: Velocity Speed
         m_Overridden: 1
     m_Vector2f:
@@ -110,7 +110,7 @@ VisualEffect:
         m_Overridden: 1
     m_NamedObject:
       m_Array:
-      - m_Value: {fileID: 2800000, guid: 4145b00d062efdc4790fc0c9fa1e41cc, type: 3}
+      - m_Value: {fileID: 2800000, guid: 0329dccc656089f489b9cff83cdafa25, type: 3}
         m_Name: Impact Texture
         m_Overridden: 1
     m_Bool:
