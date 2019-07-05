@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Experimental.VFX;
 /*
@@ -11,7 +10,8 @@ using UnityEngine.Experimental.VFX;
  * 
  * 
  */
-public class PinScript : MonoBehaviour {
+public class PinScript : MonoBehaviour
+{
     public GameObject pivotPoint;
     public enum PinMode
     {
@@ -40,12 +40,14 @@ public class PinScript : MonoBehaviour {
     public AudioClip pinImpactSound;
     AudioSource aSource;
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         aSource = GetComponent<AudioSource>();
         SetColiders(false);
     }
-	// Update is called once per frame
-	void Update () {
+    // Update is called once per frame
+    void Update()
+    {
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -125,7 +127,8 @@ public class PinScript : MonoBehaviour {
         }
     }
 
-    public void NormalizeZ() {
+    public void NormalizeZ()
+    {
         finish = new Vector3(0, 0, 0);
         StartCoroutine(RotateToRotation(transform, finish, RotationTime));
     }

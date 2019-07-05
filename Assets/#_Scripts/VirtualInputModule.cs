@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class VirtualInputModule : MonoBehaviour
 {
@@ -24,8 +22,8 @@ public class VirtualInputModule : MonoBehaviour
     }
     void Update()
     {
-        
-        
+
+
 
         if (useController)
         {
@@ -37,7 +35,8 @@ public class VirtualInputModule : MonoBehaviour
         }
         else
         {
-            if (PointOnScreen(Input.mousePosition) && pMousePos != Input.mousePosition) {
+            if (PointOnScreen(Input.mousePosition) && pMousePos != Input.mousePosition)
+            {
                 Vector3 movement = Input.mousePosition - pMousePos;
                 vMousePos.x += movement.x;
                 vMousePos.y += movement.y;
@@ -45,7 +44,7 @@ public class VirtualInputModule : MonoBehaviour
             }
         }
 
-        
+
 
 
         cursorImage.SetPositionAndRotation(vMousePos, Quaternion.identity);

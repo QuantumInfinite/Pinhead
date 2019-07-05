@@ -1,8 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class backgroundAudioMixer : MonoBehaviour {
+public class backgroundAudioMixer : MonoBehaviour
+{
 
     public AudioSource pinheadTheme;
     public AudioSource spindleTheme;
@@ -20,9 +19,10 @@ public class backgroundAudioMixer : MonoBehaviour {
 
     }
     // Update is called once per frame
-    void Update () {
-		
-	}
+    void Update()
+    {
+
+    }
     public void SetTrack(FormScript.Form form)
     {
         currentSource.volume = 0f;

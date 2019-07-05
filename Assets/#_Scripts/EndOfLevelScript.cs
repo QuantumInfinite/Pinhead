@@ -1,9 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class EndOfLevelScript : MonoBehaviour {
+public class EndOfLevelScript : MonoBehaviour
+{
     public float delay;
     public string endSceneName;
     private void OnCollisionEnter(Collision collision)

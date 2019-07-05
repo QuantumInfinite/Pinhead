@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Runtime.InteropServices;
 using UnityEngine.Experimental.VFX;
 /*
  * Author: Kyle Jones
@@ -113,12 +111,14 @@ public class FormScript : MonoBehaviour
     public bool hasHatClaydough;
 
 
-    private void Start() {
+    private void Start()
+    {
         pinList = new List<GameObject>();
         torsoRotation = UpperTorso.transform.localEulerAngles;
         aSource = GetComponent<AudioSource>();
         UIManagaer = GameObject.FindGameObjectWithTag("UI");
-        if (enableAllForms && UIManagaer) {
+        if (enableAllForms && UIManagaer)
+        {
             UIManagaer.GetComponent<PauseMenu>().EnableForm(Form.Heavy);
             UIManagaer.GetComponent<PauseMenu>().EnableForm(Form.Yarn);
             UIManagaer.GetComponent<PauseMenu>().EnableForm(Form.Pin);
@@ -140,7 +140,8 @@ public class FormScript : MonoBehaviour
     }
 
     private bool test = false;
-    void Update() {
+    void Update()
+    {
         //Change forms
         DPadDirection dPadInput = GetDPad();
         if (dPadInput != DPadDirection.None)
@@ -149,14 +150,18 @@ public class FormScript : MonoBehaviour
         }
 
 
-        if (Input.GetButtonDown("Fire") && !UIManagaer.GetComponent<PauseMenu>().IsPaused) {
+        if (Input.GetButtonDown("Fire") && !UIManagaer.GetComponent<PauseMenu>().IsPaused)
+        {
             ActivateAbility();
         }
-        if (Input.GetButtonUp("Fire") && !UIManagaer.GetComponent<PauseMenu>().IsPaused) {
+        if (Input.GetButtonUp("Fire") && !UIManagaer.GetComponent<PauseMenu>().IsPaused)
+        {
             DeactivateAbility();
         }
-        if (abilityIsActive) { //DoingStuff while active
-            switch (currentForm) {
+        if (abilityIsActive)
+        { //DoingStuff while active
+            switch (currentForm)
+            {
                 case Form.Pin:
                     //Raycast and aim
 
@@ -184,12 +189,14 @@ public class FormScript : MonoBehaviour
         else //Do stuff while ability is not active
         {
             //PinsInHead();
-            if (Input.GetButtonDown("Recall")) {
+            if (Input.GetButtonDown("Recall"))
+            {
                 RecallPins();
                 PinsInHead();
             }
         }
-        if (drawLine) {
+        if (drawLine)
+        {
             //Draw Line
             Vector3[] positions = { yarnSpawnMarker.transform.position, pivot.transform.position };
             GetComponent<LineRenderer>().SetPositions(positions);
@@ -197,17 +204,21 @@ public class FormScript : MonoBehaviour
     }
 
     //Collisions
-    private void OnTriggerEnter(Collider other) {
-        if (other.tag == "PinPickup") {
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "PinPickup")
+        {
             pinCount++;
             //  StartCoroutine(pinEffectShader.StartFresnel());
             other.gameObject.SetActive(false);
 
-            if (pinPickupEffect) {
+            if (pinPickupEffect)
+            {
                 ParticleSystem.Instantiate(pinPickupEffect, transform.position + new Vector3(0, 3, 0), transform.rotation);
             }
 
-            if (pinPickupSound) {
+            if (pinPickupSound)
+            {
                 aSource.volume = 1;
                 aSource.clip = pinPickupSound;
                 aSource.Play();
@@ -215,14 +226,18 @@ public class FormScript : MonoBehaviour
             PinsInHead();
         }
     }
-    void DeactivateAbility() {
-        if (abilityIsActive) {
+    void DeactivateAbility()
+    {
+        if (abilityIsActive)
+        {
             AudioClip clip = null;
-            switch (currentForm) {
+            switch (currentForm)
+            {
                 case Form.Pin:
                     //virtualInput.EnableCursor(false);
                     RaycastHit hit = FireRay();
-                    if ((hit.transform.tag == "SidePin" || hit.transform.tag == "BackPin" || hit.transform.tag == "Destroyable") && hit.distance <= range) {
+                    if ((hit.transform.tag == "SidePin" || hit.transform.tag == "BackPin" || hit.transform.tag == "Destroyable") && hit.distance <= range)
+                    {
                         ThrowAt(pinInstance, FireRay(), pinThrowTime);
 
                         //Remove Control of this pin
@@ -266,7 +281,8 @@ public class FormScript : MonoBehaviour
                     baseModel.SetActive(true);
                     //mainColider.enabled = true;
                     //rebutiaColider.enabled = false;
-                    if (hasHatRebutia) {
+                    if (hasHatRebutia)
+                    {
                         rebutiaRollingHat.SetActive(false);
                         rebutiaHat.SetActive(true);
                     }
@@ -276,7 +292,8 @@ public class FormScript : MonoBehaviour
                     break;
             }
             //play sound
-            if (clip) {
+            if (clip)
+            {
                 aSource.volume = 1;
                 aSource.clip = clip;
                 aSource.Play();
@@ -287,15 +304,19 @@ public class FormScript : MonoBehaviour
 
     }
 
-    void ActivateAbility() {
-        if (abilityIsActive) {
+    void ActivateAbility()
+    {
+        if (abilityIsActive)
+        {
             return;
         }
         AudioClip clip = null;
-        switch (currentForm) {
+        switch (currentForm)
+        {
             case Form.Pin:
-                if (pinCount > 0) {//Entering Pin form
-                                   //Set active
+                if (pinCount > 0)
+                {//Entering Pin form
+                 //Set active
                     pinCount--;
                     //virtualInput.EnableCursor(true);
                     abilityIsActive = true;
@@ -326,7 +347,8 @@ public class FormScript : MonoBehaviour
                     aSource.volume = 0.5f;
                     clip = pinAimSound;
                 }
-                else {
+                else
+                {
                     aSource.volume = 1;
                     aSource.clip = pinEmptySound;
                     aSource.Play();
@@ -336,8 +358,9 @@ public class FormScript : MonoBehaviour
             case Form.Yarn:
 
                 pivot = GetNearestPin();
-                if (pivot != null) { //Pin found. Connect
-                                     //Set active
+                if (pivot != null)
+                { //Pin found. Connect
+                  //Set active
                     abilityIsActive = true;
 
                     animator.SetTrigger("Swinging");
@@ -362,7 +385,8 @@ public class FormScript : MonoBehaviour
                 baseModel.SetActive(false);
                 //mainColider.enabled = false;
                 //rebutiaColider.enabled = true;
-                if (hasHatRebutia) {
+                if (hasHatRebutia)
+                {
                     rebutiaRollingHat.SetActive(true);
                     rebutiaHat.SetActive(false);
                 }
@@ -374,7 +398,8 @@ public class FormScript : MonoBehaviour
                 materialRenderer.material.color = clayHeavyColor;
                 break;
         }
-        if (clip) {
+        if (clip)
+        {
             aSource.volume = 1;
             aSource.clip = clip;
             aSource.Play();
@@ -407,8 +432,10 @@ public class FormScript : MonoBehaviour
     }
 
 
-    public void ChangeForm(Form switchTo) {
-        if (switchTo == currentForm || abilityIsActive) {
+    public void ChangeForm(Form switchTo)
+    {
+        if (switchTo == currentForm || abilityIsActive)
+        {
             return;
         }
         //  if (formChangeParticles) {
@@ -419,7 +446,8 @@ public class FormScript : MonoBehaviour
             //  characterSwap.enabled = true;
             characterSwap.SendEvent("PlaySparkles");
         }
-        if (formChangeSound) {
+        if (formChangeSound)
+        {
             aSource.volume = 1;
             aSource.clip = formChangeSound;
             aSource.Play();
@@ -432,7 +460,8 @@ public class FormScript : MonoBehaviour
         }
         SetHat(switchTo);
 
-        switch (switchTo) {
+        switch (switchTo)
+        {
             //PIN
             case Form.Pin:
                 //PinsInHead();
@@ -470,58 +499,70 @@ public class FormScript : MonoBehaviour
         }
         bgAudio.SetTrack(currentForm);
     }
-    public void SetHat(Form form) {
+    public void SetHat(Form form)
+    {
         pinheadHat.SetActive(false);
         claydoughHat.SetActive(false);
         rebutiaHat.SetActive(false);
         spindleHat.SetActive(false);
         rebutiaRollingHat.SetActive(false);
-        switch (form) {
+        switch (form)
+        {
             case Form.Yarn:
-                if (hasHatSpindle) {
+                if (hasHatSpindle)
+                {
                     spindleHat.SetActive(true);
                 }
                 break;
             case Form.Pin:
-                if (hasHatPinhead) {
+                if (hasHatPinhead)
+                {
                     pinheadHat.SetActive(true);
                 }
                 break;
             case Form.Roll:
-                if (hasHatRebutia) {
+                if (hasHatRebutia)
+                {
                     rebutiaHat.SetActive(true);
                     rebutiaRollingHat.SetActive(true);
                 }
                 break;
             case Form.Heavy:
-                if (hasHatClaydough) {
+                if (hasHatClaydough)
+                {
                     claydoughHat.SetActive(true);
                 }
                 break;
         }
     }
     //SWING FUNCTIONS
-    GameObject GetNearestPin() {
+    GameObject GetNearestPin()
+    {
         GameObject nearestPin = null;
         float pinDistance = Mathf.Infinity;
         pinList = GetComponent<FormScript>().pinList;
 
         //Go through each pin and find their distance
-        foreach (GameObject pin in pinList) {
+        foreach (GameObject pin in pinList)
+        {
             float dist = Vector2.Distance(transform.position, pin.transform.position);
-            if (pin.GetComponent<PinScript>().currentPinMode == PinScript.PinMode.back && dist < pinDistance) {
+            if (pin.GetComponent<PinScript>().currentPinMode == PinScript.PinMode.back && dist < pinDistance)
+            {
                 nearestPin = pin;
                 pinDistance = dist;
             }
         }
-        if (pinDistance > maxSwingLength) { //Make sure our pin is close enough
+        if (pinDistance > maxSwingLength)
+        { //Make sure our pin is close enough
             return null;
         }
-        else {
+        else
+        {
             return nearestPin;
         }
     }
-    void AddJoint(GameObject pivot) {
+    void AddJoint(GameObject pivot)
+    {
         print("called");
         joint = gameObject.AddComponent<ConfigurableJoint>();
         joint.connectedBody = pivot.GetComponent<Rigidbody>();
@@ -535,20 +576,23 @@ public class FormScript : MonoBehaviour
     void AllowClimb()
     {
         joint.autoConfigureConnectedAnchor = false;
-        joint.connectedAnchor = new Vector3(0,joint.connectedAnchor.magnitude, 0);
+        joint.connectedAnchor = new Vector3(0, joint.connectedAnchor.magnitude, 0);
 
     }
 
     //PIN FUNCTIONS
-    RaycastHit FireRay() {
-        if (virtualInput != null) {
+    RaycastHit FireRay()
+    {
+        if (virtualInput != null)
+        {
             Ray raymond = Camera.main.ScreenPointToRay(virtualInput.GetVirtualCursorPosition());
             RaycastHit hit;
             Physics.Raycast(raymond, out hit, 1000);
             //hit.point = new Vector3(hit.point.x,hit.point.y, 0);
             return hit;
         }
-        else {
+        else
+        {
             Ray raymond = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
             Physics.Raycast(raymond, out hit, 1000);
@@ -557,25 +601,31 @@ public class FormScript : MonoBehaviour
         }
 
     }
-    void PinsInHead() {
-        for (int i = 0; i < HeadPins.Length; i++) {
+    void PinsInHead()
+    {
+        for (int i = 0; i < HeadPins.Length; i++)
+        {
             HeadPins[i].SetActive(i < pinCount);
         }
     }
-    void RecallPins() {
+    void RecallPins()
+    {
         pinCount += pinList.Count;
-        foreach (GameObject p in pinList) {
+        foreach (GameObject p in pinList)
+        {
             Destroy(p);
         }
         pinList.Clear();
-        if (pinRecallSound) {
+        if (pinRecallSound)
+        {
             aSource.volume = 1;
             aSource.clip = pinRecallSound;
             aSource.Play();
         }
     }
 
-    void ThrowAt(GameObject Pin, RaycastHit Target, float hitTimer) {
+    void ThrowAt(GameObject Pin, RaycastHit Target, float hitTimer)
+    {
 
         //Add this pin to pinList
         pinList.Add(Pin);
@@ -592,7 +642,8 @@ public class FormScript : MonoBehaviour
         float distanceZ = (Pin.transform.position.z - Target.point.z);
 
         //Z distance override for sidePin
-        if (Target.transform.tag == "SidePin") {
+        if (Target.transform.tag == "SidePin")
+        {
             distanceZ = (Pin.transform.position.z - transform.position.z);
             //Pin.transform.position = new Vector3(Pin.transform.position.x, Pin.transform.position.y, playerRoot.transform.position.z);
         }
@@ -615,14 +666,17 @@ public class FormScript : MonoBehaviour
         {
             Pin.GetComponent<PinScript>().NormalizeZ();
         }
-        else if (Target.transform.tag == "SidePin") {
+        else if (Target.transform.tag == "SidePin")
+        {
             Pin.GetComponent<PinScript>().NormalizeX();
         }
 
-        else if (Target.transform.tag == "Destroyable") {
+        else if (Target.transform.tag == "Destroyable")
+        {
             //Do nadda
         }
-        else {
+        else
+        {
             Pin.GetComponent<PinScript>().DeleteAfter(pinDespawnTimer);
             Pin.GetComponent<PinScript>().SetColiders(true);
         }

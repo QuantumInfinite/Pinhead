@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class AcquirePinEffect : MonoBehaviour
@@ -24,7 +23,7 @@ public class AcquirePinEffect : MonoBehaviour
         {
             StartCoroutine(StartFresnel());
 
-          //  StartCoroutine(Reverse());
+            //  StartCoroutine(Reverse());
         }
     }
 
@@ -34,7 +33,7 @@ public class AcquirePinEffect : MonoBehaviour
         while (instancedMaterial.GetFloat("_FresnelPowerSlider") != maxIntensity)
         {
             time += (Time.deltaTime / speedOfEffect);
-          //  meshRenderer.material.SetFloat("_FresnelPowerSlider", Mathf.Lerp(startIntensity, maxIntensity, time));
+            //  meshRenderer.material.SetFloat("_FresnelPowerSlider", Mathf.Lerp(startIntensity, maxIntensity, time));
             meshRenderer.material.SetFloat("_FresnelPowerSlider", Mathf.PingPong(time, maxIntensity));
             //yield return new WaitForSeconds(1f);
             yield return null;

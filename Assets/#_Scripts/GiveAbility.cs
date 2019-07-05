@@ -1,8 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class GiveAbility : MonoBehaviour {
+public class GiveAbility : MonoBehaviour
+{
     public FormScript.Form selectedForm;
     private void OnTriggerEnter(Collider other)
     {

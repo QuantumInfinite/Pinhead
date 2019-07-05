@@ -1,16 +1,15 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 //ATTACH TO MAIN CAMERA, shows your health and coins
-public class GUIManager : MonoBehaviour 
-{	
-	public GUISkin guiSkin;					//assign the skin for GUI display
+public class GUIManager : MonoBehaviour
+{
+    public GUISkin guiSkin;					//assign the skin for GUI display
     public bool debugStuff = false;
-	void OnGUI()
-	{
+    void OnGUI()
+    {
 
-		GUI.skin = guiSkin; 
-		GUILayout.Space(5f);
+        GUI.skin = guiSkin;
+        GUILayout.Space(5f);
         if (debugStuff)
         {
             GUILayout.Label("Pins: " + GameObject.FindGameObjectWithTag("Player").GetComponent<FormScript>().pinCount);

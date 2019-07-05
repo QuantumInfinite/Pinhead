@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 /*
  * Author: Kyle Jones
  * 
@@ -10,7 +8,8 @@ using UnityEngine;
  * 
  * 
  */
-public class ScaleScript : MonoBehaviour {
+public class ScaleScript : MonoBehaviour
+{
 
     public Vector3 force;
 

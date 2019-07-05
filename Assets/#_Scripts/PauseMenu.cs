@@ -1,9 +1,9 @@
-﻿using UnityEngine.SceneManagement;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using System.Collections;
 
-public class PauseMenu : MonoBehaviour {
+public class PauseMenu : MonoBehaviour
+{
 
     public GameObject PauseUI;
     public GameObject RadialUI;
@@ -19,7 +19,8 @@ public class PauseMenu : MonoBehaviour {
 
     public GameObject[] formButtons;
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         PauseUI.SetActive(false);
         RadialUI.SetActive(false);
         foreach (Image img in RadialUI.GetComponentsInChildren<Image>())
@@ -29,21 +30,22 @@ public class PauseMenu : MonoBehaviour {
         currentMenu = Menu.None;
         player = GameObject.FindGameObjectWithTag("Player");
     }
-	// Update is called once per frame
-	void Update () {
-		if (Input.GetKeyDown("escape") && currentMenu != Menu.Radial)
+    // Update is called once per frame
+    void Update()
+    {
+        if (Input.GetKeyDown("escape") && currentMenu != Menu.Radial)
         {
             currentMenu = Menu.Pause;
             TogglePause(PauseUI);
 
         }
-        if (Input.GetMouseButtonDown(1) && currentMenu != Menu.Pause && !player.GetComponent<FormScript>().abilityIsActive) 
+        if (Input.GetMouseButtonDown(1) && currentMenu != Menu.Pause && !player.GetComponent<FormScript>().abilityIsActive)
         {
             currentMenu = Menu.Radial;
             TogglePause(RadialUI);
         }
-	}
-    
+    }
+
     public void EnableForm(FormScript.Form form)
     {
         int val = 0;
@@ -71,7 +73,7 @@ public class PauseMenu : MonoBehaviour {
 
         UIobject.SetActive(!UIobject.activeInHierarchy);
         IsPaused = !IsPaused;
-        
+
         if (IsPaused)
         {
             //Show curser

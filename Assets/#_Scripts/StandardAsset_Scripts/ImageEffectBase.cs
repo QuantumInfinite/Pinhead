@@ -1,9 +1,8 @@
-using System;
 using UnityEngine;
 
 namespace UnityStandardAssets.ImageEffects
 {
-    [RequireComponent(typeof (Camera))]
+    [RequireComponent(typeof(Camera))]
     [AddComponentMenu("")]
     public class ImageEffectBase : MonoBehaviour
     {
@@ -30,10 +29,8 @@ namespace UnityStandardAssets.ImageEffects
         }
 
 
-        protected Material material
-        {
-            get
-            {
+        protected Material material {
+            get {
                 if (m_Material == null)
                 {
                     m_Material = new Material(shader);

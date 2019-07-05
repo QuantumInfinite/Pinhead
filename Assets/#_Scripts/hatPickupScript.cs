@@ -1,10 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class hatPickupScript : MonoBehaviour {
+public class hatPickupScript : MonoBehaviour
+{
 
-    public enum Hat {
+    public enum Hat
+    {
         pinhead,
         spindle,
         claydough,
@@ -12,9 +12,12 @@ public class hatPickupScript : MonoBehaviour {
     }
     public Hat hatToGivePlayers;
     GameObject particles;
-    private void OnTriggerEnter(Collider other) {
-        if (other.tag == "Player") {
-            switch (hatToGivePlayers) {
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Player")
+        {
+            switch (hatToGivePlayers)
+            {
                 case Hat.pinhead:
                     other.GetComponent<FormScript>().hasHatPinhead = true;
                     break;
@@ -36,12 +39,14 @@ public class hatPickupScript : MonoBehaviour {
         }
     }
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         particles = transform.GetChild(0).gameObject;
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
 }
