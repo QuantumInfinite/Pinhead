@@ -52,7 +52,7 @@
             "typeInfo": {
                 "fullName": "UnityEditor.ShaderGraph.Vector1ShaderProperty"
             },
-            "JSONnodeData": "{\n    \"m_Name\": \"FresnelPower\",\n    \"m_GeneratePropertyBlock\": true,\n    \"m_Guid\": {\n        \"m_GuidSerialized\": \"806d075a-d9c9-499f-ae00-7b4e36135c68\"\n    },\n    \"m_DefaultReferenceName\": \"Vector1_2AF136B9\",\n    \"m_OverrideReferenceName\": \"_FresnelPowerSlider\",\n    \"m_Value\": 0.0,\n    \"m_FloatType\": 1,\n    \"m_RangeValues\": {\n        \"x\": 0.0,\n        \"y\": 2.0\n    },\n    \"m_Hidden\": false\n}"
+            "JSONnodeData": "{\n    \"m_Name\": \"FresnelPower\",\n    \"m_GeneratePropertyBlock\": true,\n    \"m_Guid\": {\n        \"m_GuidSerialized\": \"806d075a-d9c9-499f-ae00-7b4e36135c68\"\n    },\n    \"m_DefaultReferenceName\": \"Vector1_2AF136B9\",\n    \"m_OverrideReferenceName\": \"_FresnelPowerSlider\",\n    \"m_Value\": 0.0,\n    \"m_FloatType\": 1,\n    \"m_RangeValues\": {\n        \"x\": 0.0,\n        \"y\": 5.0\n    },\n    \"m_Hidden\": false\n}"
         }
     ],
     "m_SerializableNodes": [

@@ -196,8 +196,9 @@ MonoBehaviour:
   baseModel: {fileID: 1747255657742140}
   rebutiaRollForm: {fileID: 1878996599165786}
   UpperTorso: {fileID: 1969046452526468}
-  formChangeParticles: {fileID: 198130140359736024}
-  characterSwap: {fileID: 0}
+  characterSwap: {fileID: 5526281985588564251, guid: edd378c0b4fd20044930b6bd1297e885,
+    type: 3}
+  VFXSpawnerTransform: {fileID: 1041798831}
   pinEffectShader: {fileID: 0}
   pin: {fileID: 1707349961023988, guid: a1d2143a59a995e4d85f47a13a78a8cd, type: 3}
   pinSpawnMarker: {fileID: 4968578279068212}
@@ -756,6 +757,36 @@ Transform:
   m_Children: []
   m_Father: {fileID: 400016}
   m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1041798830
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1041798831}
+  m_Layer: 2
+  m_Name: VFXSpawnerTransform
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1041798831
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1041798830}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.06, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4959290120897576}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1014729941319756
 GameObject:
@@ -6842,6 +6873,7 @@ Transform:
   m_Children:
   - {fileID: 4914170566914336}
   - {fileID: 4013593016819026}
+  - {fileID: 1041798831}
   m_Father: {fileID: 400002}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
