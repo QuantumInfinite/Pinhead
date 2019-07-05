@@ -18,8 +18,10 @@ public class FormScript : MonoBehaviour
     public GameObject baseModel; //For changing forms
     public GameObject rebutiaRollForm;// For rolling
     public GameObject UpperTorso;
-    //public ParticleSystem formChangeParticles;
+   // public ParticleSystem formChangeParticles;
     public VisualEffect characterSwap;
+    private float vfxOffset = 5f;
+    public Transform VFXSpawnerTransform;
     public AcquirePinEffect pinEffectShader;
 
     public GameObject pin; //Pin to throw
@@ -136,7 +138,6 @@ public class FormScript : MonoBehaviour
         virtualInput = UIManagaer.GetComponent<VirtualInputModule>();
         regularWeight = rigid.mass;
         regularSpeed = playerMove.maxSpeed;
-        //characterSwap = GetComponent<VisualEffect>();
     }
 
     private bool test = false;
@@ -211,11 +212,17 @@ public class FormScript : MonoBehaviour
             pinCount++;
             //  StartCoroutine(pinEffectShader.StartFresnel());
             other.gameObject.SetActive(false);
+<<<<<<< HEAD
 
             if (pinPickupEffect)
             {
+=======
+            baseModel.GetComponent<Animator>().SetTrigger("FresnelAnim");
+            if (pinPickupEffect) {
+>>>>>>> 1386e9446ec69dc7e443b153c4efe63d13f04046
                 ParticleSystem.Instantiate(pinPickupEffect, transform.position + new Vector3(0, 3, 0), transform.rotation);
             }
+            
 
             if (pinPickupSound)
             {
@@ -443,7 +450,8 @@ public class FormScript : MonoBehaviour
         //  }
         if (characterSwap)
         {
-            //  characterSwap.enabled = true;
+            
+            characterSwap = Instantiate(characterSwap, VFXSpawnerTransform.position, transform.rotation);
             characterSwap.SendEvent("PlaySparkles");
         }
         if (formChangeSound)
