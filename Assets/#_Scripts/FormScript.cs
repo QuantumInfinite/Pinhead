@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Runtime.InteropServices;
@@ -135,6 +136,7 @@ public class FormScript : MonoBehaviour
         regularSpeed = playerMove.maxSpeed;
     }
 
+    private bool test = false;
     void Update() {
         //Change forms
         DPadDirection dPadInput = GetDPad();
@@ -162,14 +164,14 @@ public class FormScript : MonoBehaviour
 
                 case Form.Yarn:
                     //Do nothing
+                    //Debug.Break();
+                    if (Input.GetAxis("Vertical") > 0.1f && test == false)
+                    {
+                        test = true;
+                    }
                     break;
                 case Form.Roll:
-                    if (Input.GetAxis("Horizontal") != 0) {
-                        rebutiaRollForm.GetComponent<Animator>().SetBool("Rolling", true);
-                    }
-                    else {
-                        rebutiaRollForm.GetComponent<Animator>().SetBool("Rolling", false);
-                    }
+                    rebutiaRollForm.GetComponent<Animator>().SetBool("Rolling", Math.Abs(Input.GetAxis("Horizontal")) > 0.01f);
                     break;
                 case Form.Heavy:
                     //Do nothing
@@ -336,7 +338,6 @@ public class FormScript : MonoBehaviour
                     abilityIsActive = true;
 
                     animator.SetTrigger("Swinging");
-
                     AddJoint(pivot.GetComponent<PinScript>().pivotPoint);
 
                     //remove deceleration
@@ -508,12 +509,21 @@ public class FormScript : MonoBehaviour
         }
     }
     void AddJoint(GameObject pivot) {
+        print("called");
         joint = gameObject.AddComponent<ConfigurableJoint>();
         joint.connectedBody = pivot.GetComponent<Rigidbody>();
         joint.anchor = Vector3.zero;
         joint.xMotion = ConfigurableJointMotion.Locked;
         joint.yMotion = ConfigurableJointMotion.Locked;
         joint.zMotion = ConfigurableJointMotion.Locked;
+        Invoke("AllowClimb", 0.2f);
+    }
+
+    void AllowClimb()
+    {
+        joint.autoConfigureConnectedAnchor = false;
+        joint.connectedAnchor = new Vector3(0,joint.connectedAnchor.magnitude, 0);
+
     }
 
     //PIN FUNCTIONS

@@ -6,6 +6,10 @@ public class VirtualInputModule : MonoBehaviour
 {
     [SerializeField]
     private RectTransform cursorImage;
+
+    public float movementSpeed = 100;
+
+    public bool useController = false;
     // Start is called before the first frame update
     private Vector3 pMousePos;
     private Vector2 vMousePos;
@@ -20,22 +24,30 @@ public class VirtualInputModule : MonoBehaviour
     }
     void Update()
     {
-        /*
-        if (PointOnScreen(Input.mousePosition) && pMousePos != Input.mousePosition)
+        
+        
+
+        if (useController)
         {
-            Vector3 movement = Input.mousePosition - pMousePos;
-            vMousePos.x += movement.x;
-            vMousePos.y += movement.y;
-            cursorImage.SetPositionAndRotation(vMousePos, Quaternion.identity);
-            pMousePos = Input.mousePosition;
+            //controller
+            vMousePos.x += Input.GetAxis("RStickX") * Time.deltaTime * movementSpeed * 10;
+            vMousePos.y += Input.GetAxis("RStickY") * Time.deltaTime * movementSpeed * 10;
+            vMousePos.x = Mathf.Clamp(vMousePos.x, 0, Screen.width);
+            vMousePos.y = Mathf.Clamp(vMousePos.y, 0, Screen.height);
         }
-        vMousePos.x = Mathf.Clamp(pMousePos.x + vOffset.x, 0, Screen.width);
-        vMousePos.y = Mathf.Clamp(pMousePos.y + vOffset.y, 0, Screen.height);
-        */
-        vMousePos.x += Input.GetAxis("RStickX") * Time.deltaTime * 1000;
-        vMousePos.y += Input.GetAxis("RStickY") * Time.deltaTime * 1000;
-        vMousePos.x = Mathf.Clamp(vMousePos.x, 0, Screen.width);
-        vMousePos.y = Mathf.Clamp(vMousePos.y, 0, Screen.height);
+        else
+        {
+            if (PointOnScreen(Input.mousePosition) && pMousePos != Input.mousePosition) {
+                Vector3 movement = Input.mousePosition - pMousePos;
+                vMousePos.x += movement.x;
+                vMousePos.y += movement.y;
+                pMousePos = Input.mousePosition;
+            }
+        }
+
+        
+
+
         cursorImage.SetPositionAndRotation(vMousePos, Quaternion.identity);
 
         //
@@ -51,24 +63,7 @@ public class VirtualInputModule : MonoBehaviour
         return vMousePos;
     }
 
-    public void SetVirtualOffset(Vector3 offset)
-    {
-        vOffset = offset;
-        vMousePos += vOffset;
-    }
-
-    public void ResetVirtualOffset()
-    {
-        vOffset = Vector2.zero;
-        vMousePos -= vOffset;
-    }
-
-    public void Center()
-    {
-        vMousePos = Vector3.zero;
-    }
-
-    public void EnableCursor(bool enabled)
+    public void SetEnabled(bool enabled)
     {
         cursorImage.gameObject.SetActive(enabled);
     }
