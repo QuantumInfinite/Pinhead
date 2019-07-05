@@ -118,7 +118,7 @@ public class FormScript : MonoBehaviour
         torsoRotation = UpperTorso.transform.localEulerAngles;
         aSource = GetComponent<AudioSource>();
         UIManagaer = GameObject.FindGameObjectWithTag("UI");
-        if (enableAllForms) {
+        if (enableAllForms && UIManagaer) {
             UIManagaer.GetComponent<PauseMenu>().EnableForm(Form.Heavy);
             UIManagaer.GetComponent<PauseMenu>().EnableForm(Form.Yarn);
             UIManagaer.GetComponent<PauseMenu>().EnableForm(Form.Pin);

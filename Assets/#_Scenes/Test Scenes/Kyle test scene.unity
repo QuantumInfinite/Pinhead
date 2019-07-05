@@ -111607,6 +111607,53 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 11a0fc37ad0fcd84ea652130b8070601, type: 3}
+      propertyPath: mainCam
+      value: 
+      objectReference: {fileID: 268904523}
+    - target: {fileID: 11400000, guid: 11a0fc37ad0fcd84ea652130b8070601, type: 3}
+      propertyPath: accel
+      value: 70
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 11a0fc37ad0fcd84ea652130b8070601, type: 3}
+      propertyPath: jumpForce.y
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 114349670866637554, guid: 11a0fc37ad0fcd84ea652130b8070601,
+        type: 3}
+      propertyPath: pinImpact
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3444867810985046429, guid: 11a0fc37ad0fcd84ea652130b8070601,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.091
+      objectReference: {fileID: 0}
+    - target: {fileID: 3444867810985046429, guid: 11a0fc37ad0fcd84ea652130b8070601,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3444867810985046429, guid: 11a0fc37ad0fcd84ea652130b8070601,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3444867810985046429, guid: 11a0fc37ad0fcd84ea652130b8070601,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3444867810985046429, guid: 11a0fc37ad0fcd84ea652130b8070601,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3444867810985046429, guid: 11a0fc37ad0fcd84ea652130b8070601,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 3444867810985046431, guid: 11a0fc37ad0fcd84ea652130b8070601,
         type: 3}
       propertyPath: m_PropertySheet.m_Float.m_Array.Array.size
@@ -111707,10 +111754,6 @@ PrefabInstance:
       propertyPath: m_PropertySheet.m_Float.m_Array.Array.data[2].m_Overridden
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 11400000, guid: 11a0fc37ad0fcd84ea652130b8070601, type: 3}
-      propertyPath: mainCam
-      value: 
-      objectReference: {fileID: 268904523}
     - target: {fileID: 3444867810985046428, guid: 11a0fc37ad0fcd84ea652130b8070601,
         type: 3}
       propertyPath: m_Materials.Array.size
@@ -111764,41 +111807,6 @@ PrefabInstance:
     - target: {fileID: 3444867810985046428, guid: 11a0fc37ad0fcd84ea652130b8070601,
         type: 3}
       propertyPath: m_Materials.Array.data[9]
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3444867810985046429, guid: 11a0fc37ad0fcd84ea652130b8070601,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1.091
-      objectReference: {fileID: 0}
-    - target: {fileID: 3444867810985046429, guid: 11a0fc37ad0fcd84ea652130b8070601,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3444867810985046429, guid: 11a0fc37ad0fcd84ea652130b8070601,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3444867810985046429, guid: 11a0fc37ad0fcd84ea652130b8070601,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 3444867810985046429, guid: 11a0fc37ad0fcd84ea652130b8070601,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 3444867810985046429, guid: 11a0fc37ad0fcd84ea652130b8070601,
-        type: 3}
-      propertyPath: m_LocalScale.z
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 114349670866637554, guid: 11a0fc37ad0fcd84ea652130b8070601,
-        type: 3}
-      propertyPath: pinImpact
       value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []

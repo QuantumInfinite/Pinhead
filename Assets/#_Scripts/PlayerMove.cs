@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 //handles player movement, utilising the CharacterMotor class
 [RequireComponent(typeof(CharacterMotor))]
@@ -38,7 +39,7 @@ public class PlayerMove : MonoBehaviour
 	public int onEnemyBounce;					
 	
 	private bool grounded;
-	private Transform[] floorCheckers;
+	private List<Transform> floorCheckers;
 	private Quaternion screenMovementSpace;
 	private float airPressTime, groundedCount, curAccel, curDecel, curRotateSpeed, slope;
 	private Vector3 direction, moveDirection, screenMovementForward, screenMovementRight, movingObjSpeed;
@@ -54,7 +55,7 @@ public class PlayerMove : MonoBehaviour
 	void Awake()
 	{
 		//create single floorcheck in centre of object, if none are assigned
-		if(!floorChecks)
+		if(!floorChecks || !floorChecks.gameObject.activeInHierarchy || floorChecks.childCount == 0)
 		{
 			floorChecks = new GameObject().transform;
 			floorChecks.name = "FloorChecks";
@@ -84,13 +85,29 @@ public class PlayerMove : MonoBehaviour
 
         //gets child objects of floorcheckers, and puts them in an array
         //later these are used to raycast downward and see if we are on the ground
-        floorCheckers = new Transform[floorChecks.childCount];
-		for (int i=0; i < floorCheckers.Length; i++)
-			floorCheckers[i] = floorChecks.GetChild(i);
+        floorCheckers = new List<Transform>();
+        //floorCheckers = new Transform[floorChecks.childCount];
+        for (int i = 0; i < floorChecks.childCount; i++)
+        {
+            if (floorChecks.GetChild(i).gameObject.activeInHierarchy)
+            {
+                floorCheckers.Add(floorChecks.GetChild(i));
+            }
+
+        }
+			
 	}
     private void Start()
     {
-        pausemenu = GameObject.FindGameObjectWithTag("UI").GetComponent<PauseMenu>();
+        GameObject ui = GameObject.FindGameObjectWithTag("UI");
+        if (ui)
+        {
+            pausemenu = ui.GetComponent<PauseMenu>();
+        }
+        else
+        {
+            Debug.LogWarning("No game object tagged UI, pause functions will not work");
+        }
     }
     //get state of player, values and input
     void Update()
@@ -131,7 +148,6 @@ public class PlayerMove : MonoBehaviour
 	{
         //are we grounded
         grounded = IsGrounded ();
-        
 		//move, rotate, manage speed
 		characterMotor.MoveTo (moveDirection, curAccel, 0.7f, true);
 		if (rotateSpeed != 0 && direction.magnitude != 0)
@@ -151,6 +167,15 @@ public class PlayerMove : MonoBehaviour
 			animator.SetFloat("DistanceToTarget", characterMotor.DistanceToTarget);
 			animator.SetBool("Grounded", grounded);
 			animator.SetFloat("YVelocity", rigid.velocity.y);
+            if (!grounded && rigid.velocity.y < -0.01)
+            {
+                Ray ray = new Ray(floorCheckers[0].position, Vector3.down);
+                RaycastHit hit;
+                if (Physics.Raycast(ray, out hit))
+                {
+                    print("Max point at " + hit.distance + " (" + hit.transform.name + ")");
+                }
+            }
 		}
 
         if (rigid.position.z != zConstant)
