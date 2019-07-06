@@ -7,51 +7,68 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerMove : MonoBehaviour
 {
-    //setup
-    public bool sidescroller;                   //if true, won't apply vertical input
-    public Transform mainCam, floorChecks;      //main camera, and floorChecks object. FloorChecks are raycasted down from to check the player is grounded.
-    public Animator animator;                   //object with animation controller on, which you want to animate
-    public AudioClip jumpSound;                 //play when jumping
-    public AudioClip landSound;                 //play when landing on ground
-    public AudioClip walkSound;
-
     //movement
-    public float accel = 70f;                   //acceleration/deceleration in air or on the ground
+    public float accel = 70f; //acceleration/deceleration in air or on the ground
     public float airAccel = 18f;
-    public float decel = 7.6f;
     public float airDecel = 1.1f;
-    [HideInInspector]
-    public bool horizontalMovementAllowed = true;
-
-    [Range(0f, 5f)]
-    public float rotateSpeed = 0.7f, airRotateSpeed = 0.4f; //how fast to rotate on the ground, how fast to rotate in the air
-    public float maxSpeed = 9;                              //maximum speed of movement in X/Z axis
-    public float slopeLimit = 40, slideAmount = 35;         //maximum angle of slopes you can walk on, how fast to slide down slopes you can't
-    public float movingPlatformFriction = 7.7f;				//you'll need to tweak this to get the player to stay on moving platforms properly
-    float zConstant;
-
-    //jumping
-    public Vector3 jumpForce = new Vector3(0, 13, 0);       //normal jump force
-    public float jumpDelay = 0.1f;                          //how fast you need to jump after hitting the ground, to do the next type of jump
-    public float jumpLeniancy = 0.17f;                      //how early before hitting the ground you can press jump, and still have it work
-    [HideInInspector]
-    public int onEnemyBounce;
-
-    private bool grounded;
-    private List<Transform> floorCheckers;
-    private Quaternion screenMovementSpace;
     private float airPressTime, groundedCount, curAccel, curDecel, curRotateSpeed, slope;
-    private Vector3 direction, moveDirection, screenMovementForward, screenMovementRight, movingObjSpeed;
+
+    public Animator animator; //object with animation controller on, which you want to animate
+    private AudioSource aSource;
 
     private CharacterMotor characterMotor;
+    public float decel = 7.6f;
+    private Vector3 direction, moveDirection, screenMovementForward, screenMovementRight, movingObjSpeed;
+    private List<Transform> floorCheckers;
+
+    private bool grounded;
+
+    [HideInInspector] public bool horizontalMovementAllowed = true;
+
+    public float jumpDelay = 0.1f; //how fast you need to jump after hitting the ground, to do the next type of jump
+
+    //jumping
+    public Vector3 jumpForce = new Vector3(0, 13, 0); //normal jump force
+    public float jumpLeniancy = 0.17f; //how early before hitting the ground you can press jump, and still have it work
+    public AudioClip jumpSound; //play when jumping
+    public AudioClip landSound; //play when landing on ground
+
+    public Transform
+        mainCam,
+        floorChecks; //main camera, and floorChecks object. FloorChecks are raycasted down from to check the player is grounded.
+
+    public float maxSpeed = 9; //maximum speed of movement in X/Z axis
+
+    public float
+        movingPlatformFriction =
+            7.7f; //you'll need to tweak this to get the player to stay on moving platforms properly
+
+    [HideInInspector] public int onEnemyBounce;
+
+    private PauseMenu pausemenu;
+
     //private EnemyAI enemyAI;
     //private DealDamage dealDamage;
     private Rigidbody rigid;
-    private AudioSource aSource;
-    PauseMenu pausemenu;
+
+    [Range(0f, 5f)]
+    public float
+        rotateSpeed = 0.7f, airRotateSpeed = 0.4f; //how fast to rotate on the ground, how fast to rotate in the air
+
+    private Quaternion screenMovementSpace;
 
     //setup
-    void Awake()
+    public bool sidescroller; //if true, won't apply vertical input
+
+    public float
+        slopeLimit = 40,
+        slideAmount = 35; //maximum angle of slopes you can walk on, how fast to slide down slopes you can't
+
+    public AudioClip walkSound;
+    private float zConstant;
+
+    //setup
+    private void Awake()
     {
         //create single floorcheck in centre of object, if none are assigned
         if (!floorChecks || !floorChecks.gameObject.activeInHierarchy || floorChecks.childCount == 0)
@@ -60,18 +77,23 @@ public class PlayerMove : MonoBehaviour
             floorChecks.name = "FloorChecks";
             floorChecks.parent = transform;
             floorChecks.position = transform.position;
-            GameObject check = new GameObject();
+            var check = new GameObject();
             check.name = "Check1";
             check.transform.parent = floorChecks;
             check.transform.position = transform.position;
-            Debug.LogWarning("No 'floorChecks' assigned to PlayerMove script, so a single floorcheck has been created", floorChecks);
+            Debug.LogWarning("No 'floorChecks' assigned to PlayerMove script, so a single floorcheck has been created",
+                floorChecks);
         }
+
         //assign player tag if not already
         if (tag != "Player")
         {
             tag = "Player";
-            Debug.LogWarning("PlayerMove script assigned to object without the tag 'Player', tag has been assigned automatically", transform);
+            Debug.LogWarning(
+                "PlayerMove script assigned to object without the tag 'Player', tag has been assigned automatically",
+                transform);
         }
+
         //usual setup
         mainCam = GameObject.FindGameObjectWithTag("MainCamera").transform;
         //dealDamage = GetComponent<DealDamage>();
@@ -86,19 +108,16 @@ public class PlayerMove : MonoBehaviour
         //later these are used to raycast downward and see if we are on the ground
         floorCheckers = new List<Transform>();
         //floorCheckers = new Transform[floorChecks.childCount];
-        for (int i = 0; i < floorChecks.childCount; i++)
-        {
+        for (var i = 0; i < floorChecks.childCount; i++)
             if (floorChecks.GetChild(i).gameObject.activeInHierarchy)
             {
                 floorCheckers.Add(floorChecks.GetChild(i));
             }
-
-        }
-
     }
+
     private void Start()
     {
-        GameObject ui = GameObject.FindGameObjectWithTag("UI");
+        var ui = GameObject.FindGameObjectWithTag("UI");
         if (ui)
         {
             pausemenu = ui.GetComponent<PauseMenu>();
@@ -108,17 +127,18 @@ public class PlayerMove : MonoBehaviour
             Debug.LogWarning("No game object tagged UI, pause functions will not work");
         }
     }
+
     //get state of player, values and input
-    void Update()
+    private void Update()
     {
         //stops rigidbody "sleeping" if we don't move, which would stop collision detection
         rigid.WakeUp();
         //handle jumping
         JumpCalculations();
         //adjust movement values if we're in the air or on the ground
-        curAccel = (grounded) ? accel : airAccel;
-        curDecel = (grounded) ? decel : airDecel;
-        curRotateSpeed = (grounded) ? rotateSpeed : airRotateSpeed;
+        curAccel = grounded ? accel : airAccel;
+        curDecel = grounded ? decel : airDecel;
+        curRotateSpeed = grounded ? rotateSpeed : airRotateSpeed;
 
         //get movement axis relative to camera
         screenMovementSpace = Quaternion.Euler(0, mainCam.eulerAngles.y, 0);
@@ -136,21 +156,30 @@ public class PlayerMove : MonoBehaviour
 
         //only apply vertical input to movemement, if player is not sidescroller
         if (!sidescroller)
-            direction = (screenMovementForward * v) + (screenMovementRight * h);
+        {
+            direction = screenMovementForward * v + screenMovementRight * h;
+        }
         else
+        {
             direction = Vector3.right * h;
+        }
+
         moveDirection = transform.position + direction;
     }
 
     //apply correct player movement (fixedUpdate for physics calculations)
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         //are we grounded
         grounded = IsGrounded();
+
         //move, rotate, manage speed
         characterMotor.MoveTo(moveDirection, curAccel, 0.7f, true);
         if (rotateSpeed != 0 && direction.magnitude != 0)
+        {
             characterMotor.RotateToDirection(moveDirection, curRotateSpeed * 5, true);
+        }
+
         characterMotor.ManageSpeed(curDecel, maxSpeed + movingObjSpeed.magnitude, true);
         //Movement sounds
         if (grounded && Input.GetAxis("Horizontal") != 0 && walkSound && aSource.clip != walkSound)
@@ -168,11 +197,11 @@ public class PlayerMove : MonoBehaviour
             animator.SetFloat("YVelocity", rigid.velocity.y);
             if (!grounded && rigid.velocity.y < -0.01)
             {
-                Ray ray = new Ray(floorCheckers[0].position, Vector3.down);
+                var ray = new Ray(floorCheckers[0].position, Vector3.down);
                 RaycastHit hit;
                 if (Physics.Raycast(ray, out hit))
                 {
-                    print("Max point at " + hit.distance + " (" + hit.transform.name + ")");
+                    //print("Max point at " + hit.distance + " (" + hit.transform.name + ")");
                 }
             }
         }
@@ -185,8 +214,8 @@ public class PlayerMove : MonoBehaviour
         //Make player come to a hard stop when grounded and not pressing a button. also disable gravity
         if (grounded && Input.GetAxis("Horizontal") == 0)
         {
-            rigid.velocity = new Vector3(0, rigid.velocity.y);
-            rigid.useGravity = false;
+            //rigid.velocity = new Vector3(0, rigid.velocity.y);
+            //rigid.useGravity = false;
         }
         else
         {
@@ -195,9 +224,10 @@ public class PlayerMove : MonoBehaviour
     }
 
     //prevents rigidbody from sliding down slight slopes (read notes in characterMotor class for more info on friction)
-    void OnCollisionStay(Collision other)
+    private void OnCollisionStay(Collision other)
     {
-        if (other.collider.tag == "Scalable" && GetComponent<FormScript>().currentForm == FormScript.Form.Roll && GetComponent<FormScript>().abilityIsActive)
+        if (other.collider.tag == "Scalable" && GetComponent<FormScript>().currentForm == FormScript.Form.Roll &&
+            GetComponent<FormScript>().abilityIsActive)
         {
             if (Input.GetButton("Horizontal"))
             {
@@ -207,13 +237,16 @@ public class PlayerMove : MonoBehaviour
 
         //only stop movement on slight slopes if we aren't being touched by anything else
         if (other.collider.tag != "Untagged" || grounded == false)
+        {
             return;
+        }
         //if no movement should be happening, stop player moving in Z/X axis
-        if (direction.magnitude == 0 && slope < slopeLimit && rigid.velocity.magnitude < 2)
+        if (direction.magnitude == 0 && Mathf.Abs(slope) > 0.1 && slope < slopeLimit && rigid.velocity.magnitude < 2)
         {
             //it's usually not a good idea to alter a rigidbodies velocity every frame
             //but this is the cleanest way i could think of, and we have a lot of checks beforehand, so it should be ok
             rigid.velocity = Vector3.zero;
+            rigid.useGravity = false;
         }
     }
 
@@ -222,9 +255,9 @@ public class PlayerMove : MonoBehaviour
     private bool IsGrounded()
     {
         //get distance to ground, from centre of collider (where floorcheckers should be)
-        float dist = GetComponent<Collider>().bounds.extents.y;
+        var dist = GetComponent<Collider>().bounds.extents.y;
         //check whats at players feet, at each floorcheckers position
-        foreach (Transform check in floorCheckers)
+        foreach (var check in floorCheckers)
         {
             RaycastHit hit;
             if (Physics.Raycast(check.position, Vector3.down, out hit, dist + 0.1f))
@@ -238,9 +271,10 @@ public class PlayerMove : MonoBehaviour
                     //slide down slopes
                     if (slope > slopeLimit && hit.transform.tag != "Pushable")
                     {
-                        Vector3 slide = new Vector3(0f, -slideAmount, 0f);
+                        var slide = new Vector3(0f, -slideAmount, 0f);
                         rigid.AddForce(slide, ForceMode.Force);
                     }
+
                     //enemy bouncing
                     if (hit.transform.tag == "Enemy" && rigid.velocity.y < 0)
                     {
@@ -250,14 +284,18 @@ public class PlayerMove : MonoBehaviour
                         //dealDamage.Attack(hit.transform.gameObject, 1, 0f, 0f);
                     }
                     else
+                    {
                         onEnemyBounce = 0;
+                    }
+
                     //moving platforms
                     if (hit.transform.tag == "MovingPlatform" || hit.transform.tag == "Pushable")
                     {
                         movingObjSpeed = hit.transform.GetComponent<Rigidbody>().velocity;
                         movingObjSpeed.y = 0f;
                         //9.5f is a magic number, if youre not moving properly on platforms, experiment with this number
-                        rigid.AddForce(movingObjSpeed * movingPlatformFriction * Time.fixedDeltaTime, ForceMode.VelocityChange);
+                        rigid.AddForce(movingObjSpeed * movingPlatformFriction * Time.fixedDeltaTime,
+                            ForceMode.VelocityChange);
                     }
                     else
                     {
@@ -269,6 +307,7 @@ public class PlayerMove : MonoBehaviour
                 }
             }
         }
+
         movingObjSpeed = Vector3.zero;
         //no none of the floorchecks hit anything, we must be in the air (or water)
         return false;
@@ -278,19 +317,23 @@ public class PlayerMove : MonoBehaviour
     private void JumpCalculations()
     {
         //keep how long we have been on the ground
-        groundedCount = (grounded) ? groundedCount += Time.deltaTime : 0f;
+        groundedCount = grounded ? groundedCount += Time.deltaTime : 0f;
 
 
         //play landing sound
-        if (groundedCount < 0.25 && groundedCount != 0 && !GetComponent<AudioSource>().isPlaying && landSound && rigid.velocity.y < 1)
+        if (groundedCount < 0.25 && groundedCount != 0 && !GetComponent<AudioSource>().isPlaying && landSound &&
+            rigid.velocity.y < 1)
         {
             aSource.volume = Mathf.Abs(rigid.velocity.y) / 15;
             aSource.clip = landSound;
             aSource.Play();
         }
+
         //if we press jump in the air, save the time
         if (Input.GetButtonDown("Jump") && !grounded)
+        {
             airPressTime = Time.time;
+        }
 
         //if were on ground within slope limit
         if (grounded && slope < slopeLimit)
@@ -302,7 +345,6 @@ public class PlayerMove : MonoBehaviour
                 {
                     Jump(jumpForce);
                 }
-
             }
         }
     }
@@ -314,12 +356,14 @@ public class PlayerMove : MonoBehaviour
         {
             return;
         }
+
         if (jumpSound)
         {
             aSource.volume = 1;
             aSource.clip = jumpSound;
             aSource.Play();
         }
+
         rigid.velocity = new Vector3(rigid.velocity.x, 0f, 0f);
         rigid.AddRelativeForce(jumpVelocity, ForceMode.Impulse);
         airPressTime = 0f;

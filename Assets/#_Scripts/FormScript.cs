@@ -212,27 +212,25 @@ public class FormScript : MonoBehaviour
             pinCount++;
             //  StartCoroutine(pinEffectShader.StartFresnel());
             other.gameObject.SetActive(false);
-<<<<<<< HEAD
 
             if (pinPickupEffect)
             {
-=======
-            baseModel.GetComponent<Animator>().SetTrigger("FresnelAnim");
-            if (pinPickupEffect) {
->>>>>>> 1386e9446ec69dc7e443b153c4efe63d13f04046
+                baseModel.GetComponent<Animator>().SetTrigger("FresnelAnim");
                 ParticleSystem.Instantiate(pinPickupEffect, transform.position + new Vector3(0, 3, 0), transform.rotation);
-            }
-            
 
-            if (pinPickupSound)
-            {
-                aSource.volume = 1;
-                aSource.clip = pinPickupSound;
-                aSource.Play();
+
+                if (pinPickupSound)
+                {
+                    aSource.volume = 1;
+                    aSource.clip = pinPickupSound;
+                    aSource.Play();
+                }
+
+                PinsInHead();
             }
-            PinsInHead();
         }
     }
+
     void DeactivateAbility()
     {
         if (abilityIsActive)
