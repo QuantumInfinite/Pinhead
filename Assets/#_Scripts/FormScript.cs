@@ -20,9 +20,7 @@ public class FormScript : MonoBehaviour
     public GameObject UpperTorso;
    // public ParticleSystem formChangeParticles;
     public VisualEffect characterSwap;
-    private float vfxOffset = 5f;
     public Transform VFXSpawnerTransform;
-    public AcquirePinEffect pinEffectShader;
 
     public GameObject pin; //Pin to throw
     public Transform pinSpawnMarker; //where to spawn pin
