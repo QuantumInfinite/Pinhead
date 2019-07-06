@@ -138,7 +138,8 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 0}
+  m_Motion: {fileID: 3159328838177288179, guid: 729b3a5e7160bee4e9c8f995b839ee16,
+    type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -224,6 +225,32 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!1102 &-6722708127623617955
+AnimatorState:
+  serializedVersion: 5
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Pin Head Rig | Fall
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: 0}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
 --- !u!1102 &-6687314907602022776
 AnimatorState:
   serializedVersion: 5
@@ -246,7 +273,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -1500354584072067147, guid: d1482f3992e300c4780ec2282bf494c6,
+  m_Motion: {fileID: -4112011657161455478, guid: 729b3a5e7160bee4e9c8f995b839ee16,
     type: 3}
   m_Tag: 
   m_SpeedParameter: 
@@ -301,7 +328,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -1610863427237328480, guid: d1482f3992e300c4780ec2282bf494c6,
+  m_Motion: {fileID: 5307517235622979184, guid: 729b3a5e7160bee4e9c8f995b839ee16,
     type: 3}
   m_Tag: 
   m_SpeedParameter: 
@@ -724,7 +751,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 5522812681064789136, guid: d1482f3992e300c4780ec2282bf494c6,
+  m_Motion: {fileID: -5173947720288322020, guid: 729b3a5e7160bee4e9c8f995b839ee16,
     type: 3}
   m_Tag: 
   m_SpeedParameter: 
@@ -753,7 +780,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 5539831331247536789, guid: d1482f3992e300c4780ec2282bf494c6,
+  m_Motion: {fileID: 8253135883850260136, guid: 729b3a5e7160bee4e9c8f995b839ee16,
     type: 3}
   m_Tag: 
   m_SpeedParameter: 
