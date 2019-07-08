@@ -114,8 +114,8 @@ ModelImporter:
       name: Pin Head Rig | Jump
       takeName: Pin Head Rig|Pin Head RigAction.001
       internalID: 8253135883850260136
-      firstFrame: 50
-      lastFrame: 90
+      firstFrame: 60
+      lastFrame: 72
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -143,8 +143,8 @@ ModelImporter:
       name: Pin Head Rig | Fall
       takeName: Pin Head Rig|Pin Head RigAction.001
       internalID: -4112011657161455478
-      firstFrame: 105
-      lastFrame: 125
+      firstFrame: 73
+      lastFrame: 93
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
