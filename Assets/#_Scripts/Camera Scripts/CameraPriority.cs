@@ -12,12 +12,6 @@ public class CameraPriority : MonoBehaviour
     [SerializeField]
     public CinemachineVirtualCamera CameraToSwitchTo;
 
-
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
     public void OnTriggerEnter(Collider other)
     {
         if(other.CompareTag("Player"))
