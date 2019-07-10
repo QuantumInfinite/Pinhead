@@ -446,9 +446,9 @@ public class FormScript : MonoBehaviour
         //  }
         if (characterSwap)
         {
-            
-            characterSwap = Instantiate(characterSwap, VFXSpawnerTransform.position, transform.rotation);
+            characterSwap.transform.position =  VFXSpawnerTransform.position;
             characterSwap.SendEvent("PlaySparkles");
+            
         }
         if (formChangeSound)
         {
@@ -505,36 +505,37 @@ public class FormScript : MonoBehaviour
     }
     public void SetHat(Form form)
     {
-        pinheadHat.SetActive(false);
-        claydoughHat.SetActive(false);
-        rebutiaHat.SetActive(false);
-        spindleHat.SetActive(false);
-        rebutiaRollingHat.SetActive(false);
+        
+        if (pinheadHat) pinheadHat.SetActive(false);
+        if (claydoughHat) claydoughHat.SetActive(false);
+        if (rebutiaHat) rebutiaHat.SetActive(false);
+        if (spindleHat) spindleHat.SetActive(false);
+        if (rebutiaRollingHat) rebutiaRollingHat.SetActive(false);
         switch (form)
         {
             case Form.Yarn:
                 if (hasHatSpindle)
                 {
-                    spindleHat.SetActive(true);
+                    if (spindleHat) spindleHat.SetActive(true);
                 }
                 break;
             case Form.Pin:
                 if (hasHatPinhead)
                 {
-                    pinheadHat.SetActive(true);
+                    if (pinheadHat) pinheadHat.SetActive(true);
                 }
                 break;
             case Form.Roll:
                 if (hasHatRebutia)
                 {
-                    rebutiaHat.SetActive(true);
-                    rebutiaRollingHat.SetActive(true);
+                    if (rebutiaHat) rebutiaHat.SetActive(true);
+                    if (rebutiaRollingHat) rebutiaRollingHat.SetActive(true);
                 }
                 break;
             case Form.Heavy:
                 if (hasHatClaydough)
                 {
-                    claydoughHat.SetActive(true);
+                    if (claydoughHat) claydoughHat.SetActive(true);
                 }
                 break;
         }

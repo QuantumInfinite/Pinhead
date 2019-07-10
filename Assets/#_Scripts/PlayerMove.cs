@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 //handles player movement, utilising the CharacterMotor class
@@ -175,14 +176,14 @@ public class PlayerMove : MonoBehaviour
 
         //move, rotate, manage speed
         characterMotor.MoveTo(moveDirection, curAccel, 0.7f, true);
-        if (rotateSpeed != 0 && direction.magnitude != 0)
+        if (Math.Abs(rotateSpeed) > 0.01f && Math.Abs(direction.magnitude) > 0.01f)
         {
             characterMotor.RotateToDirection(moveDirection, curRotateSpeed * 5, true);
         }
 
         characterMotor.ManageSpeed(curDecel, maxSpeed + movingObjSpeed.magnitude, true);
         //Movement sounds
-        if (grounded && Input.GetAxis("Horizontal") != 0 && walkSound && aSource.clip != walkSound)
+        if (grounded && Math.Abs(Input.GetAxis("Horizontal")) > 0.1f && walkSound && aSource.clip != walkSound)
         {
             aSource.volume = 1;
             aSource.clip = walkSound;
@@ -206,13 +207,13 @@ public class PlayerMove : MonoBehaviour
             }
         }
 
-        if (rigid.position.z != zConstant)
+        if (Math.Abs(rigid.position.z - zConstant) > 0.1f)
         {
             rigid.position = new Vector3(rigid.position.x, rigid.position.y, zConstant);
         }
 
         //Make player come to a hard stop when grounded and not pressing a button. also disable gravity
-        if (grounded && Input.GetAxis("Horizontal") == 0)
+        if (grounded && Math.Abs(Input.GetAxis("Horizontal")) < 0.1f)
         {
             //rigid.velocity = new Vector3(0, rigid.velocity.y);
             //rigid.useGravity = false;
@@ -241,7 +242,7 @@ public class PlayerMove : MonoBehaviour
             return;
         }
         //if no movement should be happening, stop player moving in Z/X axis
-        if (direction.magnitude == 0 && Mathf.Abs(slope) > 0.1 && slope < slopeLimit && rigid.velocity.magnitude < 2)
+        if (Math.Abs(direction.magnitude) < 0.01f && Mathf.Abs(slope) > 0.1 && slope < slopeLimit && rigid.velocity.magnitude < 2)
         {
             //it's usually not a good idea to alter a rigidbodies velocity every frame
             //but this is the cleanest way i could think of, and we have a lot of checks beforehand, so it should be ok
