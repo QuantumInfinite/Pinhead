@@ -1,10 +1,9 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 //this allows the player to pick up/throw, and also pull certain objects
 //you need to add the tags "Pickup" or "Pushable" to these objects
-[RequireComponent(typeof(AudioSource))]
-[RequireComponent(typeof(Rigidbody))]
-[RequireComponent(typeof(PlayerMove))]
+[RequireComponent(typeof(PlayerMove), typeof(AudioSource), typeof(Rigidbody))]
 public class Throwing : MonoBehaviour
 {
     public AudioClip pickUpSound;                               //sound when you pickup/grab an object
@@ -22,7 +21,8 @@ public class Throwing : MonoBehaviour
     public int armsAnimationLayer;                              //index of the animation layer for "arms"
 
     [HideInInspector]
-    public GameObject heldObj;
+    public Collider heldObj;
+
     private Vector3 holdPos;
     private FixedJoint joint;
     private float timeOfPickup, timeOfThrow, defRotateSpeed;
@@ -34,11 +34,14 @@ public class Throwing : MonoBehaviour
     private TriggerParent triggerParent;
     private RigidbodyInterpolation objectDefInterpolation;
 
+    public PhysicMaterial frictionlessMaterial;
+
 
     //setup
     void Awake()
     {
         aSource = GetComponent<AudioSource>();
+
         //create grabBox is none has been assigned
         if (!grabBox)
         {
@@ -56,30 +59,34 @@ public class Throwing : MonoBehaviour
         defRotateSpeed = playerMove.rotateSpeed;
         //set arms animation layer to animate with 1 weight (full override)
         if (animator)
+        {
             animator.SetLayerWeight(armsAnimationLayer, 1);
+        }
     }
 
     //throwing/dropping
     void Update()
     {
 
+        if (heldObj) //Turn on friction if not moving
+        {
+            
+            heldObj.material = Math.Abs(Input.GetAxis("Horizontal")) < 0.1f ? null : frictionlessMaterial;
+            animator.SetFloat("ClayPushPull", Input.GetAxis("Horizontal"));
+        }
         //when we press grab button, throw object if we're holding one
         if (Input.GetButtonDown("Grab") && heldObj && Time.time > timeOfPickup + 0.1f)
         {
             if (heldObj.tag == "Pickup")
+            {
                 ThrowPickup();
+            }
         }
         //set animation value for arms layer
         if (animator)
-            if (heldObj && heldObj.tag == "Pickup")
-                animator.SetBool("HoldingPickup", true);
-            else
-                animator.SetBool("HoldingPickup", false);
-
-        if (heldObj && heldObj.tag == "Pushable")
-            animator.SetBool("HoldingPushable", true);
-        else
-            animator.SetBool("HoldingPushable", false);
+        {
+            animator.SetBool("HoldingPickup", (heldObj && heldObj.tag == "Pickup"));
+        }
 
         //if we're holding a pushable, rotate to face it
         if (heldObj && heldObj.tag == "Pushable")
@@ -112,24 +119,32 @@ public class Throwing : MonoBehaviour
         {
             //pickup
             if (other.tag == "Pickup" && heldObj == null && timeOfThrow + 0.2f < Time.time)
+            {
                 LiftPickup(other);
+            }
+
             //grab
             if (other.tag == "Pushable" && heldObj == null && timeOfThrow + 0.2f < Time.time)
+            {
                 GrabPushable(other);
+            }
         }
     }
 
     private void GrabPushable(Collider other)
     {
-        heldObj = other.gameObject;
-        objectDefInterpolation = heldObj.GetComponent<Rigidbody>().interpolation;
-        heldObj.GetComponent<Rigidbody>().interpolation = RigidbodyInterpolation.Interpolate;
+        heldObj = other;
+        Rigidbody otherRigid = heldObj.GetComponent<Rigidbody>();
+        objectDefInterpolation = otherRigid.interpolation;
+        otherRigid.interpolation = RigidbodyInterpolation.Interpolate;
+        animator.SetTrigger("ClayGrab");
         AddJoint();
         //no breakForce limit for pushables anymore because Unity 5's new physics system broke this. Perhaps it'll be fixed in future
         joint.breakForce = Mathf.Infinity;
         joint.breakTorque = Mathf.Infinity;
         //stop player rotating in direction of movement, so they can face the block theyre pulling
         playerMove.rotateSpeed = 0;
+
     }
 
     private void LiftPickup(Collider other)
@@ -143,7 +158,7 @@ public class Throwing : MonoBehaviour
         if (!Physics.CheckSphere(holdPos, checkRadius))
         {
             gizmoColor = Color.green;
-            heldObj = other.gameObject;
+            heldObj = other;
             objectDefInterpolation = heldObj.GetComponent<Rigidbody>().interpolation;
             heldObj.GetComponent<Rigidbody>().interpolation = RigidbodyInterpolation.Interpolate;
             heldObj.transform.position = holdPos;
@@ -166,6 +181,7 @@ public class Throwing : MonoBehaviour
     private void DropPushable()
     {
         heldObj.GetComponent<Rigidbody>().interpolation = objectDefInterpolation;
+        heldObj.GetComponent<Collider>().material = null;
         Destroy(joint);
         playerMove.rotateSpeed = defRotateSpeed;
         heldObj = null;
@@ -202,7 +218,7 @@ public class Throwing : MonoBehaviour
                 aSource.clip = pickUpSound;
                 aSource.Play();
             }
-            joint = heldObj.AddComponent<FixedJoint>();
+            joint = heldObj.gameObject.AddComponent<FixedJoint>();
             joint.connectedBody = GetComponent<Rigidbody>();
         }
     }
@@ -213,6 +229,7 @@ public class Throwing : MonoBehaviour
         Gizmos.color = gizmoColor;
         Gizmos.DrawSphere(holdPos, checkRadius);
     }
+
 }
 
 /* NOTE: to check if the player is able to lift an object, and that nothing is above their head, a sphereCheck is used. (line 136)
