@@ -5,49 +5,54 @@ using UnityEngine.UI;
 
 public class DPadDisplay : MonoBehaviour
 {
-    [Space(10)]
+    [Header("Player References")]
+
+    //REFERENCE TO THE CHARACTERMOTOR
+    public CharacterMotor characterMotor;
+
+    [Header("UI Images")]
 
     //REFERENCES TO CANVAS IMAGES
     public GameObject entireDPad;
 
-    [Space(10)]
-
     //DPad White Arrows
+    [Space(10)]
     public Image upArrow;
     public Image downArrow;
     public Image leftArrow;
     public Image rightArrow;
 
+    //Dpad White Arrows (Animated)
     [Space(10)]
+    public Image upArrowAnim;
+    public Image downArrowAnim;
+    public Image leftArrowAnim;
+    public Image rightArrowAnim;
 
     //DPad Character Heads
+    [Space(10)]
     public Image pinHead;
     public Image spindle;
     public Image rebutia;
     public Image clayDoh;
 
-    [Space(10)]
-
+    [Header("Game Events")]
     //GAME EVENT BOOLEANS
     public bool spindleFound = false;
     public bool rebutiaFound = false;
     public bool clayDohFound = false;
 
-    [Space(10)]
-
-    //UI Colors
-    private Color transparent;
-    private Color opaque;
-
-    [Space(10)]
+    [Header("Animations")]
 
     //Animator
     public Animator animator;
 
-    [Space(10)]
-
     //Test Bools
     public bool moving = false;
+
+    //UI Colors
+    private Color transparent;
+    private Color opaque;
 
     void Start()
     {
@@ -60,24 +65,30 @@ public class DPadDisplay : MonoBehaviour
 
     void Update()
     {
+        //Handles Seperation of Animated Arrows and Input Feedback Arrows
         if(pinHead.color.a == 1)
         {
-            Debug.Log(pinHead.color.a);
+            upArrowAnim.gameObject.SetActive(false);
             upArrow.gameObject.SetActive(true);
+            downArrowAnim.gameObject.SetActive(false);
             downArrow.gameObject.SetActive(true);
+            leftArrowAnim.gameObject.SetActive(false);
             leftArrow.gameObject.SetActive(true);
+            rightArrowAnim.gameObject.SetActive(false);
             rightArrow.gameObject.SetActive(true);
         }
 
         if (pinHead.color.a < 1)
         {
-            Debug.Log(pinHead.color.a);
+            upArrowAnim.gameObject.SetActive(true);
             upArrow.gameObject.SetActive(false);
+            downArrowAnim.gameObject.SetActive(true);
             downArrow.gameObject.SetActive(false);
+            leftArrowAnim.gameObject.SetActive(true);
             leftArrow.gameObject.SetActive(false);
+            rightArrowAnim.gameObject.SetActive(true);
             rightArrow.gameObject.SetActive(false);
         }
-
 
         //Up Arrow Input
         if (Input.GetKeyDown("up"))
@@ -119,8 +130,18 @@ public class DPadDisplay : MonoBehaviour
             rightArrow.color = transparent;
         }
 
-        //TESTING PURPOSES
-        if(moving == false)
+        //Fading Animation
+        if (characterMotor.currentSpeed != Vector3.zero)
+        {
+            moving = true;
+        }
+
+        if (characterMotor.currentSpeed == Vector3.zero)
+        {
+            moving = false;
+        }
+
+        if (moving == false)
         {
             animator.SetBool("MovingStart", false);
             animator.SetBool("MovingStop", true);
@@ -132,6 +153,5 @@ public class DPadDisplay : MonoBehaviour
             animator.SetBool("MovingStart", true);
             
         }
-
     }
 }

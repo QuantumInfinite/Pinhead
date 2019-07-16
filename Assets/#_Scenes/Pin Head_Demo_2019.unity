@@ -1823,7 +1823,7 @@ GameObject:
   - component: {fileID: 160412643}
   - component: {fileID: 160412642}
   m_Layer: 0
-  m_Name: Up Arrow
+  m_Name: Up Arrow Anim
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1839,8 +1839,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1655490789}
+  m_Children: []
   m_Father: {fileID: 1133570600}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2423,7 +2422,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 269502012}
-  m_LocalRotation: {x: -0.024412494, y: 0.11449157, z: 0.0028143867, w: 0.99312025}
+  m_LocalRotation: {x: -0.024412494, y: 0.114491604, z: 0.0028143877, w: 0.99312025}
   m_LocalPosition: {x: 94.972, y: 8.128, z: -3.175}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -3055,7 +3054,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 293266053}
-  m_LocalRotation: {x: 0.039961252, y: 0.003388546, z: -0.0001355182, w: 0.9991955}
+  m_LocalRotation: {x: 0.039961252, y: 0.0033885462, z: -0.00013551846, w: 0.9991955}
   m_LocalPosition: {x: 37.53, y: 6.008, z: -11.371}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -4817,7 +4816,7 @@ GameObject:
   - component: {fileID: 508521805}
   - component: {fileID: 508521804}
   m_Layer: 0
-  m_Name: Left Arrow
+  m_Name: Left Arrow Anim
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4833,8 +4832,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: 0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1614776455}
+  m_Children: []
   m_Father: {fileID: 1133570600}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
@@ -6483,7 +6481,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 659039264}
-  m_LocalRotation: {x: 0.011390671, y: 0.050288312, z: -0.0005735806, w: 0.9986696}
+  m_LocalRotation: {x: 0.011390671, y: 0.05028831, z: -0.00057358056, w: 0.9986696}
   m_LocalPosition: {x: 84.014, y: 0.914, z: -4.904}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -6640,7 +6638,7 @@ GameObject:
   - component: {fileID: 662262159}
   - component: {fileID: 662262160}
   m_Layer: 0
-  m_Name: Right Arrow (1)
+  m_Name: Right Arrow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6653,16 +6651,16 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 662262157}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: -0.7071068, y: -0.7071068, z: -0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1677023620}
-  m_RootOrder: 0
+  m_Father: {fileID: 1133570600}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 180, y: 0, z: 270}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0, y: 0}
+  m_AnchoredPosition: {x: 28, y: 0}
   m_SizeDelta: {x: 14, y: 12}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &662262159
@@ -6904,6 +6902,18 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 6475815502612994790}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &708960998 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4452429393058245137, guid: 1e45a48ad03a0544cad6456eeeffae66,
+    type: 3}
+  m_PrefabInstance: {fileID: 6475815502612994790}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 708960990}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9ba551e60e36a949bdf6c0262d8b61e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!95 &708961002 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 6475815501979645964, guid: 1e45a48ad03a0544cad6456eeeffae66,
@@ -7031,7 +7041,7 @@ GameObject:
   - component: {fileID: 713850304}
   - component: {fileID: 713850303}
   m_Layer: 0
-  m_Name: Down Arrow
+  m_Name: Down Arrow Anim
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7047,8 +7057,7 @@ RectTransform:
   m_LocalRotation: {x: 1, y: -0, z: -0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1356591853}
+  m_Children: []
   m_Father: {fileID: 1133570600}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 180, y: 0, z: 0}
@@ -10994,6 +11003,10 @@ RectTransform:
   - {fileID: 713850302}
   - {fileID: 508521803}
   - {fileID: 1677023620}
+  - {fileID: 662262158}
+  - {fileID: 1655490789}
+  - {fileID: 1356591853}
+  - {fileID: 1614776455}
   m_Father: {fileID: 639263250}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -12920,7 +12933,7 @@ GameObject:
   - component: {fileID: 1356591854}
   - component: {fileID: 1356591855}
   m_Layer: 0
-  m_Name: Down Arrow (1)
+  m_Name: Down Arrow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12933,16 +12946,16 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1356591852}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 1, y: -0, z: -0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 713850302}
-  m_RootOrder: 0
+  m_Father: {fileID: 1133570600}
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 180, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -28}
   m_SizeDelta: {x: 14, y: 12}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1356591854
@@ -13460,7 +13473,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1400270974}
-  m_LocalRotation: {x: 0.055745218, y: -0.090058096, z: 0.0050487705, w: 0.99436235}
+  m_LocalRotation: {x: 0.055745218, y: -0.0900581, z: 0.005048771, w: 0.99436235}
   m_LocalPosition: {x: 97.348, y: 9.094, z: -3.869}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -15228,7 +15241,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1507270826}
-  m_LocalRotation: {x: 0.020009855, y: -0.16119401, z: 0.003268895, w: 0.9867145}
+  m_LocalRotation: {x: 0.020009855, y: -0.16119404, z: 0.0032688957, w: 0.9867145}
   m_LocalPosition: {x: -15.676, y: 0.72057366, z: -2.8059995}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -17025,7 +17038,7 @@ GameObject:
   - component: {fileID: 1614776456}
   - component: {fileID: 1614776457}
   m_Layer: 0
-  m_Name: Left Arrow (1)
+  m_Name: Left Arrow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -17038,16 +17051,16 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1614776454}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: 0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 508521803}
-  m_RootOrder: 0
+  m_Father: {fileID: 1133570600}
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -0}
+  m_AnchoredPosition: {x: -28, y: 0}
   m_SizeDelta: {x: 14, y: 12}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1614776456
@@ -17552,7 +17565,7 @@ GameObject:
   - component: {fileID: 1655490790}
   - component: {fileID: 1655490791}
   m_Layer: 0
-  m_Name: Up Arrow (1)
+  m_Name: Up Arrow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -17569,12 +17582,12 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 160412641}
-  m_RootOrder: 0
+  m_Father: {fileID: 1133570600}
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 28}
   m_SizeDelta: {x: 14, y: 12}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1655490790
@@ -17880,7 +17893,7 @@ GameObject:
   - component: {fileID: 1677023622}
   - component: {fileID: 1677023621}
   m_Layer: 0
-  m_Name: Right Arrow
+  m_Name: Right Arrow Anim
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -17896,8 +17909,7 @@ RectTransform:
   m_LocalRotation: {x: -0.7071068, y: -0.7071068, z: -0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 662262158}
+  m_Children: []
   m_Father: {fileID: 1133570600}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 180, y: 0, z: 270}
@@ -21208,11 +21220,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72f03ba11e22bcd41a2f7966be71150f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  characterMotor: {fileID: 708960998}
   entireDPad: {fileID: 639263249}
   upArrow: {fileID: 1655490791}
   downArrow: {fileID: 1356591855}
   leftArrow: {fileID: 1614776457}
   rightArrow: {fileID: 662262160}
+  upArrowAnim: {fileID: 160412642}
+  downArrowAnim: {fileID: 713850303}
+  leftArrowAnim: {fileID: 508521804}
+  rightArrowAnim: {fileID: 1677023621}
   pinHead: {fileID: 681707827}
   spindle: {fileID: 1519348612}
   rebutia: {fileID: 1748872446}
