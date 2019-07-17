@@ -37,6 +37,7 @@ public class DPadDisplay : MonoBehaviour
     public Image clayDoh;
 
     [Header("Game Events")]
+
     //GAME EVENT BOOLEANS
     public bool spindleFound = false;
     public bool rebutiaFound = false;
@@ -91,41 +92,41 @@ public class DPadDisplay : MonoBehaviour
         }
 
         //Up Arrow Input
-        if (Input.GetKeyDown("up"))
+        if (Input.GetKeyDown("up") || Input.GetKeyDown("1"))
         {
             upArrow.color = opaque;
         }
-        if (Input.GetKeyUp("up"))
+        if (Input.GetKeyUp("up") || Input.GetKeyUp("1"))
         {
             upArrow.color = transparent;
         }
 
         //Down Arrow Input
-        if (Input.GetKeyDown("down"))
+        if (Input.GetKeyDown("down") || Input.GetKeyDown("3"))
         {
             downArrow.color = opaque;
         }
-        if (Input.GetKeyUp("down"))
+        if (Input.GetKeyUp("down") || Input.GetKeyUp("3"))
         {
             downArrow.color = transparent;
         }
 
         //Left Arrow Input
-        if (Input.GetKeyDown("left"))
+        if (Input.GetKeyDown("left") || Input.GetKeyDown("4"))
         {
             leftArrow.color = opaque;
         }
-        if (Input.GetKeyUp("left"))
+        if (Input.GetKeyUp("left") || Input.GetKeyUp("4"))
         {
             leftArrow.color = transparent;
         }
 
         //Right Arrow Input
-        if (Input.GetKeyDown("right"))
+        if (Input.GetKeyDown("right") || Input.GetKeyDown("2"))
         {
             rightArrow.color = opaque;
         }
-        if (Input.GetKeyUp("right"))
+        if (Input.GetKeyUp("right") || Input.GetKeyUp("2"))
         {
             rightArrow.color = transparent;
         }
@@ -151,7 +152,6 @@ public class DPadDisplay : MonoBehaviour
         {
             animator.SetBool("MovingStop", false);
             animator.SetBool("MovingStart", true);
-            
         }
     }
 }
