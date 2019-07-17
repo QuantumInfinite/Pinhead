@@ -59,7 +59,7 @@ public class DPadDisplay : MonoBehaviour
         //Get transparency color value
         transparent = upArrow.color;
         opaque = upArrow.color;
-        opaque.a = 255f;
+        opaque.a = 1;
     }
 
 
@@ -78,7 +78,7 @@ public class DPadDisplay : MonoBehaviour
             rightArrow.gameObject.SetActive(true);
         }
 
-        if (pinHead.color.a < 1)
+        if(pinHead.color.a < 1)
         {
             upArrowAnim.gameObject.SetActive(true);
             upArrow.gameObject.SetActive(false);
