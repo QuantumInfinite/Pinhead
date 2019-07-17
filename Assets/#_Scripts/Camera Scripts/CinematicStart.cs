@@ -7,10 +7,11 @@ public class CinematicStart : MonoBehaviour
 {
     [SerializeField]
     public PlayableDirector PlayableDirector;
+    public string TagName = "Player";
 
     public void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag(TagName))
         {
             PlayableDirector.Play();
         }
