@@ -34,15 +34,15 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - Texture2D_45D7DB3:
-        m_Texture: {fileID: 2800000, guid: 1e7fd373f8c4ada44932ea71437dfa0e, type: 3}
+        m_Texture: {fileID: 2800000, guid: 1fb1a86487743a04399b030cb35d8041, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - Texture2D_4BBCE29:
-        m_Texture: {fileID: 2800000, guid: 87889d2e5edc1e542ae7f74767d0ed43, type: 3}
+        m_Texture: {fileID: 2800000, guid: 734efc7f562b63d4b8439dd57c6d1682, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - Texture2D_5741E08:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 1923f47f3eecbc048b3f2a1c88a6da1f, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - Texture2D_A3D17606:
@@ -94,8 +94,8 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - Vector1_1E47D72F: 0
-    - Vector1_3FAD567: 0
+    - Vector1_1E47D72F: 1
+    - Vector1_3FAD567: 1
     - Vector1_CC1CE956: 8.3
     - _AlphaClip: 0
     - _Blend: 0
@@ -105,6 +105,7 @@ Material:
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _EnvironmentReflections: 1
+    - _FresnelPowerSlider: 0
     - _GlossMapScale: 1
     - _Glossiness: 0.361
     - _GlossyReflections: 1
