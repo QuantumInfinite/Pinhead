@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Experimental.VFX;
 /*
@@ -13,20 +14,23 @@ using UnityEngine.Experimental.VFX;
  */
 public class FormScript : MonoBehaviour
 {
-
+    [Header("Character parts")]
     public GameObject playerRoot; //For spawning
     public GameObject baseModel; //For changing forms
     public GameObject rebutiaRollForm;// For rolling
     public GameObject UpperTorso;
    // public ParticleSystem formChangeParticles;
+   [Header("VFX")]
     public VisualEffect characterSwap;
     public Transform VFXSpawnerTransform;
 
+    public GameObject[] HeadPins;
     public GameObject pin; //Pin to throw
     public Transform pinSpawnMarker; //where to spawn pin
     public Animator animator; //Animator
     public SkinnedMeshRenderer materialRenderer; //Where to apply the materials
 
+    [Header("Sounds")]
     public AudioClip pinAimSound;
     public AudioClip pinThrowSound;
     public AudioClip pinPickupSound;
@@ -38,20 +42,25 @@ public class FormScript : MonoBehaviour
     public AudioClip pinEmptySound;
     private AudioSource aSource;
 
+    [Header("Pinhead")]
     [HideInInspector]
     public Form currentForm = Form.Pin;
     public int pinCount; //Count of available pins
     public float pinThrowTime; //throw time
     public float pinDespawnTimer; //Time for pins to disapear
+
+    [Header("Spindle")]
     public float range;
     public int maxSwingLength = 15;
     public float swingingAirDecel;
     public GameObject yarnSpawnMarker;
-    public GameObject[] HeadPins;
+
+    [Header("Clay-doh")]
     private float regularWeight;
     public float heavyWeight;
     public float heavySpeed;
     private float regularSpeed;
+
     public Material[] materials;
     public List<GameObject> pinList; //list of all pins
     [HideInInspector]
@@ -543,46 +552,38 @@ public class FormScript : MonoBehaviour
     //SWING FUNCTIONS
     GameObject GetNearestPin()
     {
+        Vector3 sphereCastStart = transform.position;
+        sphereCastStart.z = -range;
+
+        GameObject[] nearbyPins = Physics.SphereCastAll(sphereCastStart, range, new Vector3(0,0,1))
+            .Where( x => x.transform.tag == "Pin")
+            .Select(x => x.transform.gameObject)
+            .ToArray();
         GameObject nearestPin = null;
         float pinDistance = Mathf.Infinity;
-        pinList = GetComponent<FormScript>().pinList;
 
         //Go through each pin and find their distance
-        foreach (GameObject pin in pinList)
+        foreach (GameObject pin in nearbyPins)
         {
+            print(pin + " " + pin.name + " " + pin.tag);
             float dist = Vector2.Distance(transform.position, pin.transform.position);
-            if (pin.GetComponent<PinScript>().currentPinMode == PinScript.PinMode.back && dist < pinDistance)
+            if (pin.GetComponent<PinScript>().currentPinMode == PinScript.PinMode.back && dist < pinDistance && dist < maxSwingLength)
             {
                 nearestPin = pin;
                 pinDistance = dist;
             }
         }
-        if (pinDistance > maxSwingLength)
-        { //Make sure our pin is close enough
-            return null;
-        }
-        else
-        {
-            return nearestPin;
-        }
+
+        return nearestPin;
     }
     void AddJoint(GameObject pivot)
     {
-        print("called");
         joint = gameObject.AddComponent<ConfigurableJoint>();
         joint.connectedBody = pivot.GetComponent<Rigidbody>();
         joint.anchor = Vector3.zero;
         joint.xMotion = ConfigurableJointMotion.Locked;
         joint.yMotion = ConfigurableJointMotion.Locked;
         joint.zMotion = ConfigurableJointMotion.Locked;
-        Invoke("AllowClimb", 0.2f);
-    }
-
-    void AllowClimb()
-    {
-        joint.autoConfigureConnectedAnchor = false;
-        joint.connectedAnchor = new Vector3(0, joint.connectedAnchor.magnitude, 0);
-
     }
 
     //PIN FUNCTIONS

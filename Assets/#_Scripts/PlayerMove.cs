@@ -24,7 +24,7 @@ public class PlayerMove : MonoBehaviour
 
     private bool grounded;
 
-    [HideInInspector] public bool horizontalMovementAllowed = true;
+    public bool horizontalMovementAllowed = true;
 
     public float jumpDelay = 0.1f; //how fast you need to jump after hitting the ground, to do the next type of jump
 
