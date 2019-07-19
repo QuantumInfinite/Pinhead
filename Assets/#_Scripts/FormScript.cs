@@ -164,9 +164,9 @@ public class FormScript : MonoBehaviour
                 case Form.Pin:
                     //Raycast and aim
 
-                    Vector3 point = FireRay().point;
-                    playerRoot.transform.LookAt(new Vector3(point.x, transform.position.y, point.z));
-                    UpperTorso.transform.LookAt(point); //have player look at mouse
+                    //Vector3 point = FireRay().point;
+                    //playerRoot.transform.LookAt(new Vector3(point.x, transform.position.y, point.z));
+                    //UpperTorso.transform.LookAt(point); //have player look at mouse
                     break;
 
                 case Form.Yarn:
@@ -239,7 +239,7 @@ public class FormScript : MonoBehaviour
                 case Form.Pin:
                     //virtualInput.EnableCursor(false);
                     RaycastHit hit = FireRay();
-                    if ((hit.transform.tag == "SidePin" || hit.transform.tag == "BackPin" || hit.transform.tag == "Destroyable") && hit.distance <= range)
+                    if (hit.transform && (hit.transform.tag == "SidePin" || hit.transform.tag == "BackPin" || hit.transform.tag == "Destroyable") && hit.distance <= range)
                     {
                         ThrowAt(pinInstance, FireRay(), pinThrowTime);
 
@@ -591,6 +591,8 @@ public class FormScript : MonoBehaviour
         if (virtualInput != null)
         {
             Ray raymond = Camera.main.ScreenPointToRay(virtualInput.GetVirtualCursorPosition());
+            Debug.DrawRay(Camera.main.transform.position, raymond.direction * 100f, Color.red, 2.0f);
+            
             RaycastHit hit;
             Physics.Raycast(raymond, out hit, 1000);
             //hit.point = new Vector3(hit.point.x,hit.point.y, 0);
