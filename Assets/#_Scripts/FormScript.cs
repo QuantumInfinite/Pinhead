@@ -148,6 +148,18 @@ public class FormScript : MonoBehaviour
     }
 
     private bool test = false;
+
+    void FixedUpdate()
+    {
+        if (Input.GetButtonDown("Fire") && !UIManagaer.GetComponent<PauseMenu>().IsPaused)
+        {
+            ActivateAbility();
+        }
+        if (Input.GetButtonUp("Fire") && !UIManagaer.GetComponent<PauseMenu>().IsPaused)
+        {
+            DeactivateAbility();
+        }
+    }
     void Update()
     {
         //Change forms
@@ -173,9 +185,9 @@ public class FormScript : MonoBehaviour
                 case Form.Pin:
                     //Raycast and aim
 
-                    //Vector3 point = FireRay().point;
-                    //playerRoot.transform.LookAt(new Vector3(point.x, transform.position.y, point.z));
-                    //UpperTorso.transform.LookAt(point); //have player look at mouse
+                    Vector3 point = FireRay().point;
+                    playerRoot.transform.LookAt(new Vector3(point.x, transform.position.y, point.z));
+                    UpperTorso.transform.LookAt(point); //have player look at mouse
                     break;
 
                 case Form.Yarn:
@@ -348,13 +360,7 @@ public class FormScript : MonoBehaviour
                     //Cursor.visible = true;
                     //Cursor.lockState = CursorLockMode.Locked; //This and next line center curser on screen 
                     //Cursor.lockState = CursorLockMode.None;   //^
-
-                    if (virtualInput != null)
-                    {
-                        //virtualInput.Center();
-                        // virtualInput.SetVirtualOffset(new Vector3(Screen.width / 3, 0));
-                    }
-
+                    
                     //change sound
                     aSource.volume = 0.5f;
                     clip = pinAimSound;
@@ -591,11 +597,15 @@ public class FormScript : MonoBehaviour
     {
         if (virtualInput != null)
         {
-            Ray raymond = Camera.main.ScreenPointToRay(virtualInput.GetVirtualCursorPosition());
-            Debug.DrawRay(Camera.main.transform.position, raymond.direction * 100f, Color.red, 2.0f);
-            
+            Ray raymond = Camera.main.ScreenPointToRay(Input.mousePosition);
+            //raymond.origin = new Vector3(raymond.origin.x, raymond.origin.y, -7.5f);
+            Debug.DrawRay(raymond.origin, raymond.direction * 100f, Color.red, 2.0f);
             RaycastHit hit;
             Physics.Raycast(raymond, out hit, 1000);
+            //GameObject s = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            //s.transform.localScale *= 0.1f;
+            //DestroyImmediate(s.GetComponent<Collider>());
+            //s.transform.position = hit.point;
             //hit.point = new Vector3(hit.point.x,hit.point.y, 0);
             return hit;
         }
@@ -634,7 +644,6 @@ public class FormScript : MonoBehaviour
 
     void ThrowAt(GameObject Pin, RaycastHit Target, float hitTimer)
     {
-
         //Add this pin to pinList
         pinList.Add(Pin);
 
@@ -642,7 +651,7 @@ public class FormScript : MonoBehaviour
         Pin.transform.parent = null;
         Pin.AddComponent<Rigidbody>();
         Pin.GetComponent<BoxCollider>().enabled = true;
-
+        Pin.transform.LookAt(Target.point);
 
         //Do the calculations
         float distanceX = -(Pin.transform.position.x - Target.point.x);
