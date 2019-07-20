@@ -20,13 +20,13 @@ public class FormScript : MonoBehaviour
     public GameObject rebutiaRollForm;// For rolling
     public GameObject UpperTorso;
    // public ParticleSystem formChangeParticles;
+
    [Header("VFX")]
     public VisualEffect characterSwap;
     public Transform VFXSpawnerTransform;
-
     public GameObject[] HeadPins;
+
     public GameObject pin; //Pin to throw
-    public Transform pinSpawnMarker; //where to spawn pin
     public Animator animator; //Animator
     public SkinnedMeshRenderer materialRenderer; //Where to apply the materials
 
@@ -43,11 +43,11 @@ public class FormScript : MonoBehaviour
     private AudioSource aSource;
 
     [Header("Pinhead")]
-    [HideInInspector]
     public Form currentForm = Form.Pin;
     public int pinCount; //Count of available pins
     public float pinThrowTime; //throw time
     public float pinDespawnTimer; //Time for pins to disapear
+    public Transform pinSpawnMarker; //where to spawn pin
 
     [Header("Spindle")]
     public float range;
@@ -56,11 +56,12 @@ public class FormScript : MonoBehaviour
     public GameObject yarnSpawnMarker;
 
     [Header("Clay-doh")]
-    private float regularWeight;
     public float heavyWeight;
     public float heavySpeed;
-    private float regularSpeed;
+    public Color32 clayNormalColor = new Color(1, 1, 1, 1);
+    public Color32 clayHeavyColor = new Color(0.5F, 0.5f, 0.5F, 1);
 
+    [Header("General")]
     public Material[] materials;
     public List<GameObject> pinList; //list of all pins
     [HideInInspector]
@@ -68,8 +69,22 @@ public class FormScript : MonoBehaviour
     public bool enableAllForms;
     public BoxCollider mainColider;
     public SphereCollider rebutiaColider;
-    public Color32 clayNormalColor = new Color(1, 1, 1, 1);
-    public Color32 clayHeavyColor = new Color(0.5F, 0.5f, 0.5F, 1);
+
+    [Header("Hats")]
+    public GameObject pinheadHat;
+    public GameObject rebutiaHat;
+    public GameObject rebutiaRollingHat;
+    public GameObject spindleHat;
+    public GameObject claydoughHat;
+    public bool hasHatPinhead;
+    public bool hasHatRebutia;
+    public bool hasHatSpindle;
+    public bool hasHatClaydough;
+
+
+    //Private members
+    private float regularWeight;
+    private float regularSpeed;
 
     Rigidbody rigid;
 
@@ -86,7 +101,14 @@ public class FormScript : MonoBehaviour
     PlayerMove playerMove;
 
     private VirtualInputModule virtualInput;
+    
+    GameObject UIManagaer;
 
+    backgroundAudioMixer bgAudio;
+
+   
+
+    //Enums
     public enum DPadDirection
     {
         None,
@@ -104,21 +126,6 @@ public class FormScript : MonoBehaviour
         Roll,
         Heavy
     }
-    GameObject UIManagaer;
-
-    backgroundAudioMixer bgAudio;
-
-    [Header("Hats")]
-    public GameObject pinheadHat;
-    public GameObject rebutiaHat;
-    public GameObject rebutiaRollingHat;
-    public GameObject spindleHat;
-    public GameObject claydoughHat;
-    public bool hasHatPinhead;
-    public bool hasHatRebutia;
-    public bool hasHatSpindle;
-    public bool hasHatClaydough;
-
 
     private void Start()
     {
@@ -151,14 +158,7 @@ public class FormScript : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (Input.GetButtonDown("Fire") && !UIManagaer.GetComponent<PauseMenu>().IsPaused)
-        {
-            ActivateAbility();
-        }
-        if (Input.GetButtonUp("Fire") && !UIManagaer.GetComponent<PauseMenu>().IsPaused)
-        {
-            DeactivateAbility();
-        }
+        CheckAbilities(); //Duplicate code because cinimachine dumb
     }
     void Update()
     {
@@ -169,15 +169,8 @@ public class FormScript : MonoBehaviour
             ChangeForm(dPadInput);
         }
 
+        CheckAbilities();  //Duplicate code because cinimachine dumb
 
-        if (Input.GetButtonDown("Fire") && !UIManagaer.GetComponent<PauseMenu>().IsPaused)
-        {
-            ActivateAbility();
-        }
-        if (Input.GetButtonUp("Fire") && !UIManagaer.GetComponent<PauseMenu>().IsPaused)
-        {
-            DeactivateAbility();
-        }
         if (abilityIsActive)
         { //DoingStuff while active
             switch (currentForm)
@@ -218,8 +211,20 @@ public class FormScript : MonoBehaviour
         if (drawLine)
         {
             //Draw Line
-            Vector3[] positions = { yarnSpawnMarker.transform.position, pivot.transform.position };
+            Vector3[] positions = {yarnSpawnMarker.transform.position, pivot.transform.position };
             GetComponent<LineRenderer>().SetPositions(positions);
+        }
+    }
+
+    void CheckAbilities()
+    {
+        if (Input.GetButtonDown("Fire") && !UIManagaer.GetComponent<PauseMenu>().IsPaused)
+        {
+            ActivateAbility();
+        }
+        if (Input.GetButtonUp("Fire") && !UIManagaer.GetComponent<PauseMenu>().IsPaused)
+        {
+            DeactivateAbility();
         }
     }
 
@@ -375,14 +380,15 @@ public class FormScript : MonoBehaviour
                 break;
             case Form.Yarn:
 
-                pivot = GetNearestPin();
-                if (pivot != null)
+                GameObject nearestPin = GetNearestPin();
+                if (nearestPin != null)
                 { //Pin found. Connect
+                    pivot = nearestPin.GetComponent<PinScript>().pivotPoint;
                   //Set active
                     abilityIsActive = true;
 
                     animator.SetTrigger("Swinging");
-                    AddJoint(pivot.GetComponent<PinScript>().pivotPoint);
+                    AddJoint(pivot);
 
                     //remove deceleration
                     airDecel = playerMove.airDecel;
@@ -559,21 +565,19 @@ public class FormScript : MonoBehaviour
     GameObject GetNearestPin()
     {
         Vector3 sphereCastStart = transform.position;
-        sphereCastStart.z = -range;
+        sphereCastStart.z = -maxSwingLength;
 
-        GameObject[] nearbyPins = Physics.SphereCastAll(sphereCastStart, range, new Vector3(0,0,1))
-            .Where( x => x.transform.tag == "Pin")
+        GameObject[] nearbyPins = Physics.SphereCastAll(sphereCastStart, maxSwingLength, new Vector3(0,0,1))
+            .Where( x => x.transform && x.transform.tag == "Pin")
             .Select(x => x.transform.gameObject)
             .ToArray();
         GameObject nearestPin = null;
         float pinDistance = Mathf.Infinity;
-
         //Go through each pin and find their distance
         foreach (GameObject pin in nearbyPins)
         {
-            print(pin + " " + pin.name + " " + pin.tag);
             float dist = Vector2.Distance(transform.position, pin.transform.position);
-            if (pin.GetComponent<PinScript>().currentPinMode == PinScript.PinMode.back && dist < pinDistance && dist < maxSwingLength)
+            if (pin.GetComponent<PinScript>()?.currentPinMode == PinScript.PinMode.back && dist < pinDistance && dist < maxSwingLength)
             {
                 nearestPin = pin;
                 pinDistance = dist;
@@ -582,10 +586,10 @@ public class FormScript : MonoBehaviour
 
         return nearestPin;
     }
-    void AddJoint(GameObject pivot)
+    void AddJoint(GameObject target)
     {
         joint = gameObject.AddComponent<ConfigurableJoint>();
-        joint.connectedBody = pivot.GetComponent<Rigidbody>();
+        joint.connectedBody = target.GetComponent<Rigidbody>();
         joint.anchor = Vector3.zero;
         joint.xMotion = ConfigurableJointMotion.Locked;
         joint.yMotion = ConfigurableJointMotion.Locked;
@@ -597,7 +601,7 @@ public class FormScript : MonoBehaviour
     {
         if (virtualInput != null)
         {
-            Ray raymond = Camera.main.ScreenPointToRay(Input.mousePosition);
+            Ray raymond = Camera.main.ScreenPointToRay(virtualInput.GetVirtualCursorPosition());
             //raymond.origin = new Vector3(raymond.origin.x, raymond.origin.y, -7.5f);
             Debug.DrawRay(raymond.origin, raymond.direction * 100f, Color.red, 2.0f);
             RaycastHit hit;
@@ -703,7 +707,7 @@ public class FormScript : MonoBehaviour
     {
         float hAxis = Input.GetAxis("DPadX");
         float vAxis = Input.GetAxis("DPadY");
-        if (hAxis + vAxis != 0)
+        if (Mathf.Abs(hAxis) + Mathf.Abs(vAxis) > 0.1f)
         {
             float hStrength = Mathf.Abs(hAxis);
             float vStrength = Mathf.Abs(vAxis);
