@@ -86,6 +86,8 @@ public class FormScript : MonoBehaviour
     private float regularWeight;
     private float regularSpeed;
 
+    private Throwing pushPullGrabHandler;
+
     Rigidbody rigid;
 
     GameObject pinInstance; //Current Pin
@@ -129,6 +131,7 @@ public class FormScript : MonoBehaviour
 
     private void Start()
     {
+        pushPullGrabHandler = GetComponent<Throwing>(); //this is for pickup/push/pull. NOT PINS
         pinList = new List<GameObject>();
         torsoRotation = UpperTorso.transform.localEulerAngles;
         aSource = GetComponent<AudioSource>();
@@ -318,6 +321,7 @@ public class FormScript : MonoBehaviour
                     break;
                 case Form.Heavy:
                     materialRenderer.material.color = clayNormalColor;
+                    pushPullGrabHandler.ReleaseGrab();
                     break;
             }
             //play sound
@@ -417,9 +421,9 @@ public class FormScript : MonoBehaviour
                 break;
             case Form.Heavy:
                 //Set active
-
                 abilityIsActive = true;
                 materialRenderer.material.color = clayHeavyColor;
+                pushPullGrabHandler.TryGrab();
                 break;
         }
         if (clip)
@@ -611,6 +615,7 @@ public class FormScript : MonoBehaviour
             //DestroyImmediate(s.GetComponent<Collider>());
             //s.transform.position = hit.point;
             //hit.point = new Vector3(hit.point.x,hit.point.y, 0);
+            //print(hit.transform?.name);
             return hit;
         }
         else

@@ -36,10 +36,13 @@ public class Throwing : MonoBehaviour
 
     public PhysicMaterial frictionlessMaterial;
 
+    public FormScript formscript;
+    private Collider colliderInGrabBox;
 
     //setup
     void Awake()
     {
+        formscript = GetComponent<FormScript>();
         aSource = GetComponent<AudioSource>();
 
         //create grabBox is none has been assigned
@@ -67,21 +70,21 @@ public class Throwing : MonoBehaviour
     //throwing/dropping
     void Update()
     {
-
+        
         if (heldObj) //Turn on friction if not moving
         {
-            
             heldObj.material = Math.Abs(Input.GetAxis("Horizontal")) < 0.1f ? null : frictionlessMaterial;
             animator.SetFloat("ClayPushPull", Input.GetAxis("Horizontal"));
         }
-        //when we press grab button, throw object if we're holding one
-        if (Input.GetButtonDown("Grab") && heldObj && Time.time > timeOfPickup + 0.1f)
-        {
-            if (heldObj.tag == "Pickup")
-            {
-                ThrowPickup();
-            }
-        }
+
+        ////when we press grab button, throw object if we're holding one
+        //if (Input.GetButtonDown("Grab") && heldObj && Time.time > timeOfPickup + 0.1f)
+        //{
+        //    if (heldObj.tag == "Pickup")
+        //    {
+        //        ThrowPickup();
+        //    }
+        //}
         //set animation value for arms layer
         if (animator)
         {
@@ -98,10 +101,10 @@ public class Throwing : MonoBehaviour
 			 */
 
             //if we let go of grab key, drop the pushable
-            if (Input.GetButtonUp("Grab"))
-            {
-                DropPushable();
-            }
+            //if (Input.GetButtonUp("Grab"))
+            //{
+            //    DropPushable();
+            //}
 
             if (!joint)
             {
@@ -114,21 +117,48 @@ public class Throwing : MonoBehaviour
     //pickup/grab
     void OnTriggerStay(Collider other)
     {
-        //if grab is pressed and an object is inside the players "grabBox" trigger
-        if (Input.GetButton("Grab"))
+        if (formscript.currentForm != FormScript.Form.Heavy)
         {
-            //pickup
-            if (other.tag == "Pickup" && heldObj == null && timeOfThrow + 0.2f < Time.time)
-            {
-                LiftPickup(other);
-            }
-
-            //grab
-            if (other.tag == "Pushable" && heldObj == null && timeOfThrow + 0.2f < Time.time)
-            {
-                GrabPushable(other);
-            }
+            return;
         }
+
+        colliderInGrabBox = other;
+
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        if (colliderInGrabBox == other)
+        {
+            colliderInGrabBox = null;
+        }
+    }
+
+    public void ReleaseGrab()
+    {
+        if (heldObj && heldObj.tag == "Pushable")
+        {
+            DropPushable();
+        }
+    }
+    public void TryGrab()
+    {
+        if (colliderInGrabBox == null)
+        {
+            return;
+        }
+        //pickup
+        if (colliderInGrabBox.tag == "Pickup" && heldObj == null && timeOfThrow + 0.2f < Time.time)
+        {
+            LiftPickup(colliderInGrabBox);
+        }
+
+        //grab
+        if (colliderInGrabBox.tag == "Pushable" && heldObj == null && timeOfThrow + 0.2f < Time.time)
+        {
+            GrabPushable(colliderInGrabBox);
+        }
+        
     }
 
     private void GrabPushable(Collider other)
