@@ -1,13 +1,28 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.Audio;
 
 public class PauseMenu : MonoBehaviour
 {
-
+    [Header("Different Menus")]
     public GameObject PauseUI;
     public GameObject RadialUI;
+    public GameObject Options;
+    public GameObject Pause;
+
+    [Header ("Options Menu")]
+    public bool options = false;
+
+    [Header ("Audio")]
+    public AudioMixer mixer;
+    public Slider masterSlider;
+    public Slider sFXSlider;
+    public Slider musicSlider;
+
+    [Header ("Misc.")]
     public bool IsPaused = false;
+    
     GameObject player;
     enum Menu
     {
@@ -35,6 +50,7 @@ public class PauseMenu : MonoBehaviour
     {
         if (Input.GetKeyDown("escape") && currentMenu != Menu.Radial)
         {
+            BackButton();
             currentMenu = Menu.Pause;
             TogglePause(PauseUI);
 
@@ -43,6 +59,12 @@ public class PauseMenu : MonoBehaviour
         {
             currentMenu = Menu.Radial;
             TogglePause(RadialUI);
+        }
+        if(options)
+        {
+            mixer.SetFloat("MasterVol", Mathf.Log10(masterSlider.normalizedValue) * 20);
+            mixer.SetFloat("MusicVol", Mathf.Log10(musicSlider.normalizedValue) * 20);
+            mixer.SetFloat("SFXVol", Mathf.Log10(sFXSlider.normalizedValue) * 20);
         }
     }
 
@@ -90,6 +112,20 @@ public class PauseMenu : MonoBehaviour
         }
 
     }
+    public void OptionsButton()
+    {
+        options = true;
+        Pause.SetActive(false);
+        Options.SetActive(true);
+    }
+
+    public void BackButton()
+    {
+        options = false;
+        Pause.SetActive(true);
+        Options.SetActive(false);
+    }
+
     public void MenuButton()
     {
         Time.timeScale = 1f;
