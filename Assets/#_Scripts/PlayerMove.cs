@@ -110,10 +110,12 @@ public class PlayerMove : MonoBehaviour
         floorCheckers = new List<Transform>();
         //floorCheckers = new Transform[floorChecks.childCount];
         for (var i = 0; i < floorChecks.childCount; i++)
+        {
             if (floorChecks.GetChild(i).gameObject.activeInHierarchy)
             {
                 floorCheckers.Add(floorChecks.GetChild(i));
             }
+        }
     }
 
     private void Start()
