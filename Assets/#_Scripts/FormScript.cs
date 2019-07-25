@@ -196,6 +196,7 @@ public class FormScript : MonoBehaviour
                     break;
                 case Form.Roll:
                     rebutiaRollForm.GetComponent<Animator>().SetBool("Rolling", Math.Abs(Input.GetAxis("Horizontal")) > 0.01f);
+                    
                     break;
                 case Form.Heavy:
                     //Do nothing
