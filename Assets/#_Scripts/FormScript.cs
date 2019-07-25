@@ -311,8 +311,11 @@ public class FormScript : MonoBehaviour
                     //Change form
                     rebutiaRollForm.SetActive(false);
                     baseModel.SetActive(true);
-                    //mainColider.enabled = true;
-                    //rebutiaColider.enabled = false;
+
+                    mainColider.enabled = true;
+                    rebutiaColider.enabled = false;
+
+                    PinsInHead();
                     if (hasHatRebutia)
                     {
                         rebutiaRollingHat.SetActive(false);
@@ -410,9 +413,18 @@ public class FormScript : MonoBehaviour
                 //Change form
                 abilityIsActive = true;
                 rebutiaRollForm.SetActive(true);
+
                 baseModel.SetActive(false);
-                //mainColider.enabled = false;
-                //rebutiaColider.enabled = true;
+
+                //Hide pins
+                for (int i = 0; i < HeadPins.Length; i++)
+                {
+                    HeadPins[i].SetActive(false);
+                }
+
+                mainColider.enabled = false;
+                rebutiaColider.enabled = true;
+
                 if (hasHatRebutia)
                 {
                     rebutiaRollingHat.SetActive(true);
