@@ -492,6 +492,7 @@ public class FormScript : MonoBehaviour
         {
             characterSwap.transform.position =  VFXSpawnerTransform.position;
             characterSwap.SendEvent("PlaySparkles");
+            animator.SetTrigger("CharacterSwap");
             
         }
         if (formChangeSound)
@@ -510,6 +511,7 @@ public class FormScript : MonoBehaviour
 
         switch (switchTo)
         {
+
             //PIN
             case Form.Pin:
                 //PinsInHead();
