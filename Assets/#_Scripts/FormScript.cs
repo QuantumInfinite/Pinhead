@@ -261,83 +261,87 @@ public class FormScript : MonoBehaviour
 
     void DeactivateAbility()
     {
-        if (abilityIsActive)
+        if (!abilityIsActive)
         {
-            AudioClip clip = null;
-            switch (currentForm)
-            {
-                case Form.Pin:
-                    //virtualInput.EnableCursor(false);
-                    RaycastHit hit = FireRay();
-                    if (hit.transform && (hit.transform.tag == "SidePin" || hit.transform.tag == "BackPin" || hit.transform.tag == "Destroyable") && hit.distance <= range)
-                    {
-                        ThrowAt(pinInstance, FireRay(), pinThrowTime);
-
-                        //Remove Control of this pin
-                        pinInstance = null;
-
-                        //Play throw animation
-                        animator.SetTrigger("Throw");
-
-                        //Change sound
-                        clip = pinThrowSound;
-                    }
-                    else
-                    {
-                        pinCount++;
-                        Destroy(pinInstance);
-                        animator.SetTrigger("Idle");
-                    }
-                    PinsInHead();
-                    UpperTorso.transform.localEulerAngles = torsoRotation;
-                    playerMove.horizontalMovementAllowed = true;
-                    Cursor.visible = false;
-                    break;
-                case Form.Yarn:
-                    //body.AddRelativeForce(new Vector3(400, 500));
-                    Destroy(joint);
-
-                    animator.SetTrigger("StopSwinging");
-                    //Add deceleration back
-                    playerMove.airDecel = airDecel;
-
-                    //Stop drawing
-                    GetComponent<LineRenderer>().enabled = false;
-                    drawLine = false;
-
-                    //change sound
-                    clip = swingReleaseSound;
-                    break;
-                case Form.Roll:
-                    //Change form
-                    rebutiaRollForm.SetActive(false);
-                    baseModel.SetActive(true);
-
-                   //mainColider.enabled = true;
-                    //rebutiaColider.enabled = false;
-
-                    PinsInHead();
-                    if (hasHatRebutia)
-                    {
-                        rebutiaRollingHat.SetActive(false);
-                        rebutiaHat.SetActive(true);
-                    }
-                    break;
-                case Form.Heavy:
-                    materialRenderer.material.color = clayNormalColor;
-                    pushPullGrabHandler.ReleaseGrab();
-                    break;
-            }
-            //play sound
-            if (clip)
-            {
-                aSource.volume = 1;
-                aSource.clip = clip;
-                aSource.Play();
-            }
-            //Set inactive
-            abilityIsActive = false;
+            return;
         }
+
+        AudioClip clip = null;
+        switch (currentForm)
+        {
+            case Form.Pin:
+                //virtualInput.EnableCursor(false);
+                RaycastHit hit = FireRay();
+                if (hit.transform && (hit.transform.tag == "SidePin" || hit.transform.tag == "BackPin" || hit.transform.tag == "Destroyable") && hit.distance <= range)
+                {
+                    ThrowAt(pinInstance, FireRay(), pinThrowTime);
+
+                    //Remove Control of this pin
+                    pinInstance = null;
+
+                    //Play throw animation
+                    animator.SetTrigger("Throw");
+
+                    //Change sound
+                    clip = pinThrowSound;
+                }
+                else
+                {
+                    pinCount++;
+                    Destroy(pinInstance);
+                    animator.SetTrigger("Idle");
+                }
+                PinsInHead();
+                UpperTorso.transform.localEulerAngles = torsoRotation;
+                playerMove.horizontalMovementAllowed = true;
+                Cursor.visible = false;
+                break;
+            case Form.Yarn:
+                //body.AddRelativeForce(new Vector3(400, 500));
+                Destroy(joint);
+
+                animator.SetTrigger("StopSwinging");
+                //Add deceleration back
+                playerMove.airDecel = airDecel;
+
+                //Stop drawing
+                GetComponent<LineRenderer>().enabled = false;
+                drawLine = false;
+
+                //change sound
+                clip = swingReleaseSound;
+                break;
+            case Form.Roll:
+                //Change form
+                rebutiaRollForm.SetActive(false);
+                baseModel.SetActive(true);
+
+                //mainColider.enabled = true;
+                //rebutiaColider.enabled = false;
+
+                //rigid.useGravity = true;
+
+                PinsInHead();
+                if (hasHatRebutia)
+                { 
+                    rebutiaRollingHat.SetActive(false);
+                    rebutiaHat.SetActive(true);
+                }
+                break;
+            case Form.Heavy:
+                materialRenderer.material.color = clayNormalColor;
+                pushPullGrabHandler.ReleaseGrab();
+                break;
+        }
+        //play sound
+        if (clip)
+        {
+            aSource.volume = 1;
+            aSource.clip = clip;
+            aSource.Play();
+        }
+        //Set inactive
+        abilityIsActive = false;
 
     }
 
@@ -416,6 +420,8 @@ public class FormScript : MonoBehaviour
                 rebutiaRollForm.SetActive(true);
 
                 baseModel.SetActive(false);
+
+                //rigid.useGravity = false;
 
                 //Hide pins
                 for (int i = 0; i < HeadPins.Length; i++)

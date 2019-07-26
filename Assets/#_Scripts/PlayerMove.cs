@@ -10,6 +10,7 @@ public class PlayerMove : MonoBehaviour
 {
     //movement
     public float accel = 70f; //acceleration/deceleration in air or on the ground
+
     public float airAccel = 18f;
     public float airDecel = 1.1f;
     private float airPressTime, groundedCount, curAccel, curDecel, curRotateSpeed, slope;
@@ -68,6 +69,7 @@ public class PlayerMove : MonoBehaviour
     public AudioClip walkSound;
     private float zConstant;
 
+    public float rebutiaClimbSpeed = 1.5f;
     //setup
     private void Awake()
     {
@@ -222,34 +224,63 @@ public class PlayerMove : MonoBehaviour
         }
         else
         {
-            rigid.useGravity = true;
+            ///rigid.useGravity = true;
+        }
+    }
+
+    void OnCollisionEnter(Collision other)
+    {
+        if (other.collider.tag == "Scalable" && GetComponent<FormScript>().currentForm == FormScript.Form.Roll &&
+            GetComponent<FormScript>().abilityIsActive)
+        {
+            rigid.velocity = Vector3.zero;
         }
     }
 
     //prevents rigidbody from sliding down slight slopes (read notes in characterMotor class for more info on friction)
     private void OnCollisionStay(Collision other)
     {
-        if (other.collider.tag == "Scalable" && GetComponent<FormScript>().currentForm == FormScript.Form.Roll &&
-            GetComponent<FormScript>().abilityIsActive)
+        if (other.collider.tag == "Scalable" && GetComponent<FormScript>().currentForm == FormScript.Form.Roll && GetComponent<FormScript>().abilityIsActive)
         {
+            rigid.AddForce(-Physics.gravity, ForceMode.Acceleration);
             if (Input.GetButton("Horizontal"))
             {
-                rigid.AddForce(other.transform.GetComponent<ScaleScript>().GetForce());
+                //rigid.AddForce(other.transform.GetComponent<ScaleScript>().GetForce());
+                Vector3 scaleDir;
+                if (other.transform.position.x < transform.position.x) //Wall is to the left
+                {
+                    scaleDir = Input.GetAxis("Horizontal") < 0 ? Vector3.up : Vector3.down;
+                }
+                else //wall is to the right
+                {
+                    scaleDir = Input.GetAxis("Horizontal") < 0 ? Vector3.down : Vector3.up;
+                }
+
+                //Only apply if we are not on top of the object
+                if (other.contacts[0].point.y > transform.position.y + GetComponent<Collider>().bounds.extents.y)
+                {
+                    rigid.AddForce(scaleDir * rebutiaClimbSpeed, ForceMode.Acceleration);
+                    rigid.velocity = Vector3.ClampMagnitude(rigid.velocity, 1);
+                }
+            }
+            else
+            {
+                rigid.velocity = Vector3.zero;
             }
         }
 
         //only stop movement on slight slopes if we aren't being touched by anything else
-        if (other.collider.tag != "Untagged" || grounded == false)
+        else if (other.collider.tag != "Untagged" || grounded == false)
         {
             return;
         }
         //if no movement should be happening, stop player moving in Z/X axis
-        if (Math.Abs(direction.magnitude) < 0.01f && Mathf.Abs(slope) > 0.1 && slope < slopeLimit && rigid.velocity.magnitude < 2)
+        else if (Math.Abs(direction.magnitude) < 0.01f && Mathf.Abs(slope) > 0.1 && slope < slopeLimit && rigid.velocity.magnitude < 2)
         {
             //it's usually not a good idea to alter a rigidbodies velocity every frame
             //but this is the cleanest way i could think of, and we have a lot of checks beforehand, so it should be ok
             rigid.velocity = Vector3.zero;
-            rigid.useGravity = false;
+            ///rigid.useGravity = false;
         }
     }
 
@@ -305,7 +336,6 @@ public class PlayerMove : MonoBehaviour
                         movingObjSpeed = Vector3.zero;
                     }
                     //yes our feet are on something
-
                     return true;
                 }
             }
