@@ -274,13 +274,16 @@ public class FormScript : MonoBehaviour
                 RaycastHit hit = FireRay();
                 if (hit.transform && (hit.transform.tag == "SidePin" || hit.transform.tag == "BackPin" || hit.transform.tag == "Destroyable") && hit.distance <= range)
                 {
+                    //Play throw animation
+                    animator.SetTrigger("PinThrow");
+
+
                     ThrowAt(pinInstance, FireRay(), pinThrowTime);
 
                     //Remove Control of this pin
                     pinInstance = null;
 
-                    //Play throw animation
-                    animator.SetTrigger("Throw");
+
 
                     //Change sound
                     clip = pinThrowSound;
@@ -363,7 +366,7 @@ public class FormScript : MonoBehaviour
                     abilityIsActive = true;
 
                     //Set animation
-                    animator.SetTrigger("Aim");
+                   // animator.SetTrigger("Aim");
 
                     //Create Pin
                     pinInstance = GameObject.Instantiate(pin, pinSpawnMarker.transform.position, playerRoot.transform.rotation);
@@ -398,7 +401,7 @@ public class FormScript : MonoBehaviour
                     pivot = nearestPin.GetComponent<PinScript>().pivotPoint;
                   //Set active
                     abilityIsActive = true;
-
+                  //  animator.SetTrigger("YarnThrow");
                     animator.SetTrigger("Swinging");
                     AddJoint(pivot);
 
