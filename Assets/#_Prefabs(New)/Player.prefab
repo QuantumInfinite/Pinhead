@@ -7953,7 +7953,7 @@ SphereCollider:
   m_GameObject: {fileID: 3098295079561516908}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 0.28
   m_Center: {x: 0, y: 0.25, z: 0}
@@ -8513,7 +8513,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2ed9b0bbefceb347b9986898b936b34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  accel: 23
+  accel: 20
   airAccel: 5
   airDecel: 2
   animator: {fileID: 518419334514958850}
@@ -8594,7 +8594,6 @@ MonoBehaviour:
   pinAimSound: {fileID: 8300000, guid: be1f8ee0b1d051f4984b2514d8af16c7, type: 3}
   pinThrowSound: {fileID: 8300000, guid: c01a7d55453b8a24099b988ae9043bf2, type: 3}
   pinPickupSound: {fileID: 8300000, guid: 107c3317cb1c279488523e00899d31fd, type: 3}
-  pinPickupEffect: {fileID: 0}
   pinRecallSound: {fileID: 8300000, guid: 906cc432944ebdf498e1c375a77b4331, type: 3}
   swingStartSound: {fileID: 8300000, guid: cdf829aa25c5af6458f5d675a893063a, type: 3}
   swingReleaseSound: {fileID: 8300000, guid: 746cf1209e5b63947a0e93186106c831, type: 3}
