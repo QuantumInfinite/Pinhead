@@ -31,7 +31,7 @@ AnimationClip:
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 0.16666667
-        value: 5
+        value: 0.89
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -51,7 +51,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: material._FresnelPowerSlider
-    path: Player Mesh
+    path: Body_Low
     classID: 137
     script: {fileID: 0}
   m_PPtrCurves: []
@@ -63,7 +63,7 @@ AnimationClip:
   m_ClipBindingConstant:
     genericBindings:
     - serializedVersion: 2
-      path: 509164946
+      path: 3525906848
       attribute: 2291834737
       script: {fileID: 0}
       typeID: 137
@@ -105,7 +105,7 @@ AnimationClip:
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 0.16666667
-        value: 5
+        value: 0.89
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -125,7 +125,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: material._FresnelPowerSlider
-    path: Player Mesh
+    path: Body_Low
     classID: 137
     script: {fileID: 0}
   m_EulerEditorCurves: []

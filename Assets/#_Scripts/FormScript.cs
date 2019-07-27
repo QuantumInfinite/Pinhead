@@ -34,7 +34,7 @@ public class FormScript : MonoBehaviour
     public AudioClip pinAimSound;
     public AudioClip pinThrowSound;
     public AudioClip pinPickupSound;
-    public ParticleSystem pinPickupEffect;
+    //public ParticleSystem pinPickupEffect;
     public AudioClip pinRecallSound;
     public AudioClip swingStartSound;
     public AudioClip swingReleaseSound;
@@ -238,24 +238,22 @@ public class FormScript : MonoBehaviour
         if (other.tag == "PinPickup")
         {
             pinCount++;
-            //  StartCoroutine(pinEffectShader.StartFresnel());
             other.gameObject.SetActive(false);
 
-            if (pinPickupEffect)
+
+            baseModel.GetComponent<Animator>().SetTrigger("FresnelAnim");
+            //ParticleSystem.Instantiate(pinPickupEffect, transform.position + new Vector3(0, 3, 0), transform.rotation);
+
+
+            if (pinPickupSound)
             {
-                baseModel.GetComponent<Animator>().SetTrigger("FresnelAnim");
-                ParticleSystem.Instantiate(pinPickupEffect, transform.position + new Vector3(0, 3, 0), transform.rotation);
-
-
-                if (pinPickupSound)
-                {
-                    aSource.volume = 1;
-                    aSource.clip = pinPickupSound;
-                    aSource.Play();
-                }
-
-                PinsInHead();
+               aSource.volume = 1;
+               aSource.clip = pinPickupSound;
+               aSource.Play();
             }
+
+            PinsInHead();
+
         }
     }
 
@@ -319,8 +317,8 @@ public class FormScript : MonoBehaviour
                 rebutiaRollForm.SetActive(false);
                 baseModel.SetActive(true);
 
-                //mainColider.enabled = true;
-                //rebutiaColider.enabled = false;
+                mainColider.enabled = true;
+                rebutiaColider.enabled = false;
 
                 //rigid.useGravity = true;
 
@@ -432,8 +430,8 @@ public class FormScript : MonoBehaviour
                     HeadPins[i].SetActive(false);
                 }
 
-                //mainColider.enabled = false;
-                //rebutiaColider.enabled = true;
+                mainColider.enabled = false;
+                rebutiaColider.enabled = true;
 
                 if (hasHatRebutia)
                 {
