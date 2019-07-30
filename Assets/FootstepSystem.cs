@@ -25,8 +25,9 @@ public class FootstepSystem : MonoBehaviour
             {
                 int choice = Random.Range(0, steps.Length - 1);
                 Debug.Log("Sound " + choice + " was played.");
-                audioSource.clip = steps[choice];
-                audioSource.Play();
+                audioSource.PlayOneShot(steps[choice], 1.0f);
+                //audioSource.clip = steps[choice];
+                //audioSource.Play();
             }
       
     }
