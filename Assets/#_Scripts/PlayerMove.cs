@@ -27,7 +27,7 @@ public class PlayerMove : MonoBehaviour
 
     private bool grounded;
 
-    public bool horizontalMovementAllowed = true;
+    public bool allowUserInput = true;
 
     public float jumpDelay = 0.1f; //how fast you need to jump after hitting the ground, to do the next type of jump
 
@@ -141,7 +141,11 @@ public class PlayerMove : MonoBehaviour
         //stops rigidbody "sleeping" if we don't move, which would stop collision detection
         rigid.WakeUp();
         //handle jumping
-        JumpCalculations();
+        if (allowUserInput)
+        {
+            JumpCalculations();
+        }
+
         //adjust movement values if we're in the air or on the ground
         curAccel = grounded ? accel : airAccel;
         curDecel = grounded ? decel : airDecel;
@@ -155,7 +159,7 @@ public class PlayerMove : MonoBehaviour
         //get movement input, set direction to move in
         float h = 0;
         float v = 0;
-        if (horizontalMovementAllowed)
+        if (allowUserInput)
         {
             v = Input.GetAxisRaw("Vertical");
             h = Input.GetAxisRaw("Horizontal");

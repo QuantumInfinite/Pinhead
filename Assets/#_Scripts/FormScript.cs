@@ -83,6 +83,7 @@ public class FormScript : MonoBehaviour
 
 
     //Private members
+    
     private float regularWeight;
     private float regularSpeed;
 
@@ -167,7 +168,7 @@ public class FormScript : MonoBehaviour
     {
         //Change forms
         DPadDirection dPadInput = GetDPad();
-        if (dPadInput != DPadDirection.None)
+        if (playerMove.allowUserInput && dPadInput != DPadDirection.None)
         {
             ChangeForm(dPadInput);
         }
@@ -196,7 +197,6 @@ public class FormScript : MonoBehaviour
                     break;
                 case Form.Roll:
                     rebutiaRollForm.GetComponent<Animator>().SetBool("Rolling", Math.Abs(Input.GetAxis("Horizontal")) > 0.01f);
-                    
                     break;
                 case Form.Heavy:
                     //Do nothing
@@ -294,7 +294,7 @@ public class FormScript : MonoBehaviour
                 }
                 PinsInHead();
                 UpperTorso.transform.localEulerAngles = torsoRotation;
-                playerMove.horizontalMovementAllowed = true;
+                playerMove.allowUserInput = true;
                 Cursor.visible = false;
                 break;
             case Form.Yarn:
@@ -371,7 +371,7 @@ public class FormScript : MonoBehaviour
                     pinInstance.transform.parent = pinSpawnMarker;
 
                     //Lock character
-                    playerMove.horizontalMovementAllowed = false;
+                    playerMove.allowUserInput = false;
                     //rigid.velocity = Vector3.zero;
 
                     //Show curser DEPRICATED AS NO LONGER WORKS
@@ -456,6 +456,7 @@ public class FormScript : MonoBehaviour
 
     public void ChangeForm(DPadDirection dir)
     {
+
         Form newForm = Form.Regular;
         switch (dir)
         {
