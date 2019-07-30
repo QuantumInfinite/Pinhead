@@ -213,6 +213,7 @@ public class Throwing : MonoBehaviour
         heldObj.GetComponent<Rigidbody>().interpolation = objectDefInterpolation;
         heldObj.GetComponent<Collider>().material = null;
         Destroy(joint);
+        animator.SetTrigger("StopGrab");
         playerMove.rotateSpeed = defRotateSpeed;
         heldObj = null;
         timeOfThrow = Time.time;
