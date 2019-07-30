@@ -317,8 +317,8 @@ public class FormScript : MonoBehaviour
                 rebutiaRollForm.SetActive(false);
                 baseModel.SetActive(true);
 
-                //mainColider.enabled = true;
-                //rebutiaColider.enabled = false;
+                mainColider.enabled = true;
+                rebutiaColider.enabled = false;
 
                 //rigid.useGravity = true;
 
@@ -430,8 +430,8 @@ public class FormScript : MonoBehaviour
                     HeadPins[i].SetActive(false);
                 }
 
-                //mainColider.enabled = false;
-               // rebutiaColider.enabled = true;
+                mainColider.enabled = false;
+                rebutiaColider.enabled = true;
 
                 if (hasHatRebutia)
                 {

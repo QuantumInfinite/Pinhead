@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using Cinemachine.Utility;
 using UnityEngine;
 
 //handles player movement, utilising the CharacterMotor class
@@ -236,37 +238,76 @@ public class PlayerMove : MonoBehaviour
             rigid.velocity = Vector3.zero;
         }
     }
+    void PrintDir(Collision other)
+    {
+        Vector3[] points = other.contacts.Select(x => x.point).ToArray();
+        foreach (var variable in points)
+        {
+            Debug.DrawLine(transform.position, variable, Color.red, .2f);
+        }
+        Vector3 avg = new Vector3(points.Average(x => x.x), points.Average(x => x.y), points.Average(x => x.z));
+        print(points.Max(x => x.y) - transform.position.y);
+        //Debug.DrawLine(transform.position, avg, Color.red, 2f);
+        //print( transform.InverseTransformPoint(avg));
+        //print(Mathf.DeltaAngle(transform.position.y, avg.y));
+        //print(transform.position - avg);
+    }
+
+    bool ShouldClimb(Vector3[] points)
+    {
+        return (points.Max(x => x.y) > transform.position.y);
+    }
+
+    Vector3 AveragePoint(Vector3[] points)
+    {
+        return new Vector3(points.Average(x => x.x), points.Average(x => x.y), points.Average(x => x.z));
+    }
+
+    private GameObject IntersectPoint;
+    private void RebutiaClimb(Collision other)
+    {
+        if (!IntersectPoint)
+        {
+            IntersectPoint = new GameObject("CLIMB INTERSECT");
+        }
+        
+        rigid.AddForce(-Physics.gravity, ForceMode.Acceleration);
+        if (Input.GetButton("Horizontal"))
+        {
+            Vector3[] points = other.contacts.Select(x => x.point).ToArray();
+            Vector3 avgPoint = AveragePoint(points);
+            IntersectPoint.transform.position = avgPoint;
+            Vector3 cross = Vector3.Cross(transform.position, avgPoint);
+            //PrintDir(other);
+
+            Vector3 scaleDir;
+            if (avgPoint.x < transform.position.x) //Wall is to the left
+            {
+                scaleDir = Input.GetAxis("Horizontal") < 0 ? Vector3.up : Vector3.down;
+            }
+            else //wall is to the right
+            {
+                scaleDir = Input.GetAxis("Horizontal") < 0 ? Vector3.down : Vector3.up;
+            }
+            //Only apply if we are not on top of the object
+            if (ShouldClimb(points))
+            {
+                rigid.AddForce(scaleDir * rebutiaClimbSpeed, ForceMode.Acceleration);
+                rigid.velocity = Vector3.ClampMagnitude(rigid.velocity, 1);
+            }
+        }
+        else
+        {
+            rigid.velocity = Vector3.zero;
+        }
+    }
 
     //prevents rigidbody from sliding down slight slopes (read notes in characterMotor class for more info on friction)
     private void OnCollisionStay(Collision other)
     {
         if (other.collider.tag == "Scalable" && GetComponent<FormScript>().currentForm == FormScript.Form.Roll && GetComponent<FormScript>().abilityIsActive)
         {
-            rigid.AddForce(-Physics.gravity, ForceMode.Acceleration);
-            if (Input.GetButton("Horizontal"))
-            {
-                //rigid.AddForce(other.transform.GetComponent<ScaleScript>().GetForce());
-                Vector3 scaleDir;
-                if (other.transform.position.x < transform.position.x) //Wall is to the left
-                {
-                    scaleDir = Input.GetAxis("Horizontal") < 0 ? Vector3.up : Vector3.down;
-                }
-                else //wall is to the right
-                {
-                    scaleDir = Input.GetAxis("Horizontal") < 0 ? Vector3.down : Vector3.up;
-                }
-
-                //Only apply if we are not on top of the object
-                if (other.contacts[0].point.y > transform.position.y + GetComponent<Collider>().bounds.extents.y)
-                {
-                    rigid.AddForce(scaleDir * rebutiaClimbSpeed, ForceMode.Acceleration);
-                    rigid.velocity = Vector3.ClampMagnitude(rigid.velocity, 1);
-                }
-            }
-            else
-            {
-                rigid.velocity = Vector3.zero;
-            }
+            RebutiaClimb(other);
         }
 
         //only stop movement on slight slopes if we aren't being touched by anything else
