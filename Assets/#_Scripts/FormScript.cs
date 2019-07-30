@@ -156,6 +156,7 @@ public class FormScript : MonoBehaviour
         virtualInput = UIManagaer.GetComponent<VirtualInputModule>();
         regularWeight = rigid.mass;
         regularSpeed = playerMove.maxSpeed;
+        currentForm = Form.Pin;
     }
 
     private bool test = false;
