@@ -29,7 +29,8 @@ AudioMixerGroupController:
   m_Send: 00000000000000000000000000000000
   m_Effects:
   - {fileID: 9017095904472482590}
-  m_UserColorIndex: 0
+  - {fileID: 6973175931747152953}
+  m_UserColorIndex: 3
   m_Mute: 0
   m_Solo: 0
   m_BypassEffects: 0
@@ -107,7 +108,23 @@ AudioMixerSnapshotController:
   m_Name: Snapshot
   m_AudioMixer: {fileID: 24100000}
   m_SnapshotID: 8f668a2eb34dc8149a1d13c5af95dd78
-  m_FloatValues: {}
+  m_FloatValues:
+    ec5419b04d39fc346971e7e04acc6fb2: -21
+    27d2f4c0624b6c34d99a67bca1292289: 9.250003
+    bf2e2ee117a20ef4f9039c2c58ab9999: 0.1
+    a7f829958ab176643a0e5b3e15e709fd: 1
+    bc60bc76ad1c9af4ebb45a37ab0881ab: 0.1
+    a1236db6b0d85a140b883601a5fdbc28: 0
+    02e9e2683809ff444b9b61943a990462: 1
+    048262c87e94ee04b9bc5793ec8e40a0: 4377
+    e9f77419b5d79ef49b4752d5daf141fd: -10
+    df1853491469b1548abeec6564cce026: 7712
+    817214f93bf4df94ba8924ae9adcc608: 0.822
+    5e31204b39080254fa35da83b463faea: 0.901
+    e3ab6a5b39ebcbb49b7ad4c962a4b90e: 3408
+    c29b9e7b95639df40937d3ac6fd956f6: 0
+    eba009ccdd563894e9a9376f40628697: 10
+    1a217ddd36fa7e946ab503fa58833525: -6.5566154
   m_TransitionOverrides: {}
 --- !u!243 &5910935646299324383
 AudioMixerGroupController:
@@ -128,6 +145,26 @@ AudioMixerGroupController:
   m_Mute: 0
   m_Solo: 0
   m_BypassEffects: 0
+--- !u!244 &6973175931747152953
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_EffectID: 72ae8f6edd637ac4884e142fad46424e
+  m_EffectName: Normalize
+  m_MixLevel: c198035148ba101429989aaaeac74445
+  m_Parameters:
+  - m_ParameterName: Fade in time
+    m_GUID: a1236db6b0d85a140b883601a5fdbc28
+  - m_ParameterName: Lowest volume
+    m_GUID: 817214f93bf4df94ba8924ae9adcc608
+  - m_ParameterName: Maximum amp
+    m_GUID: 8fb70b7b45f93a040bdae4c2e95565c7
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0
 --- !u!244 &9017095904472482590
 AudioMixerEffectController:
   m_ObjectHideFlags: 3
