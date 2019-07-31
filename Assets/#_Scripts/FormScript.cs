@@ -143,6 +143,7 @@ public class FormScript : MonoBehaviour
             UIManagaer.GetComponent<PauseMenu>().EnableForm(Form.Yarn);
             UIManagaer.GetComponent<PauseMenu>().EnableForm(Form.Pin);
             UIManagaer.GetComponent<PauseMenu>().EnableForm(Form.Roll);
+
         }
         rebutiaRollForm.SetActive(false);
         PinsInHead();
@@ -464,16 +465,16 @@ public class FormScript : MonoBehaviour
             case DPadDirection.None:
                 return;
             case DPadDirection.Up:
-                newForm = Form.Yarn;
+                newForm = Form.Heavy;
                 break;
             case DPadDirection.Down:
-                newForm = Form.Heavy;
+                newForm = Form.Roll;
                 break;
             case DPadDirection.Left:
                 newForm = Form.Pin;
                 break;
             case DPadDirection.Right:
-                newForm = Form.Roll;
+                newForm = Form.Yarn;
                 break;
             default:
                 break;

@@ -6,36 +6,36 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 0
-    path: Assets/Level1.unity
+    path: 
     guid: 00000000000000000000000000000000
   - enabled: 0
-    path: Assets/Physics Platformer Kit/Scenes/3D Demo Scene 1.unity
+    path: 
     guid: 00000000000000000000000000000000
   - enabled: 0
-    path: Assets/Physics Platformer Kit/Scenes/3D Demo Scene.unity
+    path: 
     guid: 00000000000000000000000000000000
   - enabled: 0
-    path: Assets/Physics Platformer Kit/Scenes/Demo Scene.unity
+    path: 
     guid: 00000000000000000000000000000000
   - enabled: 0
-    path: Assets/Physics Platformer Kit/Scenes/3D Demo Scene.unity
+    path: 
     guid: 00000000000000000000000000000000
   - enabled: 0
-    path: Assets/Physics Platformer Kit/Scenes/Simple Demo.unity
+    path: 
     guid: 00000000000000000000000000000000
   - enabled: 0
-    path: Assets/Scenes/Start Screen.unity
+    path: 
     guid: 00000000000000000000000000000000
   - enabled: 0
-    path: Assets/Scenes/demo level.unity
-    guid: 00000000000000000000000000000000
-  - enabled: 1
     path: Assets/#_Scenes/StartScreen.unity
     guid: a920d7754a2e0074e8ee2d10424866dc
   - enabled: 1
+    path: Assets/#_Scenes/Pin Head_Demo_2019.unity
+    guid: 473579bea3faba8479ceb46ba5d84a9e
+  - enabled: 0
     path: Assets/#_Scenes/PinHead_2018.unity
     guid: f8eb2a85eb783444f883b5f74d1693d8
-  - enabled: 1
+  - enabled: 0
     path: Assets/#_Scenes/EndScreen.unity
     guid: f3673516ad4d71a46a1725c6be3c7627
   m_configObjects:
